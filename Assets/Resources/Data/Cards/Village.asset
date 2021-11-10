@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
+  m_Name: Village
+  m_EditorClassIdentifier: 
+  foodPrice: 0
+  industryPrice: 0
+  MagicPrice: 0
+  cardName: Village
+  keyword: Village
+  description: Collect resources each turn
+  abilityScriptName: VillageMaker
+  image: {fileID: 21300000, guid: d9104ee70be3b3345961340fcdcc5bee, type: 3}
+  priority: 0.4
+  creatureData:
+    hitpoint: 10
+    speed: 0
+    armor: 1
+    attack: 1
+    attackRange: 2
+    icon: {fileID: 21300000, guid: 4f420d13545eb0e499c1d54437bfb165, type: 3}
+    amphibious: 1
+    flying: 0
+    pioneer: 0
+    abilityScriptName: 

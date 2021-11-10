@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a6b5909cea6da4a89e60863df24278, type: 3}
+  m_Name: Light
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
+  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
+  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
+  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
+  - {fileID: 11400000, guid: 698698dfc4d709c4e92dc6fbddcd2295, type: 2}
+  - {fileID: 11400000, guid: 698698dfc4d709c4e92dc6fbddcd2295, type: 2}
+  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
+  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
+  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
+  capitalCardName: Capital
