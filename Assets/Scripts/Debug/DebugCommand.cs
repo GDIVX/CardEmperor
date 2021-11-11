@@ -3,45 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugCommandBase 
+public class DebugCommand 
 {
-    string _commandID;
-    string _commandDescription;
-    string _commandFormat;
-
-    public string commandID => _commandID;
-    public string commandDescription => commandDescription;
-    public string commandFormat => _commandFormat;
-
-    public DebugCommandBase(string id, string description , string format){
-        _commandID = id;
-        _commandDescription = description;
-        _commandFormat = format;
-    }
-}
-
-public class DebugCommand : DebugCommandBase
-{
+    public string name;
     Action command;
-    public DebugCommand(string id, string description, string format, Action command) : base(id, description, format)
-    {
-        this.command = command;
+
+    public DebugCommand(String name,Action command){
+        this.name = name;
+        this.command  = command;
     }
 
     public void Invoke(){
+        if(command == null){
+            Debug.LogError("Can't find command");
+            return;
+        }
         command.Invoke();
-    }
-}
-
-public class DebugCommand<T> : DebugCommandBase{
-    Action<T> command;
-
-    public DebugCommand(string id, string description, string format, Action<T> command) : base(id, description, format)
-    {
-        this.command = command;
-    }
-
-    public void Invoke(T value){
-        command.Invoke(value);
     }
 }

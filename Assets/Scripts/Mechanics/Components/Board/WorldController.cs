@@ -22,6 +22,14 @@ public class WorldController : MonoBehaviour
 
     public GameObject CreatureTemplate;
 
+    internal Vector3Int GetRandomTile()
+    {
+        int x = UnityEngine.Random.Range(0, world.GetLength(0));
+        int y = UnityEngine.Random.Range(0, world.GetLength(1));
+
+        return new Vector3Int(x,y,0);
+    }
+
     private bool[,] territory;
 
     private void Awake() {

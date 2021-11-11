@@ -31,4 +31,4 @@ MonoBehaviour:
     amphibious: 0
     flying: 0
     pioneer: 0
-    abilityScriptName: 
+    abilityScriptName: BasicAbility

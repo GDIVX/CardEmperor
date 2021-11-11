@@ -15,6 +15,8 @@ public class Creature: IClickable
     public Vector3Int position{get => _position;}
     public int ID{get => _ID;}
     public int PlayerID{get => _PlayerID;}
+    public int attackRange{get => _attackRange;}
+    public int movement{get => _movement;}
     public Player Player{get{return Player.GetPlayer(PlayerID);}}
     public bool amphibious{get{return _amphibious;}}
     public bool flying{get{return _flying;}}
@@ -23,34 +25,61 @@ public class Creature: IClickable
 
     static Dictionary<int,Creature> creaturesRegestry = new Dictionary<int, Creature>();
 
-    int hitpoint, armor, attack , speed, attackRange , _ID , _PlayerID , movement;
+    int hitpoint, armor, attack , speed, _attackRange , _ID , _PlayerID , _movement;
     Sprite _icon;
 
     Vector3Int _position;
     private bool _amphibious , _flying , _pioneer;
+    CreatureAbility ability;
 
-    public Creature(CreatureData data , int ID , Vector3Int position){
+    public Creature(CreatureData data , int cardID , Vector3Int position){
         this.hitpoint = data.hitpoint;
         this.armor = data.armor;
         this.attack = data.attack;
         this.speed = data.speed;
-        this.attackRange = data.attackRange;
+        this._attackRange = data.attackRange;
         this._icon = data.icon;
         _position = position;
-        movement = speed;
+        _movement = speed;
 
         _amphibious = data.amphibious;
         _flying = data.flying;
         _pioneer = data.pioneer;
 
-        _ID = ID;
-        Card card = Card.GetCard(ID);
+        _ID = cardID;
+        Card card = Card.GetCard(cardID);
         _PlayerID = card.playerID;
-        creaturesRegestry.Add(ID , this);
-        WorldController.Instance.world[position.x , position.y].CreatureID = ID;
+        creaturesRegestry.Add(cardID , this);
+        WorldController.Instance.world[position.x , position.y].CreatureID = cardID;
 
+        if(data.abilityScriptName != null && data.abilityScriptName !=""){
+            ability = System.Activator.CreateInstance(System.Type.GetType(data.abilityScriptName), cardID) as CreatureAbility;
+        }
 
         GameManager.Instance.RegisterToTurnStart(OnTurnStart);
+    }
+
+    public void Kill(){
+        //TODO Handle death
+    }
+    internal void TakeDamage(int damage)
+    {
+        hitpoint -= damage;
+        CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
+        displayer.SetDisplay(true);
+        if(hitpoint <= 0){
+            Kill();
+        } 
+    }
+
+    internal void OnAttackBlocked(int damage)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void OnAttackPassed(int damage)
+    {
+        throw new NotImplementedException();
     }
 
     public static Creature GetCreature(int ID){
@@ -89,6 +118,16 @@ public class Creature: IClickable
         displayer.OnDeselect();       
     }
 
+    public void InteractWithCreature(Creature creature){
+        if(ability == null) {return;}
+        if(creature.Player.IsMain()){
+            ability.ActionOnFriendlyCreature(creature);
+        }
+        else{
+            ability.ActionOnEnemyCreature(creature);
+        }
+    }
+
     public override string ToString()
     {
         Card card = Card.GetCard(ID);
@@ -105,9 +144,9 @@ public class Creature: IClickable
     }
     public void FlyTo(Vector3Int target){      
         int distance = WorldController.DistanceOf(position , target);
-        if(distance <= movement)
+        if(distance <= _movement)
             {
-                movement -= distance;
+                _movement -= distance;
                 UpdatePosition(target);
             }
     }
@@ -115,7 +154,7 @@ public class Creature: IClickable
     void OnTurnStart(Player player){
         if(player == this.Player)
         {
-            movement = speed;
+            _movement = speed;
         }
     }
 

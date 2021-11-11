@@ -9,11 +9,13 @@ public class Player
     public int ID{get{return _ID;}}
     public int cardsToDraw = 5;
     public static Player Main{get{return _main;}}
+    public static Player Rival{get{return _rival;}}
     //manas
     public Mana foodPoints, industryPoints , magicPoints , knowledge;  
 
     private int _ID;
     private static Player _main;
+    private static Player _rival;
     private static Dictionary<int, Player> PlayersRegestry = new Dictionary<int, Player>(); 
 
     public Player(bool isMain = false){
@@ -22,6 +24,9 @@ public class Player
 
         if(isMain){
             Player._main = this;
+        }
+        else{
+            Player._rival = this;
         }
 
         foodPoints = new Mana(ManaType.FOOD);
