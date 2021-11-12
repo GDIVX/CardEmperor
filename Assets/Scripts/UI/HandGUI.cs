@@ -17,6 +17,8 @@ public class HandGUI : MonoBehaviour
     Stack<CardDisplayer> _disabledCardsDisplayers;
     Tweener tweener;
 
+    DisplayScale displayScale;
+
         private void Awake() {
         oldSpacing = spacing;
         _cardDisplayers = new List<CardDisplayer>();
@@ -27,7 +29,7 @@ public class HandGUI : MonoBehaviour
 
     void Start()
     {
-        tweener.MoveAwayFromOrigin();
+        //tweener.MoveAwayFromOrigin();
     }
 
     public void AddCard(Card card){
@@ -109,11 +111,53 @@ public class HandGUI : MonoBehaviour
         RearrangeCards(spacing);
     }
 
-    public void PushUp(){
+    public void SetToMixedView(){
+        if(displayScale == DisplayScale.HandView){
+            tweener.UnfocusedOn();
+        }
         tweener.MoveToOrigin();
+        displayScale = DisplayScale.MixedView;
     }
 
-    public void PushDown(){
+    public void SetToMapView(){
+        if(displayScale == DisplayScale.HandView){
+            tweener.UnfocusedOn();
+        }
         tweener.MoveAwayFromOrigin();
+        displayScale = DisplayScale.MapView;
     }
+
+    public void SetToHandView(){
+        tweener.FocusOn();
+        displayScale = DisplayScale.HandView;
+    }
+
+    public void ScaleDown(){
+        switch (displayScale){
+            case DisplayScale.HandView:
+                SetToMixedView();
+                break;
+
+            case DisplayScale.MixedView:
+                SetToMapView();
+                break;
+            default:
+                return;
+        }
+    }
+    public void ScaleUp(){
+        switch (displayScale){
+            case DisplayScale.MapView:
+                SetToMixedView();
+                break;
+
+            case DisplayScale.MixedView:
+                SetToHandView();
+                break;
+            default:
+                return;
+        }
+    }
+
+    enum DisplayScale{MapView , MixedView , HandView}
 }

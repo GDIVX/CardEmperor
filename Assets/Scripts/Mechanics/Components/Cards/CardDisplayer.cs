@@ -119,7 +119,7 @@ public class CardDisplayer : MonoBehaviour , IClickable , IPointerClickHandler ,
 
         LeanTween.scale(gameObject , originalScale, .2f);
         
-        PushDownHand();
+        //PushDownHand();
         GameManager.CurrentSelected = null;
     }
 
@@ -132,12 +132,12 @@ public class CardDisplayer : MonoBehaviour , IClickable , IPointerClickHandler ,
     {
         transform.SetAsLastSibling();
 
-        IClickable selected = GameManager.CurrentSelected;
-        CardDisplayer cast = selected as CardDisplayer;
-        if(cast == null)
-        {
-            UIController.instance.handGUI.PushUp();
-        }
+        // IClickable selected = GameManager.CurrentSelected;
+        // CardDisplayer cast = selected as CardDisplayer;
+        // if(cast == null)
+        // {
+        //     UIController.instance.handGUI.SetToMixedView();
+        // }
 
     }
 
@@ -145,16 +145,15 @@ public class CardDisplayer : MonoBehaviour , IClickable , IPointerClickHandler ,
 
         IClickable selected = GameManager.CurrentSelected;
         CardDisplayer cast = selected as CardDisplayer;
-            Debug.Log(cast);
         if(cast == null)
         {
-            UIController.instance.handGUI.PushDown();
+            UIController.instance.handGUI.SetToMapView();
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         UIController.instance.handGUI.ArrangeCard(ID);
-        PushDownHand();
+        //PushDownHand();
     }
 }

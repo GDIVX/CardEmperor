@@ -57,16 +57,6 @@ public class CardsMannager : MonoBehaviour
         return res;
     }
 
-    private void Update() {
-        if(Input.GetKeyUp(KeyCode.A)){
-            DrawCards(1);
-            Debug.Log($"Draw pile: {_drawPile.Size}");
-        }
-        if(Input.GetKeyUp(KeyCode.S)){
-            DiscardCard(hand.GetCardIDByIndex(0));
-            Debug.Log($"Discard Pile: {discardPile.Size}");
-        }
-    }
 
     public void ExhaustCard(int ID){
         Pile pile;

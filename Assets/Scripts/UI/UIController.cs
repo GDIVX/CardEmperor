@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
 
     public HandGUI handGUI;
 
+
     void Awake()
     {
         if(instance == null){
@@ -29,6 +30,19 @@ public class UIController : MonoBehaviour
         Player.Main.industryPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.magicPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.knowledge.RegisterOnValueChange(OnManaValueChange);
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.W)){
+            handGUI.ScaleUp();
+            return;
+        }
+        if(Input.GetKeyDown(KeyCode.S)){
+            handGUI.ScaleDown();
+            return;
+        }
+        
     }
 
     public void NextTurnBtn(){

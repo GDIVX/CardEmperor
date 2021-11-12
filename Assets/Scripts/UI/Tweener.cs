@@ -16,7 +16,7 @@ public class Tweener : MonoBehaviour
     public Vector3 targetScalePosition;
 
     Vector3 origin , originalScale;
-    bool hasMovedAwayFromOrigin , inFocus , isOperating;
+    bool hasMovedAwayFromOrigin , inFocus;
 
     [Button(ButtonSizes.Medium)]
     [TabGroup("Move")]
@@ -27,13 +27,13 @@ public class Tweener : MonoBehaviour
         origin = transform.localPosition;
     }
     public void Move(){
-        if(inFocus || isOperating) {return;}
+        if(inFocus ) {return;}
 
 
         if(hasMovedAwayFromOrigin){
-            LeanTween.moveLocal(gameObject , origin , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
+            LeanTween.moveLocal(gameObject , origin , time).setEase(easeType);
         }else{
-            LeanTween.moveLocal(gameObject , targetMovePosition , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
+            LeanTween.moveLocal(gameObject , targetMovePosition , time).setEase(easeType);
         }
 
         hasMovedAwayFromOrigin = !hasMovedAwayFromOrigin;
@@ -56,9 +56,9 @@ public class Tweener : MonoBehaviour
     [Button(ButtonSizes.Medium)]
     [TabGroup("Focus")]
     public void FocusOn(){
-        if(!inFocus && !isOperating){
-            LeanTween.moveLocal(gameObject , targetScalePosition , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
-            LeanTween.scale(gameObject , targetScale , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
+        if(!inFocus){
+            LeanTween.moveLocal(gameObject , targetScalePosition , time).setEase(easeType);
+            LeanTween.scale(gameObject , targetScale , time).setEase(easeType);
             inFocus = true;
         }
     }
@@ -66,17 +66,11 @@ public class Tweener : MonoBehaviour
     [Button(ButtonSizes.Medium)]
     [TabGroup("Focus")]
     public void UnfocusedOn(){
-        if(inFocus && !isOperating){
-            LeanTween.moveLocal(gameObject , origin , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
-            LeanTween.scale(gameObject , originalScale , time).setEase(easeType).setOnStart(OnWorking).setOnComplete(OnComplete);
+        if(inFocus){
+            LeanTween.moveLocal(gameObject , origin , time).setEase(easeType);
+            LeanTween.scale(gameObject , originalScale , time).setEase(easeType);
             inFocus = false;
         }
     }
-
-    void OnComplete(){
-        isOperating = false;
-    }
-        
-    void OnWorking() => isOperating = true;
 
 }
