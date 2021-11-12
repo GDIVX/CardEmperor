@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
         else{
             _instance = this;
         }
-
         turnOrder.Add(new Player(true));
         turnOrder.Add(new Player());
         _currentTurnOfPlayer = Player.Main;

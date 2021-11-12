@@ -88,9 +88,6 @@ public class WorldTile : IClickable
         if(CurrentSelected == null){
             return;
         }
-        if(CreatureID != 0){
-            Creature.GetCreature(CreatureID).OnRightClick();
-        }
         else if(CurrentSelected.GetType() == typeof(CardDisplayer)){
             CardDisplayer displayer = (CardDisplayer)CurrentSelected;
             CardAbility ability = CardAbility.GetAbility(displayer.ID);
@@ -99,18 +96,18 @@ public class WorldTile : IClickable
         else if(CurrentSelected.GetType() == typeof(CreatureDisplayer)){
             CreatureDisplayer displayer = (CreatureDisplayer)CurrentSelected;
             int selectedCreatureID = displayer.ID;
-            Creature creature = Creature.GetCreature(selectedCreatureID);
-            if(creature == null){
+            Creature selectedCreature = Creature.GetCreature(selectedCreatureID);
+
+            if(selectedCreature == null){
                 Debug.LogError($"Can't find creature with the ID {selectedCreatureID}");
                 return;
             }
-            if(creature.Player.IsMain()){
-                if(feature != TileFeature.WATER || creature.amphibious ){
-                //We know the tile is clear and the creature is allowed to move here
-                    if(creature.flying)
-                        creature.FlyTo((Vector3Int)position);
+            if(selectedCreature.Player.IsMain()){
+                if(feature != TileFeature.WATER || selectedCreature.amphibious ){
+                    if(CreatureID == 0)
+                        selectedCreature.FlyTo((Vector3Int)position);
                     else
-                        creature.MoveTo((Vector3Int)position);
+                        selectedCreature.InteractWithCreature(Creature.GetCreature(CreatureID));
                 }
             }
         }

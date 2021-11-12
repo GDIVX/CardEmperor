@@ -18,13 +18,12 @@ public class CardsMannager : MonoBehaviour
     [SerializeField]
     GameObject _cardTamplate;
 
-    [SerializeField]
     Hand _hand;
     Pile _drawPile;
     Pile _discardPile;
     Pile _exhaustPile;
 
-    private void Awake() {
+    private void Start() {
         if(_instance != null && _instance != this){
             Destroy(this.gameObject);
         }
@@ -32,17 +31,18 @@ public class CardsMannager : MonoBehaviour
             _instance = this;
         }
 
-        _drawPile = new Pile(GenerateDeck());
-        //Create a capital card and add it to the start of the deck 
-        //NOTE capital should always be the first buildable card 
-        Card capitalCard = Card.BuildCard(deckData.capitalCardName , Player.Main.ID);
-        _drawPile.Drop(capitalCard);
+        GameManager.Instance.RegisterToTurnEnd(ClearHand);
+        GameManager.Instance.RegisterToTurnStart(OnTurnStart);
+
+        _hand = new Hand();
 
         _discardPile = new Pile();
         _exhaustPile = new Pile();
 
-        GameManager.Instance.RegisterToTurnEnd(ClearHand);
-        GameManager.Instance.RegisterToTurnStart(OnTurnStart);
+
+        _drawPile = new Pile(GenerateDeck());
+        Card capitalCard = Card.BuildCard(deckData.capitalCardName , Player.Main.ID);
+        _drawPile.Drop(capitalCard);
     }
 
 
@@ -117,10 +117,9 @@ public class CardsMannager : MonoBehaviour
     public void ClearHand(Player p){
         if(p.IsMain())
             {
-                CardDisplayer[] displayers = hand.cardDisplayers.ToArray();
-                foreach(CardDisplayer displayer in displayers){
-                    int ID = displayer.ID;
-                    DiscardCard(ID);
+                int[] IDs = hand.cardsIDs.ToArray();
+                foreach(int id in IDs){
+                    DiscardCard(id);
                 }
             }
     }

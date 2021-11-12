@@ -22,10 +22,11 @@ public class DebugConsole : MonoBehaviour
         SummonMonster = new DebugCommand("Summon monster" , ()=>{
             Card card = Card.BuildCard("Archer" , Player.Rival.ID);
             CardData data = card.data;
-            Vector3Int targetPosition = WorldController.Instance.GetRandomTile();
-            Creature creature = new Creature(data.creatureData , card.ID , targetPosition);
+            Vector3Int cellPosition = WorldController.Instance.GetRandomTile();
+            Vector3 position = WorldController.Instance.map.CellToWorld(cellPosition);
+            Creature creature = new Creature(data.creatureData , card.ID , cellPosition);
             
-            GameObject _gameObject = CreatureDisplayer.Create(creature , targetPosition);
+            GameObject _gameObject = CreatureDisplayer.Create(creature , position);
             
             
             CreatureDisplayer displayer = _gameObject.GetComponent<CreatureDisplayer>();

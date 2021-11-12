@@ -74,12 +74,12 @@ public class Creature: IClickable
 
     internal void OnAttackBlocked(int damage)
     {
-        throw new NotImplementedException();
+        //TODO fun animation
     }
 
     internal void OnAttackPassed(int damage)
     {
-        throw new NotImplementedException();
+        //TODO Fun animation
     }
 
     public static Creature GetCreature(int ID){
