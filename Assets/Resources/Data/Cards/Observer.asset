@@ -20,7 +20,7 @@ MonoBehaviour:
   description: <b>Flying</b><br><b>True Sight</b>
   abilityScriptName: CreatureMaker
   image: {fileID: 21300000, guid: f668fed98a556f34299e3e33049e10f1, type: 3}
-  priority: 0.6
+  priority: 0.5
   creatureData:
     hitpoint: 5
     speed: 4

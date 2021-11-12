@@ -9,7 +9,7 @@ public class CardData : ScriptableObject
    public int foodPrice , industryPrice , MagicPrice ;
    public string cardName, keyword , description , abilityScriptName;
    public Sprite image;
-   [Range(0,1.5f)]
+   [Range(0,1)]
    public float priority;
    public CreatureData creatureData;
 }

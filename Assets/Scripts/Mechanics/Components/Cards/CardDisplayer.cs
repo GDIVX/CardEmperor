@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardDisplayer : MonoBehaviour , IClickable
+public class CardDisplayer : MonoBehaviour , IClickable , IPointerClickHandler , IPointerEnterHandler , IPointerExitHandler
 {
     public Action OnUpdateDisplayerListener;
     public int ID{get{return _ID;}}
@@ -102,15 +103,58 @@ public class CardDisplayer : MonoBehaviour , IClickable
         Debug.Log("How you managed that?");
     }
 
+    Vector3 originalScale;
     public void OnSelect()
     {
+        if(GameManager.CurrentSelected == this) {return;}
+
+        originalScale = transform.localScale;
+        LeanTween.scale(gameObject , originalScale * 1.2f , .2f);
         GameManager.CurrentSelected = this;
-        transform.localScale = new Vector3(1.2f, 1.2f,1.2f);
     }
 
     public void OnDeselect()
     {
+        if(GameManager.CurrentSelected != this) {return;}
+
+        LeanTween.scale(gameObject , originalScale, .2f);
+        
+        PushDownHand();
         GameManager.CurrentSelected = null;
-        transform.localScale = new Vector3(.6f, .6f, .6f);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        OnLeftClick();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.SetAsLastSibling();
+
+        IClickable selected = GameManager.CurrentSelected;
+        CardDisplayer cast = selected as CardDisplayer;
+        if(cast == null)
+        {
+            UIController.instance.handGUI.PushUp();
+        }
+
+    }
+
+    void PushDownHand(){
+
+        IClickable selected = GameManager.CurrentSelected;
+        CardDisplayer cast = selected as CardDisplayer;
+            Debug.Log(cast);
+        if(cast == null)
+        {
+            UIController.instance.handGUI.PushDown();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIController.instance.handGUI.ArrangeCard(ID);
+        PushDownHand();
     }
 }

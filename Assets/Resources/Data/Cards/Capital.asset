@@ -20,7 +20,7 @@ MonoBehaviour:
   description: '<b>Town</b><br>If it falls, all is lost '
   abilityScriptName: TownMaker
   image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
-  priority: 1.5
+  priority: 1
   creatureData:
     hitpoint: 30
     speed: 0
