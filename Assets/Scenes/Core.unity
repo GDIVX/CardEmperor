@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 1181528905}
   - component: {fileID: 1181528907}
   - component: {fileID: 1181528908}
+  - component: {fileID: 1181528909}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -195,3 +196,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckData: {fileID: 11400000, guid: eecf5682435c6df44b9ecc04da8a033b, type: 2}
   _cardTamplate: {fileID: 6108676922395768260, guid: d3a1d6b22d3bd2e40b53ebb2edbd51dc, type: 3}
+--- !u!114 &1181528909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181528904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc402689774135469e3c8898f2826e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commonRarity: 0.5
+  uncommonRarity: 0.3
+  rareRarity: 0.19999999

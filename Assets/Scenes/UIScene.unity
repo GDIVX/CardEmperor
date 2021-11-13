@@ -1781,7 +1781,7 @@ MonoBehaviour:
   easeType: 28
   targetMovePosition: {x: 0, y: -70, z: 0}
   targetScale: {x: 2, y: 2, z: 1}
-  targetScalePosition: {x: 0, y: -200, z: 0}
+  targetScalePosition: {x: 0, y: 300, z: 0}
 --- !u!1 &1803617639
 GameObject:
   m_ObjectHideFlags: 0
