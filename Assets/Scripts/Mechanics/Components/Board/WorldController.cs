@@ -45,8 +45,10 @@ public class WorldController : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.NotifyOnInitTask(false);
         WorldGenerator.GenerateWorld(worldGenData , map);
         territory = new bool[worldGenData.size.x , worldGenData.size.y];
+        GameManager.Instance.NotifyOnInitTask(true);
         
     }
 

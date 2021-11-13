@@ -15,10 +15,13 @@ public class GameManager : MonoBehaviour
     Player _currentTurnOfPlayer;
     Action<Player> turnEndDelegate;
     Action<Player> turnStartDelegate;
+    int initTasksLeft;
+    bool ready = false;
     
     List<Player> turnOrder = new List<Player>();
 
         private void Awake() {
+            NotifyOnInitTask(false);
         definitions.Start();
         if(_instance != null && _instance != this){
             Destroy(this.gameObject);
@@ -30,28 +33,16 @@ public class GameManager : MonoBehaviour
         turnOrder.Add(new Player(true));
         turnOrder.Add(new Player());
         _currentTurnOfPlayer = Player.Main;
+            NotifyOnInitTask(true);
     }
 
-    public void Start()
+    void Update()
     {
-
-        EndTurn();
-    }
-
-    private void StartTurn(Player player)
-    {
-        _currentTurnOfPlayer = player;
-        turnStartDelegate?.Invoke(player);
-        player.OnTurnStart();
-            Debug.Log("Turn Start");
-        if(player.IsMain()){
-            Debug.Log("Your Turn");
+        if(!ready){
+            return;
         }
-        else{
-            Debug.Log("Enemy");
-            //TODO add AI :P 
-            EndTurn();
-        }
+        StartTurn(turnOrder[0]);
+        ready = false;
     }
 
     public void EndTurnButton(){
@@ -78,10 +69,31 @@ public class GameManager : MonoBehaviour
         StartTurn(turnOrder[turnIndex]);
     }
 
+    public void NotifyOnInitTask(bool isDone){
+        initTasksLeft = isDone ? initTasksLeft - 1 : initTasksLeft + 1;
+        ready = initTasksLeft <= 0;
+    }
+
     public void RegisterToTurnEnd(Action<Player> action){
         turnEndDelegate += action;
     }
     public void RegisterToTurnStart(Action<Player> action){
-        turnEndDelegate += action;
+        turnStartDelegate += action;
+    }
+
+    private void StartTurn(Player player)
+    {
+        _currentTurnOfPlayer = player;
+        turnStartDelegate?.Invoke(player);
+        player.OnTurnStart();
+            Debug.Log("Turn Start");
+        if(player.IsMain()){
+            Debug.Log("Your Turn");
+        }
+        else{
+            Debug.Log("Enemy");
+            //TODO add AI :P 
+            EndTurn();
+        }
     }
 }
