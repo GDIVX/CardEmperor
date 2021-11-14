@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class DebugConsole : MonoBehaviour
 {
+    [ShowInInspector]
     public List<DebugCommand> commandList;
 
-    bool showConsole;
+    public bool showConsole;
 
     DebugCommand SummonMonster;
 
@@ -62,4 +64,29 @@ public class DebugConsole : MonoBehaviour
 
         GUI.EndScrollView();
     }
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Creatures")]
+    private Creature creature;
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Creatures")]
+    private CreatureDisplayer CreatureDisplayer;
+    [ShowInInspector]
+    [TabGroup("Creatures")]
+    int creatureID;
+    [Button("Find")]
+    [TabGroup("Creatures")]
+    void FindCreature(){
+        if(creatureID == 0){
+            creature = null;
+            CreatureDisplayer = null;
+            return;
+        }
+
+        creature = Creature.GetCreature(creatureID);
+        CreatureDisplayer = CreatureDisplayer.GetCreatureDisplayer(creatureID);
+    }
+    
 }
+

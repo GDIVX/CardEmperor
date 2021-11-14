@@ -33,6 +33,7 @@ public class CreatureMaker : CardAbility
 
         Card parent = Card.GetCard(ID);
         var position = WorldController.Instance.map.GetCellCenterLocal(targetPosition);
+        Debug.Log($"worldPos : {position} gridPos : {targetPosition}");
 
         if(Creature.CreatureExist(ID)){
             Debug.LogError("Trying to create a creature that already was created");

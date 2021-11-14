@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
 public class CreatureDisplayer : MonoBehaviour , IClickable
 {
     static Dictionary<int , CreatureDisplayer> regestry = new Dictionary<int, CreatureDisplayer>();

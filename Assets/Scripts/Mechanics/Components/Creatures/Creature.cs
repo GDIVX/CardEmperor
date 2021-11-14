@@ -3,7 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
+[System.Serializable]
 public class Creature: IClickable
 {
     public int Hitpoint { get => hitpoint;}
@@ -25,11 +27,21 @@ public class Creature: IClickable
 
     static Dictionary<int,Creature> creaturesRegestry = new Dictionary<int, Creature>();
 
+    [ShowInInspector]
+    [ReadOnly]
     int hitpoint, armor, attack , speed, _attackRange , _ID , _PlayerID , _movement;
+    [ShowInInspector]
+    [ReadOnly]
     Sprite _icon;
 
+    [ShowInInspector]
+    [ReadOnly]
     Vector3Int _position;
+    [ShowInInspector]
+    [ReadOnly]
     private bool _amphibious , _flying , _pioneer;
+    [ShowInInspector]
+    [ReadOnly]
     CreatureAbility ability;
 
     public Creature(CreatureData data , int cardID , Vector3Int position){

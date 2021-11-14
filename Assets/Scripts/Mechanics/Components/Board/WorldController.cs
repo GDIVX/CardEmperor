@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,9 +11,25 @@ public class WorldController : MonoBehaviour
     static WorldController _instance;
 
 
+    [TabGroup("Generation")]
     public WorldGenData worldGenData;
+    [TabGroup("Generation")]
     public Tilemap map;
     public WorldTile[,] world;
+
+
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Debug")]
+    Vector3 _Debug_mousePosition;
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Debug")]
+    Vector3Int _Debug_gridPosition;
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Debug")]
+    WorldTile _Debug_sampledTile;
 
 
 
@@ -97,8 +114,12 @@ public class WorldController : MonoBehaviour
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));
         Vector3Int gridPosition = map.WorldToCell(new Vector3(mousePosition.x , mousePosition.y , 0));
 
+        _Debug_mousePosition = mousePosition;
+        _Debug_gridPosition = gridPosition;
+
         if(map.HasTile(gridPosition)){
             WorldTile tile = world[gridPosition.x , gridPosition.y];
+            _Debug_sampledTile = tile;
             if(isLeftClick){
                 tile.OnLeftClick();
             }

@@ -208,6 +208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc402689774135469e3c8898f2826e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commonRarity: 0.5
-  uncommonRarity: 0.3
-  rareRarity: 0.19999999
+  commonRarity: 0.54999995
+  uncommonRarity: 0.15
+  rareRarity: 0.30000004

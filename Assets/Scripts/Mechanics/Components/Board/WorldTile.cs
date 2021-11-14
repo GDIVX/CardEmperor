@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,11 +9,15 @@ public class WorldTile : IClickable
 {
     public Vector2Int position{get => _position;}
     public TileFeature feature{get=>_feature; set => SetFeature(value);}
+    [ShowInInspector]
+    [ReadOnly]
     public int CreatureID = 0;
-    public int TownID = 0;
 
-
+    [ShowInInspector]
+    [ReadOnly]
     private Vector2Int _position;
+    [ShowInInspector]
+    [ReadOnly]
     private TileFeature _feature;
 
     public WorldTile(Vector2Int position , TileFeature feature){
@@ -133,6 +138,5 @@ public class WorldTile : IClickable
 public enum TileFeature{
     WATER , PLAINS, MARSH , MOUNTIAN , PEAK 
     ,FOREST, IRON , FISHES, LAYLINE , FIELD 
-    //TODO ADD features factory
 
 }
