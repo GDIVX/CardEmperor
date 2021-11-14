@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
-[CreateAssetMenu(menuName = "Card game/Definitions")]
+[CreateAssetMenu(menuName = "Game Data/Definitions")]
 public class Definitions : ScriptableObject
 {
     [SerializeField]
@@ -24,7 +25,10 @@ public class Definitions : ScriptableObject
 
 [System.Serializable]
 public class FeatureDefinition{
+    [BoxGroup("Feature")]
     public TileFeature feature;
+    [BoxGroup("Feature")]
     public TileFeature improveTo;
+    [BoxGroup("Mana")]
     public int Food , Industry , Magic, Knowledge;
 }

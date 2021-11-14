@@ -54,7 +54,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             return;
         }
         transform.GetChild(1).GetChild(0).
-            GetComponent<TextMeshProUGUI>().text = card.data.keyword;
+            GetComponent<TextMeshProUGUI>().text = card.data.cardType.ToString();
 
         transform.GetChild(3).GetComponent<Image>().sprite = card.data.image;
 

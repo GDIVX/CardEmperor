@@ -137,6 +137,6 @@ public class WorldTile : IClickable
 [System.Serializable]
 public enum TileFeature{
     WATER , PLAINS, MARSH , MOUNTIAN , PEAK 
-    ,FOREST, IRON , FISHES, LAYLINE , FIELD 
+    ,FOREST, IRON , FISH, LAYLINE , FIELD 
 
 }
