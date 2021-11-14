@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
   m_Name: Capital
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
+  cardName: Capital
+  cardType: 1
+  description: The heart of your civilization. If it falls to darkness, all is lost.
+  abilityScriptName: TownMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
-  cardName: Capital
-  keyword: Town
-  description: '<b>Town</b><br>If it falls, all is lost '
-  abilityScriptName: TownMaker
-  image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
+  Time: 0
   priority: 1
   creatureData:
-    hitpoint: 30
-    speed: 0
-    armor: 2
-    attack: 2
+    icon: {fileID: 21300000, guid: 892b9fd01b4846848b629ea9f6f37003, type: 3}
+    hitpoint: 10
+    speed: 3
+    armor: 1
+    attack: 1
     attackRange: 2
-    icon: {fileID: 21300000, guid: 4fd3bbc0244be2a4cabb4b32bc2f5985, type: 3}
+    abilityScriptName: CreatureAbility
     amphibious: 0
     flying: 0
-    pioneer: 1
-    abilityScriptName: 
+    pioneer: 0

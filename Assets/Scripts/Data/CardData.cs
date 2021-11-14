@@ -40,6 +40,11 @@ public class CardData : ScriptableObject
    [Range(0,50)]
    [GUIColor(0,0,1)]
    public int MagicPrice ;
+   [BoxGroup("Mana Cost")]
+   [LabelWidth(100)]
+   [Range(0,50)]
+   [GUIColor(1,0,1)]
+   public int Time ;
    [Range(0,1)]
    public float priority;
    public CreatureData creatureData;
@@ -60,6 +65,7 @@ public class CreatureData
    [BoxGroup("script")]
    [HideLabel]
    [LabelWidth(100)]
+   [HideInInlineEditors]
    public string abilityScriptName;
    [BoxGroup("Properties")]
    [LabelWidth(100)]

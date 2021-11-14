@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Light
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
-  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
-  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
-  - {fileID: 11400000, guid: ef5926643971afd4c844d0efe146d328, type: 2}
-  - {fileID: 11400000, guid: 698698dfc4d709c4e92dc6fbddcd2295, type: 2}
-  - {fileID: 11400000, guid: 698698dfc4d709c4e92dc6fbddcd2295, type: 2}
-  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
-  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
-  - {fileID: 11400000, guid: dd4154568a5bf6d4391924e608bfe44f, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
+  - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
+  - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
+  - {fileID: 0}
   capitalCardName: Capital

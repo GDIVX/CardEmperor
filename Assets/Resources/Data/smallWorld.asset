@@ -77,8 +77,8 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: efa0746e22137b84d80d07546f16f6ea, type: 2}
     overlay: {fileID: 21300000, guid: 5b345c4255b3c5c488c85df677703458, type: 3}
     feature: 7
-    coverage: 0.25
-    density: 0.7
+    coverage: 0.156
+    density: 0.4
     sparceness: 0.1
   - tile: {fileID: 11400000, guid: 2ce586f732854a9418012b73c4033288, type: 2}
     overlay: {fileID: 21300000, guid: 664c8c0516c50d042b4d27a91f73d0e7, type: 3}
