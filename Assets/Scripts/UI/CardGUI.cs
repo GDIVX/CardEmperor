@@ -61,6 +61,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
 
         transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
+        transform.GetChild(2).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
         transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.attack.ToString();
         transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.speed.ToString();
@@ -69,6 +70,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.foodPrice.ToString();
         transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.industryPrice.ToString();
         transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.MagicPrice.ToString();
+
 
         transform.SetParent(UIController.instance.handGUI.transform);
 

@@ -16,7 +16,11 @@ MonoBehaviour:
   cardName: Militia
   cardType: 0
   description: <b>Range 2</b>
-  keywords: []
+  keywords:
+  - value: 2
+    keyword: 0
+  - value: 3
+    keyword: 0
   abilityScriptName: CreatureMaker
   foodPrice: 2
   industryPrice: 0
