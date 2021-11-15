@@ -6,20 +6,24 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(menuName = "Game Data/Definitions")]
 public class Definitions : ScriptableObject
 {
-    [ShowInInspector]
+    [SerializeField]
     [TabGroup("Features")]
     List<FeatureDefinition> _FeatureDefinitions;
-    [TabGroup("Features")]
     Dictionary<TileFeature , FeatureDefinition> featuresRegestry = new Dictionary<TileFeature, FeatureDefinition>();
 
+    [SerializeField]
     [TabGroup("Keywords")]
-    [ShowInInspector]
+    List<KeywordDescription> _keywordDescriptions;
     Dictionary<KeywordDefinition.Keyword,string> keywordsTooltipTexts = new Dictionary<KeywordDefinition.Keyword, string>();
     public void Start()
     {
         foreach (var feature in _FeatureDefinitions)
         {
             featuresRegestry.Add(feature.feature , feature);
+        }
+        foreach (var desc in _keywordDescriptions)
+        {
+            keywordsTooltipTexts.Add(desc.keyword , desc.description);
         }
     }
 
@@ -50,6 +54,12 @@ public class FeatureDefinition{
     public float Food , Industry , Magic, Knowledge;
 }
 
+[System.Serializable]
+internal class KeywordDescription
+{
+    public KeywordDefinition.Keyword keyword;
+    public string description;
+}
 [System.Serializable]
 public class KeywordDefinition
 {

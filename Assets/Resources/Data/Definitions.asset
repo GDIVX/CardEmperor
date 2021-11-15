@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9675eb7d03c7d0c4db0b56b01a057a79, type: 3}
   m_Name: Definitions
   m_EditorClassIdentifier: 
+  _FeatureDefinitions: []
+  _keywordDescriptions:
+  - keyword: 0
+    description: The creature can attack enemies up to _X_ hexes away
