@@ -30,5 +30,5 @@ public class FeatureDefinition{
     [BoxGroup("Feature")]
     public TileFeature improveTo;
     [BoxGroup("Mana")]
-    public int Food , Industry , Magic, Knowledge;
+    public float Food , Industry , Magic, Knowledge;
 }

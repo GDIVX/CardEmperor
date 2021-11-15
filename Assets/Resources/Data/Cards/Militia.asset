@@ -29,7 +29,7 @@ MonoBehaviour:
     armor: 1
     attack: 1
     attackRange: 2
-    abilityScriptName: CreatureAbility
+    abilityScriptName: BasicAbility
     amphibious: 0
     flying: 0
     pioneer: 0

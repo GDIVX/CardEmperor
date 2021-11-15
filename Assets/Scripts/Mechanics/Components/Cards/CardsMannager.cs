@@ -42,6 +42,7 @@ public class CardsMannager : MonoBehaviour
 
 
         _drawPile = new Pile(GenerateDeck());
+        _drawPile.Shuffle();
         Card capitalCard = Card.BuildCard(deckData.capitalCardName , Player.Main.ID);
         _drawPile.Drop(capitalCard);
         GameManager.Instance.NotifyOnInitTask(true);

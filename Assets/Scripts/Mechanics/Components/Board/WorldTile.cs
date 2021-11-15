@@ -66,10 +66,10 @@ public class WorldTile : IClickable
     {
         var definition = GameManager.Instance.definitions.GetFeatureDefinition(feature);
         int[] res = new int[4];
-        res[0] = definition.Food;
-        res[1] = definition.Industry;
-        res[2] = definition.Magic;
-        res[3] = definition.Knowledge;
+        res[0] = Mathf.FloorToInt(definition.Food);
+        res[1] = Mathf.FloorToInt(definition.Industry);
+        res[2] = Mathf.FloorToInt(definition.Magic);
+        res[3] = Mathf.FloorToInt(definition.Knowledge);
 
         return res;
     }
