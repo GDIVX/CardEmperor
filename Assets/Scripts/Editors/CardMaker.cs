@@ -31,6 +31,9 @@ public class CardMaker : OdinEditorWindow
     [LabelWidth(100)]
     [TextArea]
     public string description;
+    [VerticalGroup("Data/Info")]
+    [LabelWidth(100)]
+    public KeywordDefinition[] keywords;
     [BoxGroup("Script")]
     [HideLabel]
     [LabelWidth(100)]
@@ -88,6 +91,7 @@ public class CardMaker : OdinEditorWindow
         data.image = image;
         data.cardName = cardName;
         data.description = description;
+        data.keywords = keywords;
         char[] charsToTrim = { 'c', ' ', '\'' , 's' , '.'};
         data.abilityScriptName = Path.GetFileName(abilityScript).Trim(charsToTrim);
         data.foodPrice = foodPrice;

@@ -16,6 +16,7 @@ MonoBehaviour:
   cardName: Capital
   cardType: 1
   description: The heart of your civilization. If it falls to darkness, all is lost.
+  keywords: []
   abilityScriptName: TownMaker
   foodPrice: 0
   industryPrice: 0
@@ -32,4 +33,4 @@ MonoBehaviour:
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 0
-    pioneer: 0
+    pioneer: 1

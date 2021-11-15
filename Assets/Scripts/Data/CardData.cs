@@ -21,6 +21,9 @@ public class CardData : ScriptableObject
    [LabelWidth(100)]
    [TextArea]
    public string description;
+   [VerticalGroup("Data/Info")]
+   [LabelWidth(100)]
+   public KeywordDefinition[] keywords;
    [BoxGroup("Script")]
    [HideLabel]
    [LabelWidth(100)]
