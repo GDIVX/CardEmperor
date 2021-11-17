@@ -15,8 +15,17 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
   cardName: Capital
   cardType: 1
-  description: The heart of your civilization. If it falls to darkness, all is lost.
-  keywords: []
+  description: 'The heart of your civilization. If it falls to darkness, all is lost.
+
+    <br>
+
+    <b>Range
+    2</b>'
+  keywords:
+  - value: 2
+    keyword: 0
+  - value: 0
+    keyword: 23
   abilityScriptName: TownMaker
   foodPrice: 0
   industryPrice: 0

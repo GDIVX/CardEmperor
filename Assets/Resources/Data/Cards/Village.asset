@@ -16,7 +16,11 @@ MonoBehaviour:
   cardName: Village
   cardType: 3
   description: Collect resources but don't expand territory.<br><b>Range 2</b>
-  keywords: []
+  keywords:
+  - value: 2
+    keyword: 0
+  - value: 0
+    keyword: 24
   abilityScriptName: VillageMaker
   foodPrice: 0
   industryPrice: 0

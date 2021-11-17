@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,6 +10,9 @@ public class HandGUI : MonoBehaviour
     public Stack<CardDisplayer> disabledCards{get{return _disabledCardsDisplayers;}}
     public List<CardDisplayer> cardDisplayers{get{return _cardDisplayers;}}
 
+    
+    
+
     [SerializeField]
     [OnValueChanged("RearrangeCards")]
     float spacing = 95f;
@@ -16,6 +20,7 @@ public class HandGUI : MonoBehaviour
     List<CardDisplayer> _cardDisplayers;
     Stack<CardDisplayer> _disabledCardsDisplayers;
     Tweener tweener;
+    
 
     DisplayScale displayScale;
 
@@ -27,10 +32,6 @@ public class HandGUI : MonoBehaviour
         tweener = GetComponent<Tweener>();
     }
 
-    void Start()
-    {
-        //tweener.MoveAwayFromOrigin();
-    }
 
     public void AddCard(Card card){
         if(card == null){

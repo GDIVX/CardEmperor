@@ -18,14 +18,14 @@ public class Tweener : MonoBehaviour
     Vector3 origin , originalScale;
     bool hasMovedAwayFromOrigin , inFocus;
 
-    [Button(ButtonSizes.Medium)]
-    [TabGroup("Move")]
 
     void Awake()
     {
         originalScale = transform.localScale;
         origin = transform.localPosition;
     }
+    [Button(ButtonSizes.Medium)]
+    [TabGroup("Move")]
     public void Move(){
         if(inFocus ) {return;}
 

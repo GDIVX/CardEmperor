@@ -12,16 +12,17 @@ public class GameManager : MonoBehaviour
 
     public Player CurrentTurnOfPlayer{get{ return _currentTurnOfPlayer;}}
     public Definitions definitions;
+    public TurnSequenceMannager turnSequenceMannager {get{ return GetTurnMannager();}}
+
+
     Player _currentTurnOfPlayer;
+    TurnSequenceMannager _turnMannager;
     Action<Player> turnEndDelegate;
     Action<Player> turnStartDelegate;
-    int initTasksLeft;
-    bool ready = false;
     
     List<Player> turnOrder = new List<Player>();
 
-        private void Awake() {
-            NotifyOnInitTask(false);
+    private void Awake() {
         definitions.Start();
         if(_instance != null && _instance != this){
             Destroy(this.gameObject);
@@ -30,19 +31,17 @@ public class GameManager : MonoBehaviour
         else{
             _instance = this;
         }
+
+
+
         turnOrder.Add(new Player(true));
         turnOrder.Add(new Player());
         _currentTurnOfPlayer = Player.Main;
-            NotifyOnInitTask(true);
     }
 
-    void Update()
+    void Start()
     {
-        if(!ready){
-            return;
-        }
-        StartTurn(turnOrder[0]);
-        ready = false;
+        StartTurn(Player.Main);
     }
 
     public void EndTurnButton(){
@@ -69,10 +68,6 @@ public class GameManager : MonoBehaviour
         StartTurn(turnOrder[turnIndex]);
     }
 
-    public void NotifyOnInitTask(bool isDone){
-        initTasksLeft = isDone ? initTasksLeft - 1 : initTasksLeft + 1;
-        ready = initTasksLeft <= 0;
-    }
 
     public void RegisterToTurnEnd(Action<Player> action){
         turnEndDelegate += action;
@@ -95,5 +90,12 @@ public class GameManager : MonoBehaviour
             //TODO add AI :P 
             EndTurn();
         }
+    }
+    private TurnSequenceMannager GetTurnMannager()
+    {
+        if(_turnMannager == null){
+            _turnMannager = new TurnSequenceMannager(); 
+        }
+        return _turnMannager;
     }
 }

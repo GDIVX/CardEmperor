@@ -6,7 +6,15 @@ using UnityEngine.EventSystems;
 public class TooltipTrigger : MonoBehaviour,IPointerEnterHandler , IPointerExitHandler 
 {
     public List<string> headers = new List<string>(), contents = new List<string>();
+    public RectTransform anchor;
+    public string containerGameObjectName;
+    TooltipContainer container;
     static LTDescr delay;
+
+    void Awake()
+    {
+        container = GameObject.Find(containerGameObjectName).GetComponent<TooltipContainer>();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -18,17 +26,17 @@ public class TooltipTrigger : MonoBehaviour,IPointerEnterHandler , IPointerExitH
             {
                 header = headers.Count > 0 ? headers[i] : null;
                 content = contents.Count > 0 ? contents[i] : null;
-                TooltipSystem.Show(header,content);   
+                TooltipSystem.Show(container.transform ,header,content);   
                 
             }
         });
-
+        container.SetPosition(anchor);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         LeanTween.cancel(delay.uniqueId);
-        TooltipSystem.Hide();
+        TooltipSystem.Hide(container.transform);
     }
 
     public void SetTextFromCard(KeywordDefinition[] keywords){

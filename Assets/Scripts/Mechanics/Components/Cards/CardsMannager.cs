@@ -24,7 +24,6 @@ public class CardsMannager : MonoBehaviour
     Pile _exhaustPile;
 
     private void Awake() {
-        GameManager.Instance.NotifyOnInitTask(false);
         if(_instance != null && _instance != this){
             Destroy(this.gameObject);
         }
@@ -45,7 +44,6 @@ public class CardsMannager : MonoBehaviour
         _drawPile.Shuffle();
         Card capitalCard = Card.BuildCard(deckData.capitalCardName , Player.Main.ID);
         _drawPile.Drop(capitalCard);
-        GameManager.Instance.NotifyOnInitTask(true);
     }
 
 

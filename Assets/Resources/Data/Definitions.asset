@@ -76,3 +76,17 @@ MonoBehaviour:
   _keywordDescriptions:
   - keyword: 0
     description: The creature can attack enemies up to _X_ hexes away
+  - keyword: 24
+    description: Collect resources, but dose not push borders.
+  - keyword: 23
+    description: Collect resources and push borders around. itself.
+  - keyword: 25
+    description: Push borders around itself in a large area.
+  - keyword: 1
+    description: + _X_ Attack dices to a creature. Reduced by 1 until each turn.
+      Removed when 0.
+  - keyword: 2
+    description: + _X_ Armor dices to a creature. Reduced by 1 until each turn. Removed
+      when 0.
+  - keyword: 3
+    description: + _X_ to a creature hitpoints.
