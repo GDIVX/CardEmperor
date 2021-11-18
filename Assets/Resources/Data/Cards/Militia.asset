@@ -20,7 +20,7 @@ MonoBehaviour:
   - value: 2
     keyword: 0
   abilityScriptName: CreatureMaker
-  foodPrice: 2
+  foodPrice: 1
   industryPrice: 0
   MagicPrice: 0
   Time: 0
