@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI food,ind,magic, know;
 
     public HandGUI handGUI;
+    public ClockUI clockUI;
 
 
     void Awake()
@@ -21,6 +22,9 @@ public class UIController : MonoBehaviour
 
         handGUI = GameObject.FindObjectOfType<HandGUI>();
         if(handGUI == null){Debug.LogError("can't find HandGUI script");}
+
+        clockUI = GameObject.FindObjectOfType<ClockUI>();
+        if(handGUI == null){Debug.LogError("can't find ClockUI script");}
     }
 
     void Start()

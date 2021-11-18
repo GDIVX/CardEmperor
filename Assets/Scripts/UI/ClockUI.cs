@@ -31,6 +31,8 @@ public class ClockUI : MonoBehaviour
         _suns = GetChildren(1);
         _indicator = transform.GetChild(2).gameObject;
         _eventIconsContainer = transform.GetChild(0);
+
+        Reset();
     }
 
     private Transform[] GetChildren(int index)

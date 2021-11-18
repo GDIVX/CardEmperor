@@ -68,7 +68,7 @@ public class Creature: IClickable
             ability = System.Activator.CreateInstance(System.Type.GetType(data.abilityScriptName), cardID) as CreatureAbility;
         }
 
-        GameManager.Instance.RegisterToTurnStart(OnTurnStart);
+        GameManager.Instance.turnSequenceMannager.OnTurnStart += OnTurnStart;
     }
 
     public void Kill(){
@@ -163,8 +163,8 @@ public class Creature: IClickable
             }
     }
 
-    void OnTurnStart(Player player){
-        if(player == this.Player)
+    void OnTurnStart(Turn turn){
+        if(turn.player == this.Player)
         {
             _movement = speed;
         }

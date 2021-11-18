@@ -35,6 +35,7 @@ public class Player
         knowledge = new Mana(ManaType.KNOWLEDGE);
 
 
+
     }
 
     public static Player GetPlayer(int ID){
@@ -47,6 +48,26 @@ public class Player
 
     public void OnTurnStart()
     {
+        // string deb = turn == null ? "Skip Turn" : (turn.player.IsMain() ? "Player Turn" : "Rival Turn");
+        // Debug.Log(deb);
+
+        if(IsMain()){
+            StartPlayerTurn();
+        }
+        else{
+            StartRivalTurn();
+        }
+
+    }
+
+    private void StartRivalTurn()
+    {
+        Debug.Log("Rival Turn");
+        GameManager.Instance.turnSequenceMannager.EndTurn();
+    }
+
+    private void StartPlayerTurn()
+    {
         foodPoints.SetValue(foodPoints.income);
         industryPoints.SetValue(industryPoints.income);
         magicPoints.SetValue(magicPoints.income);
@@ -54,8 +75,18 @@ public class Player
     }
 
     public void OnTurnEnd(){
-        foodPoints.SetValue(0);
-        industryPoints.SetValue(0);
-        magicPoints.SetValue(0);    
+        if(IsMain()){
+            foodPoints.SetValue(0);
+            industryPoints.SetValue(0);
+            magicPoints.SetValue(0);    
+        }
+        else{
+            GameManager.Instance.turnSequenceMannager.NextTurn();
+        }
+    }
+
+    public override string ToString()
+    {
+        return IsMain()? "Main Player" : "Rival Player";
     }
 }

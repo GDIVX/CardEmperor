@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,17 +11,13 @@ public class GameManager : MonoBehaviour
     public static IClickable CurrentSelected;
     static GameManager _instance;
 
-    public Player CurrentTurnOfPlayer{get{ return _currentTurnOfPlayer;}}
+    public Player CurrentTurnOfPlayer{get{ return turnSequenceMannager.currentTurn.player;}}
     public Definitions definitions;
     public TurnSequenceMannager turnSequenceMannager {get{ return GetTurnMannager();}}
 
-
-    Player _currentTurnOfPlayer;
+    [ShowInInspector]
     TurnSequenceMannager _turnMannager;
-    Action<Player> turnEndDelegate;
-    Action<Player> turnStartDelegate;
-    
-    List<Player> turnOrder = new List<Player>();
+
 
     private void Awake() {
         definitions.Start();
@@ -32,65 +29,22 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
 
-
-
-        turnOrder.Add(new Player(true));
-        turnOrder.Add(new Player());
-        _currentTurnOfPlayer = Player.Main;
+        //Create players
+        new Player(true);
+        new Player(false);
     }
 
     void Start()
     {
-        StartTurn(Player.Main);
+        turnSequenceMannager.StartNewRound();
     }
 
     public void EndTurnButton(){
+            turnSequenceMannager.NextTurn();
         if(CurrentTurnOfPlayer.IsMain()){
-            EndTurn();
         }
     }
 
-    public void EndTurn()
-    {
-        int turnIndex = turnOrder.IndexOf(CurrentTurnOfPlayer);
-        if(turnIndex >= turnOrder.Count-1){
-            turnIndex = 0;
-        }
-        else{
-            turnIndex++;
-        }
-
-        turnEndDelegate?.Invoke(CurrentTurnOfPlayer);
-        CurrentTurnOfPlayer.OnTurnEnd();
-
-        //TODO check if it is safe to pass the turn
-
-        StartTurn(turnOrder[turnIndex]);
-    }
-
-
-    public void RegisterToTurnEnd(Action<Player> action){
-        turnEndDelegate += action;
-    }
-    public void RegisterToTurnStart(Action<Player> action){
-        turnStartDelegate += action;
-    }
-
-    private void StartTurn(Player player)
-    {
-        _currentTurnOfPlayer = player;
-        turnStartDelegate?.Invoke(player);
-        player.OnTurnStart();
-            Debug.Log("Turn Start");
-        if(player.IsMain()){
-            Debug.Log("Your Turn");
-        }
-        else{
-            Debug.Log("Enemy");
-            //TODO add AI :P 
-            EndTurn();
-        }
-    }
     private TurnSequenceMannager GetTurnMannager()
     {
         if(_turnMannager == null){
