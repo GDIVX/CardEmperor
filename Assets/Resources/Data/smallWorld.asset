@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: smallWorld
   m_EditorClassIdentifier: 
   seed: 0
-  size: {x: 23, y: 15}
+  size: {x: 15, y: 10}
   offset: {x: 0, y: 0}
   normalizeMode: 0
   scale: 25
@@ -23,8 +23,6 @@ MonoBehaviour:
   tileGenDefinition:
   - maxhight: 0.3
     feature: 0
-  - maxhight: 0.4
-    feature: 2
   - maxhight: 0.7
     feature: 1
   - maxhight: 0.8
@@ -32,64 +30,58 @@ MonoBehaviour:
   - maxhight: 1
     feature: 4
   tileFeaturesDefinitions:
-  - tile: {fileID: 11400000, guid: efa0746e22137b84d80d07546f16f6ea, type: 2}
+  - tile: {fileID: 11400000, guid: f520a133fecc9d94ea48be0246552503, type: 2}
     overlay: {fileID: 0}
     feature: 0
     coverage: 0
     density: 0
     sparceness: 0
-  - tile: {fileID: 11400000, guid: 5e91353867c143f46b86e42d8c6b9c47, type: 2}
+  - tile: {fileID: 11400000, guid: 2bb7ad77f08365a48a3b434f23ff85fb, type: 2}
     overlay: {fileID: 0}
     feature: 1
     coverage: 0
     density: 1
     sparceness: 0
-  - tile: {fileID: 11400000, guid: 89372a8eda8c78e4ab9778b277dd611e, type: 2}
-    overlay: {fileID: 0}
-    feature: 2
-    coverage: 0
-    density: 0
-    sparceness: 0
-  - tile: {fileID: 11400000, guid: 45e46da3af3a9b942bfa1c16821a28a0, type: 2}
+  - tile: {fileID: 11400000, guid: e38cd905be700a741803c8fce19f1381, type: 2}
     overlay: {fileID: 0}
     feature: 3
     coverage: 0
     density: 0
     sparceness: 0
-  - tile: {fileID: 11400000, guid: 2ce586f732854a9418012b73c4033288, type: 2}
+  - tile: {fileID: 11400000, guid: 2e2ec2d946c539849b9ac311c9980234, type: 2}
     overlay: {fileID: 0}
     feature: 4
     coverage: 0
     density: 0
     sparceness: 0
-  - tile: {fileID: 11400000, guid: 89372a8eda8c78e4ab9778b277dd611e, type: 2}
+  - tile: {fileID: 11400000, guid: 2bb7ad77f08365a48a3b434f23ff85fb, type: 2}
     overlay: {fileID: 21300000, guid: 6f46b4312efb5b044bf0d02b485d1062, type: 3}
     feature: 5
     coverage: 0.25
     density: 0.8
     sparceness: 0.1
-  - tile: {fileID: 11400000, guid: 45e46da3af3a9b942bfa1c16821a28a0, type: 2}
+  - tile: {fileID: 11400000, guid: e38cd905be700a741803c8fce19f1381, type: 2}
     overlay: {fileID: 21300000, guid: 93285fac35f14dd46986e600f4c2585d, type: 3}
     feature: 6
     coverage: 0.3
     density: -0.2
     sparceness: 0
-  - tile: {fileID: 11400000, guid: efa0746e22137b84d80d07546f16f6ea, type: 2}
+  - tile: {fileID: 11400000, guid: f520a133fecc9d94ea48be0246552503, type: 2}
     overlay: {fileID: 21300000, guid: 5b345c4255b3c5c488c85df677703458, type: 3}
     feature: 7
     coverage: 0.156
     density: 0.4
     sparceness: 0.1
-  - tile: {fileID: 11400000, guid: 2ce586f732854a9418012b73c4033288, type: 2}
+  - tile: {fileID: 11400000, guid: 2e2ec2d946c539849b9ac311c9980234, type: 2}
     overlay: {fileID: 21300000, guid: 664c8c0516c50d042b4d27a91f73d0e7, type: 3}
     feature: 8
     coverage: 0.25
     density: -0.25
     sparceness: -0.1
-  - tile: {fileID: 11400000, guid: b86726698d5846847847e4c0c18fb366, type: 2}
+  - tile: {fileID: 11400000, guid: a5e274457a7deae449fe7ba79443e87f, type: 2}
     overlay: {fileID: 0}
     feature: 9
     coverage: 0.05
     density: 0.8
     sparceness: 0.1
-  teritoryTile: {fileID: 11400000, guid: e27b328bec2ec564495383e5378f6ce6, type: 2}
+  teritoryTile: {fileID: 11400000, guid: 4a2c70e161e85ae478a35a030d8582d7, type: 2}
