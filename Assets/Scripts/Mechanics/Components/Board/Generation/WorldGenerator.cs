@@ -66,6 +66,18 @@ public static class WorldGenerator
     private static void AddManaNodes( WorldGenData data)
     {
         List<WorldTile> landTiles = new List<WorldTile>();
+
+        //save the center for the capital
+        int hX = Mathf.RoundToInt(data.size.x / 2);
+        int hY = Mathf.RoundToInt(data.size.y / 2);
+        WorldTile savedTile = WorldController.Instance.world[hX,hY];
+        landTiles.Remove(savedTile);
+        foreach (var t in savedTile.GetNeighbors())
+        {
+            landTiles.Remove(t);
+        }
+
+
         //Create a list of walkable tiles
         for (var x = 0; x < data.size.x; x++)
         {

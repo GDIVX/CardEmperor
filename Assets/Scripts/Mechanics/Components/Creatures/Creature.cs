@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Vector3 = UnityEngine.Vector3;
 
 [System.Serializable]
 public class Creature: IClickable
@@ -69,6 +70,23 @@ public class Creature: IClickable
         }
 
         GameManager.Instance.turnSequenceMannager.OnTurnStart += OnTurnStart;
+    }
+
+    public static Creature BuildCreatureCardless(string creatureCardName , int playerID , Vector3Int position){
+        Card tempCard = Card.BuildCard(creatureCardName , playerID);
+        return new Creature(tempCard.data.creatureData , tempCard.ID , position);
+    }
+
+    public static Creature BuildAndSpawnCardless(string creatureCardName , int playerID , Vector3Int position){
+        Creature creature = BuildCreatureCardless(creatureCardName , playerID , position);
+
+        var worldPosition =  WorldController.Instance.map.GetCellCenterLocal(position);
+        GameObject _gameObject = CreatureDisplayer.Create(creature , worldPosition);
+        CreatureDisplayer displayer = _gameObject.GetComponent<CreatureDisplayer>();
+
+        displayer.SetDisplay(true);
+
+        return creature;
     }
 
     public void Kill(){

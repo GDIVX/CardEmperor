@@ -60,6 +60,10 @@ public class WorldController : MonoBehaviour
     void Start()
     {
         WorldGenerator.GenerateWorld(worldGenData , map);
+        
+        int x = Mathf.RoundToInt(worldGenData.size.x / 2);
+        int y = Mathf.RoundToInt(worldGenData.size.y / 2);
+        Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
     }
 
     private void Update() {
