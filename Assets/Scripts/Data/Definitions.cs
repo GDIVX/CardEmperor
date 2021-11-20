@@ -48,8 +48,7 @@ public class Definitions : ScriptableObject
 public class FeatureDefinition{
     [BoxGroup("Feature")]
     public TileFeature feature;
-    [BoxGroup("Feature")]
-    public TileFeature improveTo;
+
     [BoxGroup("Mana")]
     public float Food , Industry , Magic, Knowledge;
 }

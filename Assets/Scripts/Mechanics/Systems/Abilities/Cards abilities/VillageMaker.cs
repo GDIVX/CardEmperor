@@ -7,7 +7,6 @@ public class VillageMaker : CreatureMaker
     public static Dictionary<Vector3Int , Creature> villages = new Dictionary<Vector3Int, Creature>();
     public override void Activate(Vector3Int targetPosition)
     {
-        amphibious = true;
         base.Activate(targetPosition);
 
         WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];

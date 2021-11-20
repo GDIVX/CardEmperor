@@ -6,7 +6,6 @@ public class CreatureMaker : CardAbility
 {
     public int range;
     public bool pioneer = false;
-    public bool amphibious = false;
     public bool flying = false;
 
     protected Creature creature;
@@ -16,10 +15,7 @@ public class CreatureMaker : CardAbility
         
         if(WorldController.Instance.IsTileExist(targetPosition)){
             WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];
-            if((tile.feature == TileFeature.WATER && !amphibious) || tile.CreatureID != 0){
-                return;
-            }
-            if(WorldController.Instance.IsInTerritory(targetPosition) == false && !pioneer){
+            if((!tile.walkable && !flying) || tile.CreatureID != 0){
                 return;
             }
         }

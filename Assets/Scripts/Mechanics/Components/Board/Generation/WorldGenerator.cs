@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public static class WorldGenerator 
 {
-    public static void GenerateWorld(WorldGenData data , Tilemap map ){
+    public static void GenerateWorld(WorldGenData data , Tilemap map){
         
         int seed = GenerateSeed(data);
 
@@ -24,114 +24,15 @@ public static class WorldGenerator
 
         if(WorldController.Instance.world == null){
             WorldController.Instance.world = GenerateWorldData(noiseMap , data);
-            WorldController.Instance.world = UpdateWorldData(WorldController.Instance.world , data);
+            //WorldController.Instance.world = UpdateWorldData(WorldController.Instance.world , data);
         }
         
-        UpdateWorldVisuals(new RectInt(0 , 0 , data.size.x ,data.size.y) , data , map);
+        AddManaNodes(data);
+
+        UpdateWorldVisuals(new RectInt(0 , 0 , data.size.x ,data.size.y) , data , map );
 
     }
 
-    private static WorldTile[,] UpdateWorldData(WorldTile[,] world, WorldGenData data)
-    {
-        TileFeature[,] map = new TileFeature[data.size.x , data.size.y];
-        
-
-        for (int x = 0; x < data.size.x; x++)
-        {
-            for (int y = 0; y < data.size.y; y++)
-            {
-                TileFeature feature = world[x,y].feature;
-                TileFeature improved = GameManager.Instance.definitions.GetFeatureDefinition(feature).improveTo;
-                //Generate Forest
-                TileGenFeaturesDefinition definition = null;
-
-                foreach (var def in data.tileFeaturesDefinitions)
-                {
-                    if(def.feature == improved){
-                        definition = def;
-                        break;
-                    }
-                }
-
-                float chance = definition.coverage / 2;
-                bool roll = Random.value <= chance;
-                
-                if(roll){
-                    map[x,y] = improved;
-                }
-                else{
-                    map[x,y] = feature;
-                }
-            }
-        }    
-        return UpdateWorldData(world , data , map);
-    }
-
-    private static WorldTile[,] UpdateWorldData(WorldTile[,] world, WorldGenData data, TileFeature[,] map)
-    {
-        TileFeature[,] res = map;
-        for (int x = 0; x < map.GetLength(0); x++)
-        {
-            for (int y = 0; y < map.GetLength(1); y++)
-            {
-                TileFeature feature = world[x,y].feature;
-                TileFeature improved = GameManager.Instance.definitions.GetFeatureDefinition(feature).improveTo;
-                TileGenFeaturesDefinition definition = null;
-
-                foreach (var def in data.tileFeaturesDefinitions)
-                {
-                    if(def.feature == feature){
-                        definition = def;
-                        break;
-                    }
-                }
-
-                TileGenFeaturesDefinition improvedDefintion = null;
-                foreach (var def in data.tileFeaturesDefinitions)
-                {
-                    if(def.feature == improved){
-                        improvedDefintion = def;
-                        break;
-                    }
-                }
-                res[x,y] = HandleFeaturePlacement(definition, improvedDefintion , map , x , y );
-            }
-        } 
-
-        for (int x = 0; x < map.GetLength(0); x++)
-        {
-            for (int y = 0; y < map.GetLength(1); y++)
-            {
-                world[x,y].feature = map[x,y];
-            }
-        } 
-
-        return world;
-    }
-
-    static TileFeature HandleFeaturePlacement(TileGenFeaturesDefinition definition, TileGenFeaturesDefinition ImproveDefinition , TileFeature[,] map, int x , int y ){
-        float chance = ImproveDefinition.coverage / 2;
-        TileFeature improved = ImproveDefinition.feature;
-
-        WorldTile[] neighbors = WorldController.Instance.world[x,y].GetNeighbors();
-        foreach (var n in neighbors)
-        {
-            if(map[n.position.x , n.position.y] == improved){
-                chance += ImproveDefinition.density;
-                break;
-            }
-        }
-        chance -= ImproveDefinition.sparceness;
-
-
-        bool roll = Random.value <= chance;
-        if(roll){
-            return improved;
-        }
-        else{
-            return definition.feature;
-        }
-    }
 
     private static int GenerateSeed(WorldGenData data){
         return data.seed == 0 ? Random.Range(-9999,9999) : data.seed;
@@ -140,7 +41,6 @@ public static class WorldGenerator
     public static WorldTile[,] GenerateWorldData(float[,] noiseMap, WorldGenData data){
 
         WorldTile[,] worldData = new WorldTile[data.size.x , data.size.y];
-        WorldController.Instance.overlays = new GameObject[data.size.x , data.size.y];
 
         for (int x = 0; x < data.size.x; x++)
         {
@@ -152,10 +52,10 @@ public static class WorldGenerator
                 {
                     if(hight <= definitions[i].maxhight){
                         TileFeature feature = definitions[i].feature;
-                        worldData[x,y] = new WorldTile(new Vector2Int(x,y) , feature);
+                        worldData[x,y] = new WorldTile(new Vector2Int(x,y) , feature , definitions[i].walkable);
                         break;
                     }
-                    worldData[x,y] = new WorldTile(new Vector2Int(x,y) , definitions[definitions.Length-1].feature);
+                    worldData[x,y] = new WorldTile(new Vector2Int(x,y) , definitions[definitions.Length-1].feature , definitions[definitions.Length-1].walkable);
                 }
             }
         }
@@ -163,22 +63,75 @@ public static class WorldGenerator
         return worldData;
     }
 
-    public static void UpdateWorldVisuals(RectInt area , WorldGenData data , Tilemap map){
+    private static void AddManaNodes( WorldGenData data)
+    {
+        List<WorldTile> landTiles = new List<WorldTile>();
+        //Create a list of walkable tiles
+        for (var x = 0; x < data.size.x; x++)
+        {
+            for (var y = 0; y < data.size.y; y++)
+            {
+                if(WorldController.Instance.world[x,y].walkable){
+                    landTiles.Add(WorldController.Instance.world[x,y]);
+                }
+            }
+        }
+
+        landTiles = GenerateNodesOfType(data.farms , data.nodesGenDefinitions[0] , landTiles);
+        landTiles = GenerateNodesOfType(data.forests , data.nodesGenDefinitions[1], landTiles);
+        GenerateNodesOfType(data.orbs  , data.nodesGenDefinitions[2], landTiles);
+    }
+
+    private static List<WorldTile> GenerateNodesOfType(int amount , NodesGenDefinition nodesGenDefinition, List<WorldTile> landTiles)
+    {
+        while(amount > 0){
+            int rand = Mathf.RoundToInt(Random.Range(0 , landTiles.Count));
+            WorldTile tile = landTiles[rand];
+
+            tile.feature = nodesGenDefinition.heartFeature;
+            tile.walkable = false;
+            landTiles.Remove(tile);
+            foreach (var n in tile.GetNeighbors())
+            {
+                n.feature = nodesGenDefinition.nodesFeature;
+                landTiles.Remove(n);
+            }
+            amount--;
+        }
+
+        return landTiles;
+    }
+
+    public static void UpdateWorldVisuals(RectInt area , WorldGenData data , Tilemap map ){
         
+
+        TileGenDefinition[] definitions = data.tileGenDefinition;
+        NodesGenDefinition[] nodesDef = data.nodesGenDefinitions;
+
         for(int x = area.xMin ; x < area.xMax ; x++){
             for(int y = area.yMin ; y < area.yMax ; y++ ){
 
                 TileFeature feature = WorldController.Instance.world[x,y].feature;
                 TileBase tile = null;
-                Sprite overlay = null;
 
                 //Loop trough all definitions to find the one that match
-                TileGenFeaturesDefinition[] definitions = data.tileFeaturesDefinitions;
-                foreach(TileGenFeaturesDefinition def in definitions){
+                foreach(TileGenDefinition def in definitions){
                     if(feature == def.feature){
                         tile = def.tile;
-                        overlay = def.overlay;
                         break;
+                    }
+                }
+                if(tile == null){
+                    foreach (var def in nodesDef)
+                    {
+                        if(feature == def.heartFeature){
+                            tile = def.heartTile;
+                            break;
+                        }
+                        if(feature == def.nodesFeature){
+                            tile = def.nodesTile;
+                            break;
+                        }
                     }
                 }
 
@@ -186,39 +139,7 @@ public static class WorldGenerator
 
                 //update tilebase
                 map.SetTile(new Vector3Int(x,y,0) , tile);
-                //update overlay
-
-
-                if(overlay == null){
-
-
-                    GameObject currentOverlay = WorldController.Instance.overlays[x,y];
-                    if(currentOverlay != null) {
-                        currentOverlay.SetActive(false);
-                        WorldController.Instance.disabledOverlays.Push(currentOverlay);
-                        WorldController.Instance.overlays[x,y] = null;
-                    }
-                }
-                else{
-                    GameObject model;
-                    Vector3 worldPosition = map.GetCellCenterWorld(new Vector3Int(x,y,0));
-                    worldPosition += new Vector3(-0.021f , 0.221f , 0);
-                    if(WorldController.Instance.disabledOverlays.Count > 0){
-                        model = WorldController.Instance.disabledOverlays.Pop();
-                        model.transform.position = worldPosition;
-                    }
-                    else{
-                        model = new GameObject();
-                        model.AddComponent<SpriteRenderer>();
-                        model = GameObject.Instantiate(model , worldPosition , Quaternion.identity);
-                    }
-
-                    SpriteRenderer renderer = model.GetComponent<SpriteRenderer>();
-                    renderer.sprite = overlay;
-                    WorldController.Instance.overlays[x,y] = model;
-                    model.SetActive(true);
-                }
             }
-        }
+        }     
     }
 }

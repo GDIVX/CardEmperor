@@ -7,10 +7,10 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(fileName = "WorldGenData", menuName = "World/WorldGenData", order = 0)]
 [InlineEditor]
 public class WorldGenData : ScriptableObject {
-    [TabGroup("Noise")]
+    [TabGroup("Base")]
     public int seed = 0;
-    [TabGroup("Noise")]
-    public Vector2Int size;
+    [TabGroup("Base")]
+    public Vector2Int size , Padding;
     [TabGroup("Noise")]
     public Vector2 offset;
     [TabGroup("Noise")]
@@ -28,34 +28,29 @@ public class WorldGenData : ScriptableObject {
 
 [TabGroup("Tiles Definitions")]
     public TileGenDefinition[] tileGenDefinition;
-[TabGroup("Tiles Definitions")]
-    public TileGenFeaturesDefinition[] tileFeaturesDefinitions;
-[TabGroup("Tiles Definitions")]
+[TabGroup("Mana Nodes")]
+    public NodesGenDefinition[] nodesGenDefinitions;
 [PreviewField]
     public TileBase teritoryTile;
+
+    [TabGroup("Mana Nodes")]
+    public int farms , forests , orbs;
 }
 
 [System.Serializable]
 public class TileGenDefinition{
-    [Range(0,1)]
-    public float maxhight;
-        public TileFeature feature;
-}
-[System.Serializable]
-public class TileGenFeaturesDefinition{
-    [VerticalGroup("Tile")]
-    [PreviewField]
     public TileBase tile;
-    [VerticalGroup("Tile")]
-    [PreviewField]
-    public Sprite overlay;
-    [VerticalGroup("Tile")]
+    public float maxhight;
     public TileFeature feature;
-
-        [Range(0,1)]
-    public float coverage;
-    [Range(-1,1)]
-    public float density;
-    [Range(-1,1)]
-    public float sparceness;
+    public bool walkable;
 }
+
+[System.Serializable]
+public class NodesGenDefinition{
+    public TileBase heartTile;
+    public TileBase nodesTile;
+    public int foodOutput , industryOutput , magicOutput;
+    public TileFeature heartFeature , nodesFeature;
+}
+
+

@@ -8,10 +8,12 @@ using UnityEngine;
 public class WorldTile : IClickable 
 {
     public Vector2Int position{get => _position;}
+    public Vector3Int CubePosition{get => _cubePosition;}
     public TileFeature feature{get=>_feature; set => SetFeature(value);}
     [ShowInInspector]
     [ReadOnly]
     public int CreatureID = 0;
+    public bool walkable;
 
     [ShowInInspector]
     [ReadOnly]
@@ -19,14 +21,23 @@ public class WorldTile : IClickable
     [ShowInInspector]
     [ReadOnly]
     private TileFeature _feature;
+    [ShowInInspector]
+    [ReadOnly]
+    Vector3Int _cubePosition;
 
-    public WorldTile(Vector2Int position , TileFeature feature){
+    public WorldTile(Vector2Int position , TileFeature feature , bool walkable = true){
         _position = position;
+        _cubePosition = WorldController.CordsToCube((Vector3Int)position);
+        this.walkable = walkable;
         SetFeature(feature);
+
+
     }
     public WorldTile[] GetNeighbors()
     {
-        return GetTilesInRange(1);
+        List<WorldTile> res = new List<WorldTile>(GetTilesInRange(1));
+        res.Remove(this);
+        return res.ToArray();
     }
 
 
@@ -34,7 +45,6 @@ public class WorldTile : IClickable
 
         List<WorldTile> res = new List<WorldTile>();
         //range++;
-        Vector3Int cubePosition = WorldController.CordsToCube((Vector3Int)position);
         
         for (int x = -range; x <= range; x++)
         {
@@ -44,8 +54,10 @@ public class WorldTile : IClickable
             for (var y = start; y <= end; y++)
             {
                 int z = -x-y;
+
                 Vector3Int sampledPosition = WorldController.CubeToCords(new Vector3Int(x,y,z));
-                sampledPosition += (Vector3Int)position;
+                sampledPosition = WorldController.CubeToCords(sampledPosition + CubePosition);
+                
                 if(WorldController.Instance.IsTileExist(sampledPosition)){
                     WorldTile tile = WorldController.Instance.world[sampledPosition.x , sampledPosition.y];
                     res.Add(tile);
@@ -136,7 +148,7 @@ public class WorldTile : IClickable
 
 [System.Serializable]
 public enum TileFeature{
-    WATER , PLAINS, MARSH , MOUNTIAN , PEAK 
-    ,FOREST, IRON , FISH, LAYLINE , FIELD 
+    WATER , PLAINS,MOUNTIAN  
+    ,FOREST, FOREST_HEART , FARM, FIELD , ORB_HEART , ORBS
 
 }

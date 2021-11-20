@@ -1,9 +1,12 @@
-﻿using System;
+﻿using System.Numerics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class WorldController : MonoBehaviour
 {
@@ -33,10 +36,6 @@ public class WorldController : MonoBehaviour
 
 
 
-    //TODO if moving to multiplayer, this needs to go to player. Right now we leave it here for ease of access.
-    public GameObject[,] overlays;
-    public Stack<GameObject> disabledOverlays = new Stack<GameObject>();
-
     public GameObject CreatureTemplate;
 
     internal Vector3Int GetRandomTile()
@@ -46,8 +45,6 @@ public class WorldController : MonoBehaviour
 
         return new Vector3Int(x,y,0);
     }
-
-    private bool[,] territory;
 
     private void Awake() {
         if(_instance != null && _instance != this){
@@ -63,7 +60,6 @@ public class WorldController : MonoBehaviour
     void Start()
     {
         WorldGenerator.GenerateWorld(worldGenData , map);
-        territory = new bool[worldGenData.size.x , worldGenData.size.y];
     }
 
     private void Update() {
@@ -75,13 +71,6 @@ public class WorldController : MonoBehaviour
         }
     }
 
-    internal void AddTerritory(WorldTile tile)
-    {
-
-        Vector2Int position = tile.position;
-        territory[position.x , position.y] = true;
-        UpdateTerritory();
-    }
 
     internal void AddWorkingTile(WorldTile tile)
     {
@@ -90,22 +79,6 @@ public class WorldController : MonoBehaviour
         Player.Main.industryPoints.income += income[1];
         Player.Main.magicPoints.income += income[2];
         Player.Main.knowledge.income += income[3];
-    }
-    private void UpdateTerritory()
-    {
-        for (var x = 0; x < territory.GetLength(0); x++)
-        {
-            for (var y = 0; y < territory.GetLength(1); y++)
-            {
-                if(territory[x,y]){
-                    map.SetTile(new Vector3Int(x,y,0) , worldGenData.teritoryTile);
-                }
-            }
-        }
-    }
-
-    public bool IsInTerritory(Vector3Int position){
-        return territory[position.x , position.y];
     }
     void OnMouseClick(bool isLeftClick){
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));
@@ -128,14 +101,7 @@ public class WorldController : MonoBehaviour
 
     public bool IsTileExist(Vector3Int position)
     {
-        if(
-            position.x > 0 &&
-            position.y > 0 && 
-            position.x < world.GetLength(0) && 
-            position.y < world.GetLength(1)){
-                return true;
-        }
-        return false;
+        return position.x >= 0 && position.y >= 0 && position.x < world.GetLength(0) && position.y < world.GetLength(1);
     }
     public static Vector3Int CordsToCube(Vector3Int cords){
         int q = cords.x - (cords.y - (cords.y&1)) / 2;
