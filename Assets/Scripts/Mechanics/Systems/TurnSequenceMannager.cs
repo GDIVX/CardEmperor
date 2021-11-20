@@ -29,8 +29,8 @@ public class TurnSequenceMannager
         timeIndex = 0;
         turns = new Turn[2,5];
 
-        SetTurnsTimeIndexes(Player.Main , 0);
-        SetTurnsTimeIndexes(Player.Rival , 1);
+        SetTurnsTimeIndexes(Player.Main , 0 , 4);
+        SetTurnsTimeIndexes(Player.Rival , 1 , 4);
 
         UpdateUI();
     }
@@ -84,12 +84,11 @@ public class TurnSequenceMannager
     }
 
     //Pick randomly 3 time indexes
-    private void SetTurnsTimeIndexes(Player player , int playerIndex){
-        int playerTurns = 3;
-        List<int> indexes = new List<int>{0,1,2,3,4};
+    private void SetTurnsTimeIndexes(Player player , int playerIndex , int playerTurns){
+        List<int> indexes = new List<int>{0,1,2,3,4,5};
 
         while(playerTurns > 0 ){
-            int rand = Mathf.RoundToInt(Random.Range(0 , 4));
+            int rand = Random.Range(0 , 5);
             if(indexes.Remove(rand)){
                 turns[playerIndex , rand] = new Turn(player);
                 playerTurns--;

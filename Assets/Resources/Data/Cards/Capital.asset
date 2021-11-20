@@ -26,7 +26,7 @@ MonoBehaviour:
     keyword: 0
   - value: 0
     keyword: 23
-  abilityScriptName: TownMaker
+  abilityScriptName: CreatureMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
