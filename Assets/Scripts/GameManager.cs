@@ -32,12 +32,15 @@ public class GameManager : MonoBehaviour
         //Create players
         new Player(true);
         new Player(false);
+
     }
 
     void Start()
     {
         turnSequenceMannager.StartNewRound();
     }
+
+    
 
     public void EndTurnButton(){
             turnSequenceMannager.NextTurn();

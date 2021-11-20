@@ -11,6 +11,7 @@ using Vector3 = UnityEngine.Vector3;
 public class WorldController : MonoBehaviour
 {
     public static WorldController Instance{get{return _instance;}}
+    public SyncTask WorldGenTask;
     static WorldController _instance;
 
 
@@ -55,6 +56,8 @@ public class WorldController : MonoBehaviour
             _instance = this;
         }
 
+        WorldGenTask = new SyncTask();
+
     }
 
     void Start()
@@ -64,7 +67,10 @@ public class WorldController : MonoBehaviour
         int x = Mathf.RoundToInt(worldGenData.size.x / 2);
         int y = Mathf.RoundToInt(worldGenData.size.y / 2);
         Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
+
+        WorldGenTask.Done();
     }
+
 
     private void Update() {
         if(Input.GetMouseButtonDown(0)){
