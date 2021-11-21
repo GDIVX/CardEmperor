@@ -62,6 +62,10 @@ public class HandGUI : MonoBehaviour
     {
 
         CardDisplayer displayer = CardDisplayer.GetDisplayer(ID);
+        if(displayer == null){
+            Debug.LogWarning($"Can't find displayer of card{Card.GetCard(ID)}");
+            return;
+        }
         displayer.Clear();
         displayer.SetDisplayActive(false);
         _cardDisplayers.Remove(displayer);

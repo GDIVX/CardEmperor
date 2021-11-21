@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static RandomSelector;
+using Random = UnityEngine.Random;
 
 public class CardsMannager : MonoBehaviour
 {
@@ -9,7 +11,7 @@ public class CardsMannager : MonoBehaviour
     public static CardsMannager Instance{get{return _instance;}}
     public Pile discardPile{get{return _discardPile;}}
     public Pile drawPile{get{return _drawPile;}}
-    public Pile ExhaustPile{get{return _exhaustPile;}}
+    public Pile ExilePile{get{return _exilePile;}}
 
     public DeckData deckData;
     public GameObject cardTamplate{get{return _cardTamplate;}}
@@ -21,7 +23,7 @@ public class CardsMannager : MonoBehaviour
     Hand _hand;
     Pile _drawPile;
     Pile _discardPile;
-    Pile _exhaustPile;
+    Pile _exilePile;
 
     private void Awake() {
         if(_instance != null && _instance != this){
@@ -37,7 +39,7 @@ public class CardsMannager : MonoBehaviour
         _hand = new Hand();
 
         _discardPile = new Pile();
-        _exhaustPile = new Pile();
+        _exilePile = new Pile();
 
 
         _drawPile = new Pile(GenerateDeck());
@@ -57,7 +59,7 @@ public class CardsMannager : MonoBehaviour
     }
 
 
-    public void ExhaustCard(int ID){
+    public void ExileCard(int ID){
         Pile pile;
         Card card = Card.GetCard(ID);
 
@@ -71,7 +73,7 @@ public class CardsMannager : MonoBehaviour
             CardDisplayer.GetDisplayer(ID).OnDeselect();
             hand.RemoveCard(ID);
 
-            _exhaustPile.Drop(card);
+            _exilePile.Drop(card);
             return;
         }
         else{
@@ -80,7 +82,7 @@ public class CardsMannager : MonoBehaviour
         }
 
         pile.Remove(card);
-        _exhaustPile.Drop(card);
+        _exilePile.Drop(card);
     }
 
     public void ReformPiles()
@@ -104,6 +106,7 @@ public class CardsMannager : MonoBehaviour
     }
 
     public void ClearHand(Turn turn){
+        if(turn.player == null) return;
         if(turn.player.IsMain())
             {
                 int[] IDs = hand.cardsIDs.ToArray();
@@ -125,5 +128,31 @@ public class CardsMannager : MonoBehaviour
         }
     }
 
+    public Card CreateRandomCardWithRarity(){
+        Rarity rarity = GameManager.Instance.randomSelector.GetRarity();
+        List<CardData> cards = null;
 
+        switch(rarity){
+            case Rarity.COMMON:
+                cards = deckData.commonCards;
+                break;
+            case Rarity.UNCOMMON:
+                cards = deckData.uncommonCards;
+                break;
+            case Rarity.RARE:
+                cards = deckData.rareCards;
+                break;
+        }
+
+        int rand = Random.Range(0 , cards.Count);
+        CardData data = cards[rand];
+        return new Card(data , Player.Main.ID);
+    }
+
+    public Card CreateExileCard(){
+        List<CardData> cards = deckData.exileCards;
+        int rand = Random.Range(0 , cards.Count);
+        CardData data = cards[rand];
+        return new Card(data , Player.Main.ID);
+    }
 }

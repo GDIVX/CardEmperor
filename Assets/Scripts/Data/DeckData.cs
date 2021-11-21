@@ -6,10 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Cards/Deck Data")]
 public class DeckData : ScriptableObject
 {
-    public List<CardData> cards = new List<CardData>();
-    public string capitalCardName;
+    public List<CardData> starterDeck = new List<CardData>();
+    public List<CardData> commonCards = new List<CardData>();
+    public List<CardData> uncommonCards = new List<CardData>();
+    public List<CardData> rareCards = new List<CardData>();
+    public List<CardData> exileCards = new List<CardData>();
     public Stack<CardData> ExtractDeck(){
-        return new Stack<CardData>(cards);
+        return new Stack<CardData>(starterDeck);
     }
 
 }

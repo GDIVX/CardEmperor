@@ -29,14 +29,14 @@ public class RandomSelector : MonoBehaviour
 
     public enum Rarity{ COMMON , UNCOMMON , RARE}
 
-    public Rarity GetRandomRarity(){
+    Rarity GetRandomRarity(){
         float rand = Random.value;
         if(rand <= rareRarity) return Rarity.RARE;
         if(rand <= uncommonRarity) return Rarity.UNCOMMON;
         return Rarity.COMMON;
     }
 
-    public Rarity GetRarityAndAdjust(){
+    public Rarity GetRarity(){
         Rarity res = GetRandomRarity();
         if(res == Rarity.RARE){
             commonRarity = saveCommon;
@@ -53,6 +53,6 @@ public class RandomSelector : MonoBehaviour
 
     [Button]
     void test(){
-        Debug.Log(GetRarityAndAdjust());
+        Debug.Log(GetRarity());
     }
 }

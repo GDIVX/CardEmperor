@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class SyncTask 
 {
-    public Action<SyncTask> onTaskDone;
+    internal Action<SyncTask> _onDone;
+    public Action OnDone;
 
     public void Done(){
-        onTaskDone?.Invoke(this);
+        _onDone?.Invoke(this);
+        OnDone?.Invoke();
     }
 
 }
@@ -22,10 +24,17 @@ public class SyncTaskGroup{
         
         foreach (var task in this.tasks)
         {
-            task.onTaskDone += OnTaskDone;
+            task._onDone += OnTaskDone;
         }
     }
 
+    public SyncTaskGroup(){
+        tasks = new List<SyncTask>();
+    }
+
+    public void AddTask(SyncTask task){
+        tasks.Add(task);
+    }
 
     void OnTaskDone(SyncTask task){
         tasks?.Remove(task);

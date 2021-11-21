@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameEvent 
 {
     public string title;
+    public SyncTask task;
 
     public GameEvent(string title)
     {
@@ -15,11 +16,12 @@ public class GameEvent
 
 public class CardEvent : GameEvent{
     public List<Card> cards;
-    public Action<Card> action;
+    public Action<Card> cardAction;
+    public Action action;
 
     public CardEvent(string title , List<Card> cards , Action<Card> OnCardSelected) : base(title)
     {
         this.cards = cards;
-        this.action = OnCardSelected;
+        this.cardAction = OnCardSelected;
     }
 }

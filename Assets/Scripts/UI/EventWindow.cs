@@ -55,7 +55,7 @@ public class EventWindow : MonoBehaviour
                     btn.SetID(card.ID);
                 }
                 else{
-                    btn = CardButton.Create(cardEvent.action , card.ID).GetComponent<CardButton>();
+                    btn = CardButton.Create(cardEvent.cardAction , card.ID).GetComponent<CardButton>();
                     cardButtons.Add(btn);
                 }
             }

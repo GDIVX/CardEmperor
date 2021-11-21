@@ -17,6 +17,9 @@ public class TurnSequenceMannager
     public Turn currentTurn;    
     [ShowInInspector]
     private int timeIndex;
+    public int RoundsCount = 0;
+    public int daysCount = 0;
+    bool active = true;
 
     public void StartNewRound(){
 
@@ -25,7 +28,8 @@ public class TurnSequenceMannager
     }
 
 
-    private void StartDay(){
+    public void StartDay(){
+        daysCount++;
         timeIndex = 0;
         turns = new Turn[2,5];
 
@@ -33,9 +37,18 @@ public class TurnSequenceMannager
         SetTurnsTimeIndexes(Player.Rival , 1 , 4);
 
         UpdateUI();
+        if(daysCount > NewCardsEventDaysCount())
+            GameEventMannager.FireNewCardEvent();
     }
+
+
     public void NextTurn()
     {
+        if(GameEventMannager.isPlayingEvent){
+            GameEventMannager.onAnyEventDone += NextTurn;
+            return;
+        }
+
         if(currentTurn != null && currentTurn.IsActive) EndTurn();
 
         currentTurn = SetCurrentTurn();
@@ -56,6 +69,10 @@ public class TurnSequenceMannager
         currentTurn.End();
         OnTurnComplete?.Invoke(currentTurn);
     }
+    private int NewCardsEventDaysCount()
+    {
+        return Mathf.RoundToInt(GameManager.Instance.progressionCurve.Evaluate(GameManager.Instance.level));
+    }
 
     Turn SetCurrentTurn(){
         //Rival start first
@@ -72,7 +89,8 @@ public class TurnSequenceMannager
 
     private void NextTimeIndex()
     {
-        int res = timeIndex+1;      
+        int res = timeIndex+1;
+        RoundsCount++;      
         //if it over 4, start the next day
         if(res > 4){
             StartDay();

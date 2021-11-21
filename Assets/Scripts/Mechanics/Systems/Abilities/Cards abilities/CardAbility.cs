@@ -33,6 +33,9 @@ public abstract class CardAbility {
     public static bool CanAfford(int ID){
                 Card card = Card.GetCard(ID);
         Player player = GameManager.Instance.CurrentTurnOfPlayer;
+        if(player == null){
+            Debug.LogError("Trying to play a card when its null player turn");
+        }
 
         int leftoverFood = player.foodPoints.Value - card.foodPrice;
         int leftoverIndustry = player.industryPoints.Value - card.industryPrice;
