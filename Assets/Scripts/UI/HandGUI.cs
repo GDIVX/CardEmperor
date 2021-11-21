@@ -48,7 +48,6 @@ public class HandGUI : MonoBehaviour
         else{
             display = CardDisplayer.Create();
             cardDisplayer = display.GetComponent<CardDisplayer>();
-            Debug.Log(cardDisplayer);
         }
 
         cardDisplayer.SetID(card.ID);

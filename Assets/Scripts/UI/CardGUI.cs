@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Show a GUI of the card with no user input
+/// </summary>
+
 public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
         public int ID{get{return _ID;}}
@@ -72,7 +76,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.MagicPrice.ToString();
 
 
-        transform.SetParent(UIController.instance.handGUI.transform);
+        transform.SetParent(UIController.Instance.handGUI.transform);
 
         gameObject.SetActive(true);
     }

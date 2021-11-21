@@ -79,7 +79,7 @@ public class TurnSequenceMannager
         }
         else{
             timeIndex = res;
-            UIController.instance.clockUI.MoveTo(timeIndex);
+            UIController.Instance.clockUI.MoveTo(timeIndex);
         }
     }
 
@@ -99,8 +99,8 @@ public class TurnSequenceMannager
     private void UpdateUI()
     {
         
-        UIController.instance.clockUI.Reset();
-        UIController.instance.clockUI.MoveTo(timeIndex);
+        UIController.Instance.clockUI.Reset();
+        UIController.Instance.clockUI.MoveTo(timeIndex);
         
         for (var p = 0; p <= 1; p++)
         {
@@ -108,7 +108,7 @@ public class TurnSequenceMannager
             {
                 Turn turn = turns[p,t];
                 if(turn != null){
-                    UIController.instance.clockUI.CreateEventIcon(t , p == 0);
+                    UIController.Instance.clockUI.CreateEventIcon(t , p == 0);
                 }
             }
         }

@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Create a GUI of a card with play controls by the player. Can call for the card ability.
+/// </summary>
+
 public class CardDisplayer : CardGUI ,IClickable
 {
     public Action OnUpdateDisplayerListener;
@@ -79,6 +83,6 @@ public class CardDisplayer : CardGUI ,IClickable
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        UIController.instance.handGUI.ArrangeCard(ID);
+        UIController.Instance.handGUI.ArrangeCard(ID);
     }
 }

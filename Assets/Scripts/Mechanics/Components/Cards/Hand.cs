@@ -13,7 +13,7 @@ public class Hand
     HandGUI GUI;
 
         public Hand(){
-        GUI = UIController.instance.handGUI;
+        GUI = UIController.Instance.handGUI;
     }
 
 

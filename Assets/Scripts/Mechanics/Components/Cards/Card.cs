@@ -78,5 +78,10 @@ public class Card
          return null;
       }
    }
-   
+
+   public override string ToString()
+   {
+      return _data.cardName;
+   }
+
 }
