@@ -12,6 +12,11 @@ public class CardDisplayer : CardGUI ,IClickable
     private static Dictionary<int, CardDisplayer> CardDisplayerRegestry = new Dictionary<int, CardDisplayer>();
 
 
+    public static new GameObject Create(){
+        GameObject _gameObject = CardGUI.Create();
+        _gameObject.AddComponent<CardDisplayer>();
+        return _gameObject;
+    }
 
     public override void SetID(int ID){
         base.SetID(ID);

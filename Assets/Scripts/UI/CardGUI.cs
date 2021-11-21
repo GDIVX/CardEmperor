@@ -17,7 +17,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public static GameObject Create(){
         
         GameObject _gameObject = CardsMannager.Instance.cardTamplate;
-        CardGUI cardGui = _gameObject.GetComponent<CardDisplayer>();
+        _gameObject = GameObject.Instantiate(_gameObject);
 
         return _gameObject;
     }

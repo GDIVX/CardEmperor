@@ -47,8 +47,8 @@ public class HandGUI : MonoBehaviour
         }
         else{
             display = CardDisplayer.Create();
-            display = GameObject.Instantiate(display);
             cardDisplayer = display.GetComponent<CardDisplayer>();
+            Debug.Log(cardDisplayer);
         }
 
         cardDisplayer.SetID(card.ID);
