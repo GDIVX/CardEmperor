@@ -41,29 +41,21 @@ public class WorldTile : IClickable
     }
 
 
+//It's not the most efficient way to make this calculation, but from all the other methods I tried it is the most reliable.
     public WorldTile[] GetTilesInRange(int range){
 
         List<WorldTile> res = new List<WorldTile>();
-        //range++;
         
-        for (int x = -range; x <= range; x++)
+        for (var x = -range; x <= range; x++)
         {
-            int  start = Mathf.Max(-range , -x - range);
-            int end = Mathf.Min(range , -x + range);
-
-            for (var y = start; y <= end; y++)
+            for (var y = -range; y <= range; y++)
             {
-                int z = -x-y;
-
-                Vector3Int sampledPosition = WorldController.CubeToCords(new Vector3Int(x,y,z));
-                sampledPosition = WorldController.CubeToCords(sampledPosition + CubePosition);
-                
-                if(WorldController.Instance.IsTileExist(sampledPosition)){
-                    WorldTile tile = WorldController.Instance.world[sampledPosition.x , sampledPosition.y];
-                    res.Add(tile);
+                Vector3Int pos = new Vector3Int(position.x + x , position.y + y , 0);
+                if(WorldController.Instance.IsTileExist(pos) && WorldController.DistanceOf((Vector3Int)position  ,pos) <= range){
+                    res.Add(WorldController.Instance.world[pos.x,pos.y]);
+                    
                 }
             }
-            
         }
 
         return res.ToArray();
@@ -120,9 +112,9 @@ public class WorldTile : IClickable
                 return;
             }
             if(selectedCreature.Player.IsMain()){
-                if(feature != TileFeature.WATER || selectedCreature.amphibious ){
+                if(walkable || selectedCreature.flying ){
                     if(CreatureID == 0)
-                        selectedCreature.FlyTo((Vector3Int)position);
+                        selectedCreature.MoveTo((Vector3Int)position);
                     else
                         selectedCreature.InteractWithCreature(Creature.GetCreature(CreatureID));
                 }
