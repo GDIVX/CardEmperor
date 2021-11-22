@@ -156,7 +156,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6efa89e54faa3459985753d4436e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.08312988
+      value: 1.1357422
+      inSlope: 1.3628837
+      outSlope: 1.3628837
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12322483
+    - serializedVersion: 3
+      time: 4.929725
+      value: 12.298303
+      inSlope: 6.46786
+      outSlope: 6.46786
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07900741
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 9.996971
+      value: 20.377125
+      inSlope: 1.5943221
+      outSlope: 1.5943221
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   definitions: {fileID: 11400000, guid: acb2431bcd23cc34bbc8f74f7b7ccd59, type: 2}
+  level: 0
 --- !u!4 &1181528906
 Transform:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using TMPro;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 public class EventWindow : MonoBehaviour
 {

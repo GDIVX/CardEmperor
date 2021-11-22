@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Vector3 = UnityEngine.Vector3;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 [System.Serializable]
 public class Creature: IClickable
@@ -24,6 +25,8 @@ public class Creature: IClickable
     public bool amphibious{get{return _amphibious;}}
     public bool flying{get{return _flying;}}
     public bool pioneer{get{return _pioneer;}}
+
+    public static Action<Creature> OnCreatureDeath;
 
 
     static Dictionary<int,Creature> creaturesRegestry = new Dictionary<int, Creature>();
@@ -90,7 +93,14 @@ public class Creature: IClickable
     }
 
     public void Kill(){
-        //TODO Handle death
+        OnCreatureDeath?.Invoke(this);
+        //Clear view
+        CreatureDisplayer.GetCreatureDisplayer(ID).SetDisplay(false);
+        //Move the card into exile
+        CardsMannager.Instance.ExilePile.Drop(Card.GetCard(ID));
+        //Remove the creature from the board
+        WorldTile tile = WorldController.Instance.world[position.x , position.y];
+        tile.CreatureID = 0;
     }
     internal void TakeDamage(int damage)
     {
@@ -150,12 +160,22 @@ public class Creature: IClickable
 
     public void InteractWithCreature(Creature creature){
         if(ability == null) {return;}
-        if(creature.Player.IsMain()){
+        if(creature.Player ==  Player){
             ability.ActionOnFriendlyCreature(creature);
         }
         else{
             ability.ActionOnEnemyCreature(creature);
         }
+    }
+
+
+    public void MoveTo(Vector3Int target){      
+        int distance = WorldController.DistanceOf(position , target);
+        if(distance <= _movement)
+            {
+                _movement -= distance;
+                UpdatePosition(target);
+            }
     }
 
     public override string ToString()
@@ -167,20 +187,6 @@ public class Creature: IClickable
         return null;
     }
 
-    public void MoveTo(Vector3Int target){
-        //TODO placeholder, replace with a pathfinding algorithm 
-        
-        FlyTo(target);
-    }
-    public void FlyTo(Vector3Int target){      
-        int distance = WorldController.DistanceOf(position , target);
-        if(distance <= _movement)
-            {
-                _movement -= distance;
-                UpdatePosition(target);
-            }
-    }
-
     void OnTurnStart(Turn turn){
         if(turn.player == this.Player)
         {
@@ -188,7 +194,7 @@ public class Creature: IClickable
         }
     }
 
-    private void UpdatePosition(Vector3Int newPosition)
+    public void UpdatePosition(Vector3Int newPosition)
     {
         //Clean old tile
         WorldTile tile = WorldController.Instance.world[position.x , position.y];

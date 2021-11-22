@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 public class WorldController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class WorldController : MonoBehaviour
     [TabGroup("Generation")]
     public WorldGenData worldGenData;
     [TabGroup("Generation")]
-    public Tilemap map;
+    public Tilemap map , indicatorsMap;
     public WorldTile[,] world;
 
 
@@ -33,6 +34,8 @@ public class WorldController : MonoBehaviour
     [ReadOnly]
     [TabGroup("Debug")]
     WorldTile _Debug_sampledTile;
+    [TabGroup("Debug")]
+    public TileBase tileGizmo;
 
 
 
@@ -44,6 +47,12 @@ public class WorldController : MonoBehaviour
         int y = UnityEngine.Random.Range(0, world.GetLength(1));
 
         return new Vector3Int(x,y,0);
+    }
+
+    internal void DrawTileGizmo(WorldTile tile)
+    {
+        indicatorsMap.ClearAllTiles();
+        indicatorsMap.SetTile((Vector3Int)tile.position , tileGizmo);
     }
 
     private void Awake() {
@@ -83,7 +92,6 @@ public class WorldController : MonoBehaviour
         Player.Main.foodPoints.income += income[0];
         Player.Main.industryPoints.income += income[1];
         Player.Main.magicPoints.income += income[2];
-        Player.Main.knowledge.income += income[3];
     }
     void OnMouseClick(bool isLeftClick){
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));

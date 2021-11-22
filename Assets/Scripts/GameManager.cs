@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,8 +34,8 @@ public class GameManager : MonoBehaviour
         }
 
         //Create players
-        new Player(true);
-        new Player(false);
+        new MainPLayer();
+        new Rival();
 
     }
 
@@ -71,4 +72,10 @@ public class GameManager : MonoBehaviour
     public void debug_fireCardEvent(){
         GameEventMannager.FireNewCardEvent();
     }
+
+    [Button]
+    public void debug_spawnMonster(){
+        MonsterSpawner.Spawn("Militia" , new Vector3Int(0,0,0) , new WanderAgent());
+    }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Mechanics.Systems.Players;
 using UnityEngine;
 using static RandomSelector;
 using Random = UnityEngine.Random;
@@ -32,9 +33,6 @@ public class CardsMannager : MonoBehaviour
         else{
             _instance = this;
         }
-
-        GameManager.Instance.turnSequenceMannager.OnTurnComplete += ClearHand;
-        GameManager.Instance.turnSequenceMannager.OnTurnStart += OnTurnStart;
 
         _hand = new Hand();
 
@@ -105,23 +103,13 @@ public class CardsMannager : MonoBehaviour
         _discardPile.Drop(Card.GetCard(ID));
     }
 
-    public void ClearHand(Turn turn){
-        if(turn.player == null) return;
-        if(turn.player.IsMain())
-            {
-                int[] IDs = hand.cardsIDs.ToArray();
-                foreach(int id in IDs){
-                    DiscardCard(id);
-                }
-            }
-    }
-
-    void OnTurnStart(Turn turn){
-        if(turn.player.IsMain()){
-            DrawCards(turn.player.cardsToDraw);
+    public void ClearHand(){
+        int[] IDs = hand.cardsIDs.ToArray();
+        foreach(int id in IDs){
+            DiscardCard(id);
         }
     }
-    void DrawCards(int amount){
+    public void DrawCards(int amount){
         for (int i = 0; i < amount; i++)
         {
             hand.AddCard(_drawPile.Draw());

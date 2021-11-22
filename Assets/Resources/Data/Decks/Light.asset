@@ -12,11 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a6b5909cea6da4a89e60863df24278, type: 3}
   m_Name: Light
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
-  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
-  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
-  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  starterDeck:
   - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
   - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
-  capitalCardName: Capital
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  commonCards:
+  - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
+  uncommonCards:
+  - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
+  rareCards:
+  - {fileID: 11400000, guid: c52df8522cc25074ea85c2011f68e11a, type: 2}
+  exileCards:
+  - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}

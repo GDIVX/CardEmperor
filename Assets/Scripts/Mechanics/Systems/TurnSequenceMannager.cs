@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 [System.Serializable]
 public class TurnSequenceMannager 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Assets.Scripts.Mechanics.Systems.Players;
 
 public class UIController : MonoBehaviour
 {
@@ -28,7 +29,6 @@ public class UIController : MonoBehaviour
         Player.Main.foodPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.industryPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.magicPoints.RegisterOnValueChange(OnManaValueChange);
-        Player.Main.knowledge.RegisterOnValueChange(OnManaValueChange);
     }
 
     void Update()
@@ -58,9 +58,6 @@ public class UIController : MonoBehaviour
                 break;
             case ManaType.MAGIC:
                 magic.text = value.ToString();
-                break;
-            case ManaType.KNOWLEDGE:
-                know.text = value.ToString();
                 break;
         }
     }
