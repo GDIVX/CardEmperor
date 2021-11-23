@@ -23,9 +23,15 @@ public class CardDisplayer : CardGUI ,IClickable
     }
 
     public override void SetID(int ID){
+        if(IsIDTaken(ID)){
+            Debug.LogError($"Trying to assign a card with ID {ID} to more then one inspector");
+            base.SetID(0);
+            return;
+        }
         base.SetID(ID);
         CardDisplayer.CardDisplayerRegestry[ID] = this;
     }
+
 
     public override void Clear(){
         CardDisplayer.CardDisplayerRegestry[_ID] = null;
@@ -84,5 +90,12 @@ public class CardDisplayer : CardGUI ,IClickable
     public override void OnPointerExit(PointerEventData eventData)
     {
         UIController.Instance.handGUI.ArrangeCard(ID);
+    }
+    private bool IsIDTaken(int ID)
+    {
+        if(!CardDisplayerRegestry.ContainsKey(ID)){
+            return false;
+        }
+        return CardDisplayerRegestry[ID] != null;
     }
 }

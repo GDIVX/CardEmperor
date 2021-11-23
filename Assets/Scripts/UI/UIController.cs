@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour
     public static UIController Instance =>_instance;
     static UIController _instance;
 
-    public TextMeshProUGUI food,ind,magic, know;
+    public TextMeshProUGUI food,ind,magic, drawPileTxt ,discardPileTxt, exilePileTxt;
 
     public HandGUI handGUI;
     public ClockUI clockUI;
@@ -29,6 +29,10 @@ public class UIController : MonoBehaviour
         Player.Main.foodPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.industryPoints.RegisterOnValueChange(OnManaValueChange);
         Player.Main.magicPoints.RegisterOnValueChange(OnManaValueChange);
+
+        CardsMannager.Instance.drawPile.OnValueChange += OnPileValueChanged;
+        CardsMannager.Instance.discardPile.OnValueChange += OnPileValueChanged;
+        CardsMannager.Instance.exilePile.OnValueChange += OnPileValueChanged;
     }
 
     void Update()
@@ -62,7 +66,21 @@ public class UIController : MonoBehaviour
         }
     }
 
-        public static int GetDisabledChildrenCount(Transform t){
+    void OnPileValueChanged(Pile pile){
+        switch(pile.pileType){
+            case Pile.PileType.Draw:
+                drawPileTxt.text = pile.Size.ToString();
+                break;
+            case Pile.PileType.Discard:
+                discardPileTxt.text = pile.Size.ToString();
+                break;
+            case Pile.PileType.Exile:
+                exilePileTxt.text = pile.Size.ToString();
+                break;
+        }
+    }
+
+    public static int GetDisabledChildrenCount(Transform t){
         int res = 0;
         for (var i = 0; i < t.childCount; i++)
         {

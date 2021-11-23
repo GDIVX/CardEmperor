@@ -1,31 +1,47 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
+[System.Serializable]
 public class Pile 
 {
     public int Size{get{return cards.Count;}}
+    public PileType pileType;
+    [ShowInInspector]
     Stack<Card> cards;
+    public Action<Pile> OnValueChange;
 
-public Pile(){
+public Pile(PileType type){
         cards = new Stack<Card>();
+        this.pileType = type;
+        OnValueChange?.Invoke(this);
     }
 
-public Pile(Stack<Card> cards){
+public Pile(Stack<Card> cards , PileType type){
     this.cards = cards;
-        Shuffle();
+    this.pileType = type;
+    Shuffle();
+
+    OnValueChange?.Invoke(this);
     }
 
     public Card Draw(){
+        
         if(cards.Count != 0)
-        return cards.Pop();
+        {
+            OnValueChange?.Invoke(this);
+            return cards.Pop();
+        }
         else{
             if(CardsMannager.Instance.discardPile.IsEmpty()){
                 Debug.LogWarning("No more cards!");
+                OnValueChange?.Invoke(this);
                 return null;
             }
             CardsMannager.Instance.ReformPiles();
+            OnValueChange?.Invoke(this);
             return CardsMannager.Instance.drawPile.Draw();
         }
     }
@@ -36,6 +52,7 @@ public Pile(Stack<Card> cards){
         }
 
         cards.Push(card);
+        OnValueChange?.Invoke(this);
     }    
 
     public void Shuffle()
@@ -75,6 +92,9 @@ public Pile(Stack<Card> cards){
         {
             cards.Push(otherPile.cards.Pop());
         }
+
+        OnValueChange?.Invoke(this);
+        otherPile.OnValueChange?.Invoke(otherPile);
     }
 
     public bool Has(Card card){
@@ -86,5 +106,10 @@ public Pile(Stack<Card> cards){
         List<Card> list = new List<Card>(cards);
         list.Remove(card);
         cards = new Stack<Card>(list);
+        OnValueChange?.Invoke(this);
+    }
+    public enum PileType
+    {
+        Draw, Discard , Exile
     }
 }

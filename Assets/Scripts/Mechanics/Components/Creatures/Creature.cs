@@ -97,7 +97,7 @@ public class Creature: IClickable
         //Clear view
         CreatureDisplayer.GetCreatureDisplayer(ID).SetDisplay(false);
         //Move the card into exile
-        CardsMannager.Instance.ExilePile.Drop(Card.GetCard(ID));
+        CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
         //Remove the creature from the board
         WorldTile tile = WorldController.Instance.world[position.x , position.y];
         tile.CreatureID = 0;
@@ -188,6 +188,9 @@ public class Creature: IClickable
     }
 
     void OnTurnStart(Turn turn){
+        if(turn == null || turn.player == null){
+            return;
+        }
         if(turn.player == this.Player)
         {
             _movement = speed;

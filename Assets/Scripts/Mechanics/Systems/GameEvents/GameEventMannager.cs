@@ -29,7 +29,7 @@ public static class GameEventMannager
         cards.Add(CardsMannager.Instance.CreateExileCard());
 
         CardEvent cardEvent = new CardEvent("End of the day. New forces wish to join you. Choose one:" , cards , (x)=>{
-            CardsMannager.Instance.discardPile.Drop(x);
+            CardsMannager.Instance.discardPile.Drop(Card.Copy(x , x.playerID));
             //TODO fire a new weekly event
             UIController.Instance.eventWindow.Hide();
             GameManager.Instance.level++;

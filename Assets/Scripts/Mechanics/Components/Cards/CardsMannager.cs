@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Mechanics.Systems.Players;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using static RandomSelector;
 using Random = UnityEngine.Random;
@@ -12,7 +13,7 @@ public class CardsMannager : MonoBehaviour
     public static CardsMannager Instance{get{return _instance;}}
     public Pile discardPile{get{return _discardPile;}}
     public Pile drawPile{get{return _drawPile;}}
-    public Pile ExilePile{get{return _exilePile;}}
+    public Pile exilePile{get{return _exilePile;}}
 
     public DeckData deckData;
     public GameObject cardTamplate{get{return _cardTamplate;}}
@@ -21,9 +22,13 @@ public class CardsMannager : MonoBehaviour
     [SerializeField]
     GameObject _cardTamplate;
 
+    [ShowInInspector]
     Hand _hand;
+    [ShowInInspector]
     Pile _drawPile;
+    [ShowInInspector]
     Pile _discardPile;
+    [ShowInInspector]
     Pile _exilePile;
 
     private void Awake() {
@@ -36,11 +41,11 @@ public class CardsMannager : MonoBehaviour
 
         _hand = new Hand();
 
-        _discardPile = new Pile();
-        _exilePile = new Pile();
+        _discardPile = new Pile(Pile.PileType.Discard);
+        _exilePile = new Pile(Pile.PileType.Exile);
 
 
-        _drawPile = new Pile(GenerateDeck());
+        _drawPile = new Pile(GenerateDeck() , Pile.PileType.Draw);
         _drawPile.Shuffle();
     }
 

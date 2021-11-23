@@ -10,10 +10,12 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance{get{return _instance;}}
     public static IClickable CurrentSelected;
-    public AnimationCurve progressionCurve;
     static GameManager _instance;
 
-    public Player CurrentTurnOfPlayer{get{ return turnSequenceMannager.currentTurn.player;}}
+    public Player CurrentTurnOfPlayer{get{
+        if(turnSequenceMannager.currentTurn == null){return null;}
+        return turnSequenceMannager.currentTurn.player;
+        }}
     public Definitions definitions;
     public TurnSequenceMannager turnSequenceMannager {get{ return GetTurnMannager();}}
     public RandomSelector randomSelector{get{return GetRandomSelector();}}

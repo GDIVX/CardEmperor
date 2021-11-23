@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,11 +9,13 @@ using UnityEngine.UI;
 /// <summary>
 /// Show a GUI of the card with no user input
 /// </summary>
+[System.Serializable]
 
 public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-        public int ID{get{return _ID;}}
-
+    public int ID{get{return _ID;}}
+    
+    [ShowInInspector]
     protected int _ID;
     public virtual void OnPointerClick(PointerEventData eventData){}
     public virtual void OnPointerEnter(PointerEventData eventData){}

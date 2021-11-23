@@ -17,7 +17,9 @@ public class HandGUI : MonoBehaviour
     [OnValueChanged("RearrangeCards")]
     float spacing = 95f;
     float oldSpacing;
+    [ShowInInspector]
     List<CardDisplayer> _cardDisplayers;
+    [ShowInInspector]
     Stack<CardDisplayer> _disabledCardsDisplayers;
     Tweener tweener;
     
@@ -64,13 +66,14 @@ public class HandGUI : MonoBehaviour
         CardDisplayer displayer = CardDisplayer.GetDisplayer(ID);
         if(displayer == null){
             Debug.LogWarning($"Can't find displayer of card{Card.GetCard(ID)}");
+            RearrangeCards(spacing);
             return;
         }
         displayer.Clear();
         displayer.SetDisplayActive(false);
         _cardDisplayers.Remove(displayer);
         _disabledCardsDisplayers.Push(displayer);
-        RearrangeCardsHelper();
+        RearrangeCards(spacing);
     }
 
         private void RearrangeCards(float spacing)
@@ -111,9 +114,6 @@ public class HandGUI : MonoBehaviour
         }
     }
 
-        void RearrangeCardsHelper(){
-        RearrangeCards(spacing);
-    }
 
     public void SetToMixedView(){
         if(displayScale == DisplayScale.HandView){

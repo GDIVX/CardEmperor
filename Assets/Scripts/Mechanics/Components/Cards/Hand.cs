@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
+[System.Serializable]
 public class Hand 
 {
 
     public int Count{get => cardsIDs.Count;}
     public List<int> cardsIDs { get => _cardsIDs; set => _cardsIDs = value; }
 
+    [ShowInInspector]
     List<int> _cardsIDs = new List<int>();
-    HandGUI GUI;
-
-        public Hand(){
-        GUI = UIController.Instance.handGUI;
-    }
 
 
 
@@ -23,8 +21,12 @@ public class Hand
             Debug.LogWarning("Trying to add a null card to hand");  
             return;
         }
+        if(Has(card.ID)){
+            Debug.LogError($"Trying to add the card {card} with ID {card.ID} to the hand more then once ");
+            return;
+        }
         cardsIDs.Add(card.ID);
-        GUI.AddCard(card);
+        UIController.Instance.handGUI.AddCard(card);
     }
 
     internal int GetCardIDByIndex(int index)
@@ -48,7 +50,7 @@ public class Hand
             return;
         }
         cardsIDs.Remove(ID);
-        GUI.RemoveCard(ID);
+        UIController.Instance.handGUI.RemoveCard(ID);
     }
 
 

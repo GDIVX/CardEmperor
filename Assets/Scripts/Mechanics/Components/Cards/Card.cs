@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Sirenix.OdinInspector;
 
 [System.Serializable]
 public class Card
@@ -18,16 +19,20 @@ public class Card
       private static Dictionary<int, Card> CardsRegistry = new Dictionary<int, Card>();
 
 
+   [ShowInInspector]
    private int _ID;
+   [ShowInInspector]
    private int _playerID;
 
    private CardAbility abilities;
 
    public CardDisplayer Displayer { get => displayer;}
+   [ShowInInspector]
    private CardDisplayer displayer;
    private CardAbility _ability;
-   private CardDisplayer _displayer;
+   [ShowInInspector]
    private CardData _data;
+   [ShowInInspector]
    private float _priority;
 
    public Card (CardData data , int playerID){
@@ -54,6 +59,10 @@ public class Card
       Card.CardsRegistry.Add(ID , this);
    }
 
+
+   public static Card Copy(Card original , int playerID){
+      return new Card(original.data , playerID);
+   }
    public static Card GetCard(int ID){
       return Card.CardsRegistry[ID];
    }

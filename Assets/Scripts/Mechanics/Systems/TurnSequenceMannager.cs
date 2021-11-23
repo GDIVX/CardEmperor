@@ -72,7 +72,7 @@ public class TurnSequenceMannager
     }
     private int NewCardsEventDaysCount()
     {
-        return Mathf.RoundToInt(GameManager.Instance.progressionCurve.Evaluate(GameManager.Instance.level));
+        return (GameManager.Instance.level * 2) + 1;
     }
 
     Turn SetCurrentTurn(){
