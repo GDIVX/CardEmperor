@@ -44,7 +44,7 @@ public class CreatureMaker : CardAbility
 
         displayer.SetDisplay(true);
 
-        CardsMannager.Instance.ExileCard(ID);
+        CardsMannager.Instance.hand.RemoveCard(ID);
     }
 
     public override void Activate(CardDisplayer targetCard)

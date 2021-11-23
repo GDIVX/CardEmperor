@@ -12,11 +12,16 @@ public class GameManager : MonoBehaviour
     public static IClickable CurrentSelected;
     static GameManager _instance;
 
+    public Creature capital;
+
     public Player CurrentTurnOfPlayer{get{
         if(turnSequenceMannager.currentTurn == null){return null;}
         return turnSequenceMannager.currentTurn.player;
         }}
+
+
     public Definitions definitions;
+    public Action OnGameOver , OnGameStart;
     public TurnSequenceMannager turnSequenceMannager {get{ return GetTurnMannager();}}
     public RandomSelector randomSelector{get{return GetRandomSelector();}}
     public int level;
@@ -39,6 +44,9 @@ public class GameManager : MonoBehaviour
         new MainPLayer();
         new Rival();
 
+        //Track the capital
+        Creature.OnCreatureDeath += CheckIfCapitalDestroyed;
+
     }
 
     void Start()
@@ -46,7 +54,17 @@ public class GameManager : MonoBehaviour
         turnSequenceMannager.StartNewRound();
     }
 
+    internal void GameOver()
+    {
+        OnGameOver?.Invoke();
+        Debug.Log("Game Over");
+    }
     
+    public void CheckIfCapitalDestroyed(Creature c){
+        if(c.ID == capital.ID){
+            GameOver();
+        }
+    }
 
     public void EndTurnButton(){
         if(CurrentTurnOfPlayer == null){return;}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace Assets.Scripts.Mechanics.Systems.Players
     public class Rival : Player
     {
         public List<CreatureAgent> Agents = new List<CreatureAgent>();
+
+        public Personality personality;
                 public Rival()
         {
             _ID = IDFactory.GetUniqueID();
@@ -14,7 +17,10 @@ namespace Assets.Scripts.Mechanics.Systems.Players
 
             _rival = this;
 
+            personality = PersonalityFactory.Generate();
+
         }
+
 
         public override void OnTurnEnd()
         {
@@ -23,9 +29,8 @@ namespace Assets.Scripts.Mechanics.Systems.Players
 
         public override void OnTurnStart()
         {
-            if(Agents.Count == 0){
-                MonsterSpawner.SpawnNew();
-            }
+            personality.Play();
+
             foreach (var agent in Agents)
             {
                 agent.OnTurnStart();
@@ -33,5 +38,6 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             
             GameManager.Instance.turnSequenceMannager.NextTurn();
         }
+
     }
 }

@@ -10,9 +10,7 @@ public static class MonsterSpawner
         Creature creature = Creature.BuildAndSpawnCardless(creatureName , Player.Rival.ID , position);
         agent.SetID(creature.ID);
         Player.Rival.Agents.Add(agent);
+
     }
 
-    internal static void SpawnNew()
-    {
-    }
 }

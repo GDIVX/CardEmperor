@@ -71,8 +71,8 @@ public class WorldController : MonoBehaviour
         
         int x = Mathf.RoundToInt(worldGenData.size.x / 2);
         int y = Mathf.RoundToInt(worldGenData.size.y / 2);
-        Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
-
+        Creature capital = Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
+        GameManager.Instance.capital = capital;
     }
 
 
