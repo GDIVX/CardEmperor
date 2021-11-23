@@ -95,7 +95,8 @@ public class CardsMannager : MonoBehaviour
         }
         discardPile.Shuffle();
         drawPile.TransferFrom(discardPile);
-        Debug.Log("reformed piles");
+        
+        //TODO add tweeneing animation
     }
 
     private void DiscardCard(int ID)

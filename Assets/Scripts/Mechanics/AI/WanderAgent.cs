@@ -25,7 +25,7 @@ public class WanderAgent : CreatureAgent
         {
             if(tile.CreatureID != 0){
                 Creature other = Creature.GetCreature(tile.CreatureID);
-                if(other.Player.IsMain());{
+                if(other.Player.IsMain()){
                     creature.InteractWithCreature(other);
                 }
             }

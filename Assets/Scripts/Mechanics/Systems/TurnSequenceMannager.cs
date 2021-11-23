@@ -20,18 +20,16 @@ public class TurnSequenceMannager
     private int timeIndex;
     public int RoundsCount = 0;
     public int daysCount = 0;
-    bool active = true;
 
     public void StartNewRound(){
 
         StartDay();
-        NextTurn();
+        StartNextTurn();
     }
 
 
     public void StartDay(){
         daysCount++;
-        timeIndex = 0;
         turns = new Turn[2,5];
 
         SetTurnsTimeIndexes(Player.Main , 0 , 4);
@@ -43,20 +41,23 @@ public class TurnSequenceMannager
     }
 
 
-    public void NextTurn()
+    void StartNextTurn()
     {
         if(GameEventMannager.isPlayingEvent){
-            GameEventMannager.onAnyEventDone += NextTurn;
+            GameEventMannager.onAnyEventDone += StartNextTurn;
             return;
         }
 
-        if(currentTurn != null && currentTurn.IsActive) EndTurn();
+        if(currentTurn != null && currentTurn.IsActive){
+            Debug.LogWarning("Trying to start a new turn without ending the current one");
+            return;
+        }
 
         currentTurn = SetCurrentTurn();
 
         if(currentTurn == null){
             NextTimeIndex();
-            NextTurn();
+            StartNextTurn();
             return;
         }
 
@@ -66,9 +67,15 @@ public class TurnSequenceMannager
 
     }
 
-    public void EndTurn(){
+    void EndTurn(){
+        if(currentTurn == null || !currentTurn.IsActive) return;
         currentTurn.End();
         OnTurnComplete?.Invoke(currentTurn);
+    }
+
+    public void NextTurn(){
+        EndTurn();
+        StartNextTurn();
     }
     private int NewCardsEventDaysCount()
     {
@@ -94,12 +101,11 @@ public class TurnSequenceMannager
         RoundsCount++;      
         //if it over 4, start the next day
         if(res > 4){
+            res = 0;
             StartDay();
         }
-        else{
-            timeIndex = res;
-            UIController.Instance.clockUI.MoveTo(timeIndex);
-        }
+        timeIndex = res;
+        UIController.Instance.clockUI.MoveTo(timeIndex);
     }
 
     //Pick randomly 3 time indexes
