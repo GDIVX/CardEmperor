@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using Random = UnityEngine.Random;
 
 public class Personality
 {
@@ -28,18 +27,22 @@ public class Personality
             return;
         }
 
-        Decision currentDecision = GetDecision();
+        Decision currentDecision = GetDecision(Random.Range(0 , decisions.Count - 1));
         currentDecision.Invoke();
     }
 
-    private Decision GetDecision()
+    private Decision GetDecision(int index , int iteration = 3)
     {
-        foreach (Decision d in decisions)
-        {
-            if(d.severity >= mood) return d;
+        if(iteration <= 0){
+            return decisions[0];
         }
+        Decision decision = decisions[index];
+        if(decision == null){return GetDecision(index-1);}
 
-        return decisions[decisions.Count-1];
+        if(decision.severity >= mood){
+            return decision;
+        }
+        return GetDecision(Random.Range(0 , index) , iteration - 1);
     }
 }
 

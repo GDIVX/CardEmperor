@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ public Pile(Stack<Card> cards , PileType type){
         }
         else{
             if(CardsMannager.Instance.discardPile.IsEmpty()){
-                Debug.LogWarning("No more cards!");
+                Prompt.Toast("<color=red><b>No More Cards to draw!</color><b>" , GameManager.Instance.GetCapitalDisplayer().transform.position , 1.5f , 30);
                 OnValueChange?.Invoke(this);
                 return null;
             }

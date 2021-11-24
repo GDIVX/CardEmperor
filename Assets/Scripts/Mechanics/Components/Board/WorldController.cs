@@ -43,8 +43,8 @@ public class WorldController : MonoBehaviour
 
     internal Vector3Int GetRandomTile()
     {
-        int x = UnityEngine.Random.Range(0, world.GetLength(0));
-        int y = UnityEngine.Random.Range(0, world.GetLength(1));
+        int x = UnityEngine.Random.Range(1, world.GetLength(0) - 1);
+        int y = UnityEngine.Random.Range(1, world.GetLength(1) - 1);
 
         return new Vector3Int(x,y,0);
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Assets.Scripts.Mechanics.Systems.Players;
+using Assets.Scripts.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,6 +50,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    internal CreatureDisplayer GetCapitalDisplayer()
+    {
+        return CreatureDisplayer.GetCreatureDisplayer(capital.ID);
+    }
+
     void Start()
     {
         turnSequenceMannager.StartNewRound();
@@ -57,7 +63,8 @@ public class GameManager : MonoBehaviour
     internal void GameOver()
     {
         OnGameOver?.Invoke();
-        Debug.Log("Game Over");
+        Prompt.Toast("<color=red><b>All Is Lost!</color></b>" , GetCapitalDisplayer().transform.position , 3 , 50);
+        //TODO move to end game scene
     }
     
     public void CheckIfCapitalDestroyed(Creature c){

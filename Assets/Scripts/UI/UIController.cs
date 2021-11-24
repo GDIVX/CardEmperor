@@ -16,11 +16,13 @@ public class UIController : MonoBehaviour
     public EventWindow eventWindow;
 
 
+
     void Awake()
     {
         if(Instance == null){
             _instance = this;
         }
+
     }
 
     void Start()

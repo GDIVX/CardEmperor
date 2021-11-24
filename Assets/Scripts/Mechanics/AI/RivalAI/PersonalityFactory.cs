@@ -12,13 +12,18 @@ public static class PersonalityFactory
             //Add new Decision to the list
             //Use a comment to mark each one
 
-            //Scout event
+            //Waiting
             new Decision(0 , ()=>{
+                Rival.Rival.personality.mood += .1f;
+            }),
+
+            //Scout event
+            new Decision(0.1f , ()=>{
                 Vector3Int pos = WorldController.Instance.GetRandomTile();
                 WorldTile tile = WorldController.Instance.world[pos.x , pos.y];
                 WorldTile[] area = tile.GetTilesInRange(2);
 
-                int rand = Random.Range(2,5);
+                int rand = Random.Range(1,3);
 
                 //Spawn observers in the area
                 for (var i = 0; i < rand; i++)
@@ -26,7 +31,7 @@ public static class PersonalityFactory
                     MonsterSpawner.Spawn("Observer" , (Vector3Int)area[Random.Range(0 , area.Length)].position , new WanderAgent());
                 }
                 
-                Rival.Rival.personality.mood += 0.1f;
+                Rival.Rival.personality.mood -= 0.1f;
             })
         };
 

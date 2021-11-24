@@ -112,7 +112,7 @@ public class WorldTile : IClickable
                 return;
             }
             if(selectedCreature.Player.IsMain()){
-                if(walkable || selectedCreature.flying ){
+                if(walkable || selectedCreature.flying || selectedCreature.attackRange > 0){
                     if(CreatureID == 0)
                         selectedCreature.MoveTo((Vector3Int)position);
                     else

@@ -22,12 +22,23 @@ public class BasicAbility : CreatureAbility
         if(distance <= creature.attackRange){
             //Roll attack dice
             int attackRoll = Dice.Roll(creature.Attack);
+            int attackAvarage = Mathf.RoundToInt(attackRoll / creature.Attack);
             //Roll armor dice
-            int armorRoll = Dice.Roll(target.Armor);
+            //Missing often is not fun, push the avarage roll to be lower then the attack roll
+            int armorRoll = Dice.Roll(target.Armor ,Mathf.RoundToInt( attackAvarage /2) );
 
-            int damage = armorRoll - attackRoll;
+            int damage = attackRoll - armorRoll;
 
-            Debug.Log($"Attack {creature.Attack} : {attackRoll} VS Armor {target.Armor} : {armorRoll} Results: {damage}");
+            if(creature.Player.IsMain()){
+                //nudge the numbers slightly in favour of the player
+                damage  = Mathf.RoundToInt(damage*Random.Range(1,1.25f));
+            }
+            else{
+                damage  = Mathf.RoundToInt(damage*Random.Range(0.25f,1.25f));
+            }
+
+            creature.ToastAttackFormated(damage , target.Hitpoint);
+
             if(damage > 0){
                 //attack passed
                 creature.OnAttackPassed(damage);

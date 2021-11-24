@@ -17,7 +17,7 @@ MonoBehaviour:
   cardType: 0
   description: <b>Flying</b>
   keywords: []
-  abilityScriptName: Cards abilitie
+  abilityScriptName: 
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0

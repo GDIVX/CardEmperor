@@ -64,7 +64,7 @@ public class CreatureData
    public Sprite icon;
    [VerticalGroup("Data/Stats")]
    [LabelWidth(100)]
-   public int hitpoint, speed, armor, attack , attackRange;
+   public int hitpoint, speed, armor, attack , attackRange , attacksPerTurn;
    [BoxGroup("script")]
    [HideLabel]
    [LabelWidth(100)]

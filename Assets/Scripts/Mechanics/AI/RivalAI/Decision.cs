@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Decision : IComparer<Decision>
+public class Decision : IComparer<Decision> , IComparable<Decision>
 {
     public float severity;
 
@@ -18,6 +18,11 @@ public class Decision : IComparer<Decision>
     public int Compare(Decision x, Decision y)
     {
         return Mathf.RoundToInt(x.severity - y.severity);
+    }
+
+    public int CompareTo(Decision other)
+    {
+        return Mathf.RoundToInt(severity - other.severity);
     }
 
     public void Invoke(){

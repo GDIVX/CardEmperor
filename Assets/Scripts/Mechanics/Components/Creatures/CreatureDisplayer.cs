@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Assets.Scripts.UI;
 
 [System.Serializable]
 public class CreatureDisplayer : MonoBehaviour , IClickable
@@ -82,5 +83,9 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         //TODO activate some shader
         transform.localScale = new Vector3(1 , 1 , 1);
         
+    }
+
+    public void Toast(string msg , float time ,float fontSize = 30 ){
+        Prompt.Toast(msg , transform.position , time , fontSize);
     }
 }

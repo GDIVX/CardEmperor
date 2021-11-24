@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using System;
 using System.Collections;
@@ -6,6 +7,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Vector3 = UnityEngine.Vector3;
 using Assets.Scripts.Mechanics.Systems.Players;
+using Debug = UnityEngine.Debug;
 
 [System.Serializable]
 public class Creature: IClickable
@@ -25,6 +27,8 @@ public class Creature: IClickable
     public bool amphibious{get{return _amphibious;}}
     public bool flying{get{return _flying;}}
     public bool pioneer{get{return _pioneer;}}
+    public int attacksPerTurn = 1;
+
 
     public static Action<Creature> OnCreatureDeath;
 
@@ -33,7 +37,7 @@ public class Creature: IClickable
 
     [ShowInInspector]
     [ReadOnly]
-    int hitpoint, armor, attack , speed, _attackRange , _ID , _PlayerID , _movement;
+    int hitpoint, armor, attack , speed, _attackRange , _ID , _PlayerID , _movement , _attacksAttempts;
     [ShowInInspector]
     [ReadOnly]
     Sprite _icon;
@@ -124,7 +128,7 @@ public class Creature: IClickable
 
     public static Creature GetCreature(int ID){
         if(CreatureExist(ID) == false){
-            Debug.LogError("Trying to get a creature that dose not exist");
+            UnityEngine.Debug.LogError("Trying to get a creature that dose not exist");
             return null;
         }
         return creaturesRegestry[ID];
@@ -136,7 +140,7 @@ public class Creature: IClickable
 
     public void OnLeftClick()
     {
-        Debug.Log("How did you get here?");
+        UnityEngine.Debug.Log("How did you get here?");
     }
 
     public void OnRightClick()
@@ -163,7 +167,8 @@ public class Creature: IClickable
         if(creature.Player ==  Player){
             ability.ActionOnFriendlyCreature(creature);
         }
-        else{
+        else if(attacksPerTurn > _attacksAttempts) {
+            _attacksAttempts++;
             ability.ActionOnEnemyCreature(creature);
         }
     }
@@ -194,6 +199,7 @@ public class Creature: IClickable
         if(turn.player == this.Player)
         {
             _movement = speed;
+            _attacksAttempts = 0;
         }
     }
 
@@ -217,4 +223,27 @@ public class Creature: IClickable
         var res = WorldController.Instance.map.CellToWorld(_position);
         
     }
+    public void ToastAttackFormated(int damage , int targetHitpoint)
+    {
+        CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
+
+        if(damage <= 0){
+            //Missed!
+            displayer.Toast($"<color=grey><b><i>Missed! {damage}</color></b></I>" , 1);
+            return;
+        }
+
+        float damageRelativeToHitpoints = damage / targetHitpoint;
+        float fontSize = Mathf.Clamp( 35 * damageRelativeToHitpoints , 24 , 50);
+
+        if(damageRelativeToHitpoints >= 1){
+            //fatal hit
+        displayer.Toast($"<color=red><b><i>FATAL! {damage}!</color></b></I>" , 1 , fontSize);
+            return;
+        }
+            displayer.Toast($"<color=blue><b><i>{damage}</color></b></I>" , 1 ,fontSize);
+
+        
+    }
+
 }
