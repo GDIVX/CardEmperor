@@ -15,9 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
   cardName: Capital
   cardType: 1
-  description: 'The heart of your civilization. If it falls to darkness, all is lost.
-
-    <br>
+  description: 'The last light in the darkness. Protect it at all cost!
 
     <b>Range
     2</b>'
@@ -39,6 +37,7 @@ MonoBehaviour:
     armor: 1
     attack: 1
     attackRange: 2
+    attacksPerTurn: 0
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 0

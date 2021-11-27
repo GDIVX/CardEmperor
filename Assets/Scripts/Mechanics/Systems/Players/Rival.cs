@@ -9,16 +9,14 @@ namespace Assets.Scripts.Mechanics.Systems.Players
     {
         public List<CreatureAgent> Agents = new List<CreatureAgent>();
 
-        public Personality personality;
+        public Personality personality => GetPersonality();
+        Personality _personality;
                 public Rival()
         {
             _ID = IDFactory.GetUniqueID();
             PlayersRegestry.Add(ID, this);
 
             _rival = this;
-
-            personality = PersonalityFactory.Generate();
-
         }
 
 
@@ -39,5 +37,11 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             GameManager.Instance.turnSequenceMannager.NextTurn();
         }
 
+        Personality GetPersonality(){
+            if(_personality == null){
+                _personality = PersonalityFactory.Generate();
+            }
+            return _personality;
+        }
     }
 }

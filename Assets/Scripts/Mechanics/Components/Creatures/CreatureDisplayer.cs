@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.UI;
+using System;
 
 [System.Serializable]
 public class CreatureDisplayer : MonoBehaviour , IClickable
@@ -87,5 +88,21 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
 
     public void Toast(string msg , float time ,float fontSize = 30 ){
         Prompt.Toast(msg , transform.position , time , fontSize);
+    }
+
+    void OnMouseEnter()
+    {
+        CreatureInspector.ShowCreatureCard(ID);
+    }
+
+    void  OnMouseExit()
+    {
+        CreatureInspector.Hide();
+    }
+
+    internal void UpdatePosition(Vector3Int newPosition)
+    {
+        var worldPosition = WorldController.Instance.map.CellToWorld(newPosition);
+        transform.LeanMove(worldPosition , 1).setEase(LeanTweenType.easeInSine);
     }
 }

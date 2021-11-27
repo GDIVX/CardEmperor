@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 912572620815807807}
   - component: {fileID: 4651393615588870746}
+  - component: {fileID: 367002907815116524}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -49,6 +50,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 12
+--- !u!58 &367002907815116524
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912572620815807792}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &912572621057301492
 GameObject:
   m_ObjectHideFlags: 0

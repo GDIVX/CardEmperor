@@ -176,7 +176,7 @@ public class Creature: IClickable
 
     public void MoveTo(Vector3Int target){      
         int distance = WorldController.DistanceOf(position , target);
-        if(distance <= _movement)
+        if(distance <= _movement && (flying || WorldController.Instance.world[target.x,target.y].walkable))
             {
                 _movement -= distance;
                 UpdatePosition(target);
@@ -213,14 +213,12 @@ public class Creature: IClickable
         tile = WorldController.Instance.world[newPosition.x , newPosition.y];
         tile.CreatureID = ID;
 
-        var from = WorldController.Instance.map.CellToWorld(_position);
-        _position = newPosition;
-
         //Move the displayer
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
-        var worldPosition = WorldController.Instance.map.CellToWorld(newPosition);
-        displayer.transform.position = worldPosition;
-        var res = WorldController.Instance.map.CellToWorld(_position);
+        displayer.UpdatePosition(newPosition);
+
+        _position = newPosition;
+
         
     }
     public void ToastAttackFormated(int damage , int targetHitpoint)

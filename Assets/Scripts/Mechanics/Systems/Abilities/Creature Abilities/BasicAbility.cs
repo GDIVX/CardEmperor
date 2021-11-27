@@ -37,7 +37,7 @@ public class BasicAbility : CreatureAbility
                 damage  = Mathf.RoundToInt(damage*Random.Range(0.25f,1.25f));
             }
 
-            creature.ToastAttackFormated(damage , target.Hitpoint);
+            target.ToastAttackFormated(damage , target.Hitpoint);
 
             if(damage > 0){
                 //attack passed
