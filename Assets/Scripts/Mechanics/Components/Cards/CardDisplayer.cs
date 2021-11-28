@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Create a GUI of a card with play controls by the player. Can call for the card ability.
+/// Create a GUI of a card with active controls by the player. Can call for the card ability.
 /// </summary>
 
 public class CardDisplayer : CardGUI ,IClickable
@@ -64,7 +64,6 @@ public class CardDisplayer : CardGUI ,IClickable
         if(GameManager.CurrentSelected == this) {return;}
 
         originalScale = transform.localScale;
-        LeanTween.scale(gameObject , originalScale * 1.2f , .2f);
         GameManager.CurrentSelected = this;
     }
 
@@ -72,7 +71,6 @@ public class CardDisplayer : CardGUI ,IClickable
     {
         if(GameManager.CurrentSelected != this) {return;}
 
-        LeanTween.scale(gameObject , originalScale, .2f);
         
         GameManager.CurrentSelected = null;
     }
@@ -84,12 +82,17 @@ public class CardDisplayer : CardGUI ,IClickable
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        LeanTween.scale(gameObject ,new Vector3(1.2f,1.2f,1.2f) , .2f);
+        UIController.Instance.handGUI.RearrangeCards(
+            GetComponent<RectTransform>().rect.width*.8f);
         transform.SetAsLastSibling();
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
+        UIController.Instance.handGUI.RearrangeCards();
         UIController.Instance.handGUI.ArrangeCard(ID);
+        LeanTween.scale(gameObject , new Vector3(1,1,1), .2f);
     }
     private bool IsIDTaken(int ID)
     {

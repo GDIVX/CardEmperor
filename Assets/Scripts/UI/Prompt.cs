@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI
     {
         
         private static Prompt Main;
-        public LeanTweenType ease; 
+    
         
         void Awake()
         {
@@ -24,7 +24,7 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public static void Toast(string massage , Vector3 worldPosition , float time , float fontSize = 30f){
+        public static void Toast(string massage , Vector3 worldPosition , float time , float fontSize = 30f , LeanTweenType ease = LeanTweenType.easeInOutSine){
 
             GameObject display = GetDisplay();
             TextMeshProUGUI text = display.GetComponent<TextMeshProUGUI>();
@@ -35,7 +35,11 @@ namespace Assets.Scripts.UI
             text.text = massage;
             text.fontSize = fontSize;
 
-            LeanTween.value(display , text.alpha , 0 , time).setEase(Main.ease).setOnUpdate(prompt.SetAlpha).setOnComplete(prompt.Rest);
+            LeanTween.value(display , text.alpha , 0 , time).setEase(ease).setOnUpdate(prompt.SetAlpha).setOnComplete(prompt.Rest);
+        }
+
+        public static void ToastCenter(String massage , float time , float fontSize = 30f , LeanTweenType ease = LeanTweenType.easeInOutSine){
+            Toast(massage , GameManager.Instance.GetCapitalDisplayer().transform.position , time , fontSize , ease);
         }
 
         public void Rest()

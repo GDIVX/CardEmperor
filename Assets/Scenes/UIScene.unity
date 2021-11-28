@@ -2178,6 +2178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 870260262}
   - component: {fileID: 870260263}
+  - component: {fileID: 870260264}
   m_Layer: 5
   m_Name: Creature Inspector
   m_TagString: Untagged
@@ -2217,6 +2218,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GUI: {fileID: 6108676922395768260, guid: d3a1d6b22d3bd2e40b53ebb2edbd51dc, type: 3}
+--- !u!114 &870260264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870260261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &906003707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4966,7 +4993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b50b68bdf8cf9694abc82bee7570c16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ease: 16
 --- !u!1 &2025974922
 GameObject:
   m_ObjectHideFlags: 0

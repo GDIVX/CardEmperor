@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Mechanics.Systems.Players;
+using Assets.Scripts.UI;
 using UnityEngine;
 
 
@@ -44,7 +45,7 @@ public abstract class CardAbility {
 
         if(leftoverFood < 0 || leftoverIndustry < 0 || leftoverMagic < 0){
             //we can't afford to play this card
-            Debug.Log("Can't afford this card");
+            Prompt.ToastCenter($"<color=blue><b>No more cards to draw!</color></b>" , 1 , 35);
             return false;
         }
         player.foodPoints.SetValue(leftoverFood);

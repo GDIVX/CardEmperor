@@ -15,7 +15,7 @@ public class HandGUI : MonoBehaviour
 
     [SerializeField]
     [OnValueChanged("RearrangeCards")]
-    float spacing = 95f;
+    public float spacing = 95f;
     float oldSpacing;
     [ShowInInspector]
     List<CardDisplayer> _cardDisplayers;
@@ -76,7 +76,7 @@ public class HandGUI : MonoBehaviour
         RearrangeCards(spacing);
     }
 
-        private void RearrangeCards(float spacing)
+    public void RearrangeCards(float spacing)
     {
         if(!Application.isPlaying){return;}
         float totalHandLength = _cardDisplayers.Count * spacing;
@@ -92,10 +92,14 @@ public class HandGUI : MonoBehaviour
 
         for (int i = 0; i < _cardDisplayers.Count; i++)
         {
-            _cardDisplayers[i].transform.position = new Vector3(x,y,z);
+            _cardDisplayers[i].transform.LeanMove(new Vector3(x,y,z) , .2f).setEase(LeanTweenType.easeInOutSine);
             _cardDisplayers[i].transform.SetSiblingIndex(i);
             x += spacing;
         }
+    }
+
+    public void RearrangeCards(){
+        RearrangeCards(spacing);
     }
 
     public void ArrangeCard(int ID){

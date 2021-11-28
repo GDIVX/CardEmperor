@@ -15,7 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: d9104ee70be3b3345961340fcdcc5bee, type: 3}
   cardName: Village
   cardType: 3
-  description: Collect resources but don't expand territory.<br><b>Range 2</b>
+  description: Collect Resources .<br><b>Range 2</b>
   keywords:
   - value: 2
     keyword: 0
@@ -34,6 +34,7 @@ MonoBehaviour:
     armor: 1
     attack: 1
     attackRange: 2
+    attacksPerTurn: 0
     abilityScriptName: BasicAbility
     amphibious: 1
     flying: 0

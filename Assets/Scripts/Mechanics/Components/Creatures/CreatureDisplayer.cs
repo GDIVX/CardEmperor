@@ -97,7 +97,8 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
 
     void  OnMouseExit()
     {
-        CreatureInspector.Hide();
+        if(GameManager.CurrentSelected != this)
+            CreatureInspector.Hide();
     }
 
     internal void UpdatePosition(Vector3Int newPosition)
