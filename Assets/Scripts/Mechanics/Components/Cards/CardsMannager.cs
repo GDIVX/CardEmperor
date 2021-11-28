@@ -16,6 +16,7 @@ public class CardsMannager : MonoBehaviour
     public Pile exilePile{get{return _exilePile;}}
 
     public DeckData deckData;
+    public Deck deck;
     public GameObject cardTamplate{get{return _cardTamplate;}}
     public Hand hand{get{return _hand;}}
 
@@ -45,12 +46,14 @@ public class CardsMannager : MonoBehaviour
         _exilePile = new Pile(Pile.PileType.Exile);
 
 
-        _drawPile = new Pile(GenerateDeck() , Pile.PileType.Draw);
+        _drawPile = new Pile(GenerateDrawPile() , Pile.PileType.Draw);
         _drawPile.Shuffle();
+
+        deck = new Deck(deckData);
     }
 
 
-    private Stack<Card> GenerateDeck()
+    private Stack<Card> GenerateDrawPile()
     {   
         Stack<CardData> dataBase = deckData.ExtractDeck();
         Stack<Card> res = new Stack<Card>();
@@ -128,13 +131,13 @@ public class CardsMannager : MonoBehaviour
 
         switch(rarity){
             case Rarity.COMMON:
-                cards = deckData.commonCards;
+                cards = deck.commonCards;
                 break;
             case Rarity.UNCOMMON:
-                cards = deckData.uncommonCards;
+                cards = deck.uncommonCards;
                 break;
             case Rarity.RARE:
-                cards = deckData.rareCards;
+                cards = deck.rareCards;
                 break;
         }
 
