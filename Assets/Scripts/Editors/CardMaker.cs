@@ -6,6 +6,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
+using static RandomSelector;
 
 public class CardMaker : OdinEditorWindow
 {
@@ -33,7 +34,13 @@ public class CardMaker : OdinEditorWindow
     public string description;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
+    public Rarity rarity;
+    [VerticalGroup("Data/Info")]
+    [LabelWidth(100)]
     public KeywordDefinition[] keywords;
+    [VerticalGroup("Data/Associated Cards")]
+    [LabelWidth(100)]
+    public List<CardData> UpgradeOptions , UnlockCards;
     [BoxGroup("Script")]
     [HideLabel]
     [LabelWidth(100)]
@@ -101,6 +108,9 @@ public class CardMaker : OdinEditorWindow
         data.priority = priority;
         creatureData.abilityScriptName = Path.GetFileName(creatureAbility).Trim(charsToTrim);
         data.creatureData = creatureData;
+        data.UpgradeOptions = UpgradeOptions;
+        data.UnlockCards = UnlockCards;
+        data.rarity = rarity;
 
         AssetDatabase.CreateAsset(data , $"{SaveFolder}/{cardName}.asset");
         AssetDatabase.SaveAssets();
@@ -110,7 +120,7 @@ public class CardMaker : OdinEditorWindow
         return (cardType == CardData.CardType.Creature ||
         cardType == CardData.CardType.Town ||
         cardType == CardData.CardType.Fort ||
-        cardType == CardData.CardType.outpost);
+        cardType == CardData.CardType.worker);
     }
 
     bool NotValidName(){

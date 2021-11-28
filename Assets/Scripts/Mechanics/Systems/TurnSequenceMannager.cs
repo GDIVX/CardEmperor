@@ -37,7 +37,7 @@ public class TurnSequenceMannager
 
         UpdateUI();
         if(daysCount > NewCardsEventDaysCount())
-            GameEventMannager.FireNewCardEvent();
+            GameEventMannager.FireAddCardEvent();
     }
 
 

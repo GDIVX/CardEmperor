@@ -17,7 +17,7 @@ public static class GameEventMannager
         return gameEvent;
     }
 
-    public static CardEvent FireNewCardEvent(){
+    public static CardEvent FireAddCardEvent(){
         
         List<Card> cards = new List<Card>();
 
@@ -29,8 +29,10 @@ public static class GameEventMannager
         cards.Add(CardsMannager.Instance.CreateExileCard());
 
         CardEvent cardEvent = new CardEvent("End of the day. New forces wish to join you. Choose one:" , cards , (x)=>{
-            CardsMannager.Instance.discardPile.Drop(Card.Copy(x , x.playerID));
-            //TODO fire a new weekly event
+            Card card = Card.Copy(x,x.playerID);
+            CardsMannager.Instance.discardPile.Drop(card);
+            CardsMannager.Instance.deck.AddCardOption(card);
+            
             UIController.Instance.eventWindow.Hide();
             GameManager.Instance.level++;
 

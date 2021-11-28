@@ -15,4 +15,5 @@ public class DeckData : ScriptableObject
         return new Stack<CardData>(starterDeck);
     }
 
+
 }

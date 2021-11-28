@@ -67,6 +67,20 @@ public class Card
       return Card.CardsRegistry[ID];
    }
 
+   public static Card Replace(Card original, string newCardName){
+      Card newCard = Card.BuildCard(newCardName , original.playerID);
+
+      newCard._ID = original.ID;
+      original._ID = 0;
+
+      CardDisplayer displayer = CardDisplayer.GetDisplayer(newCard.ID);
+      if(displayer != null && displayer.isActiveAndEnabled){
+         displayer.SetDisplayActive(true);
+      }
+
+      return newCard;
+   }
+
    public static bool CardExist(int ID){
       return CardsRegistry.ContainsKey(ID);
    }

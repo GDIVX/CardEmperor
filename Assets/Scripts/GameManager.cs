@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     [Button]
     public void debug_fireCardEvent(){
-        GameEventMannager.FireNewCardEvent();
+        GameEventMannager.FireAddCardEvent();
     }
 
     [Button]

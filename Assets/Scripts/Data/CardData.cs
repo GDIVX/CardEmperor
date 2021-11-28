@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 using Sirenix.OdinInspector;
+using static RandomSelector;
 
 [InlineEditor]
 [CreateAssetMenu(menuName = "Cards/Deck Data")]
@@ -51,8 +52,13 @@ public class CardData : ScriptableObject
    [Range(0,1)]
    public float priority;
    public CreatureData creatureData;
+   public Rarity rarity; 
 
-   public enum CardType{Creature , Town , Fort , outpost , Magic , Miracle , Fate , Curse}
+   public enum CardType{Creature , Town , Fort , worker , Magic , Miracle , Fate , Curse}
+
+   public List<CardData> UpgradeOptions , UnlockCards;
+
+   public bool reserve;
 }
 
 [System.Serializable]

@@ -147,7 +147,7 @@ public class CardsMannager : MonoBehaviour
     }
 
     public Card CreateExileCard(){
-        List<CardData> cards = deckData.exileCards;
+        List<CardData> cards = deck.exileCards;
         int rand = Random.Range(0 , cards.Count);
         CardData data = cards[rand];
         return new Card(data , Player.Main.ID);
