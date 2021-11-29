@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AddHeal : CardAbility
 {
-    public override void Activate(Vector3Int targetPosition)
+    protected override void _Activate(Vector3Int targetPosition)
     {
         Creature creature = Creature.GetCreatureByPosition(targetPosition);
         if(creature == null){
@@ -18,7 +18,7 @@ public class AddHeal : CardAbility
 
     }
 
-    public override void Activate(CardDisplayer targetCard)
+    protected override void _Activate(CardDisplayer targetCard)
     {
     }
 

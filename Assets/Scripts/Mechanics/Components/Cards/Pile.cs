@@ -37,7 +37,7 @@ public Pile(Stack<Card> cards , PileType type){
         }
         else{
             if(CardsMannager.Instance.discardPile.IsEmpty()){
-                Prompt.Toast("<color=red><b>No More Cards to draw!</color><b>" , GameManager.Instance.GetCapitalDisplayer().transform.position , 1.5f , 30);
+                Prompt.ToastCenter("<color=red><b>No More Cards to draw!</color><b>" , 1.5f , 30);
                 OnValueChange?.Invoke(this);
                 return null;
             }

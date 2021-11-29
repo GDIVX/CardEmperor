@@ -85,20 +85,17 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             ActivateAndShowText(transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>() , card.attack.ToString());
             ActivateAndShowText(transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>() , card.armor.ToString());
             ActivateAndShowText(transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>() , card.hitpoint.ToString());
-            ActivateAndShowText(transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>() ,card.foodPrice.ToString());
-            ActivateAndShowText(transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>() , card.industryPrice.ToString());
-            ActivateAndShowText(transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>() , card.MagicPrice.ToString());          
         }
         else{
-            transform.GetChild(4).gameObject.SetActive(false);
-            transform.GetChild(5).gameObject.SetActive(false);
-            transform.GetChild(6).gameObject.SetActive(false);
             transform.GetChild(7).gameObject.SetActive(false);
             transform.GetChild(8).gameObject.SetActive(false);
             transform.GetChild(9).gameObject.SetActive(false);
             transform.GetChild(10).gameObject.SetActive(false);
         }
 
+            ActivateAndShowText(transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>() ,card.foodPrice.ToString());
+            ActivateAndShowText(transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>() , card.industryPrice.ToString());
+            ActivateAndShowText(transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>() , card.MagicPrice.ToString());          
 
 
         transform.SetParent(UIController.Instance.handGUI.transform);

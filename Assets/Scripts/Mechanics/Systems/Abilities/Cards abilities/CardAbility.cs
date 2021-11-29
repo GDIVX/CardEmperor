@@ -11,10 +11,19 @@ public abstract class CardAbility {
 [HideInInspector]
     public int ID{get =>_ID;}
     
-    public abstract void Activate(Vector3Int targetPosition);
-    public abstract void Activate(CardDisplayer targetCard);
+    protected abstract void _Activate(Vector3Int targetPosition);
+    protected abstract void _Activate(CardDisplayer targetCard);
     protected abstract void OnStart();
     protected abstract void OnTriggerEnabled();
+
+    public void Activate(Vector3Int targetPosition){
+        if(CanAfford(ID)){
+            _Activate(targetPosition);
+        }
+        else{
+            Prompt.ToastCenter("<color=blue>Can't Afford To Play The Card</color>" , .8f);
+        }
+    }
 
     static Dictionary<int,CardAbility> regestry = new Dictionary<int, CardAbility>();
     private int _ID;
@@ -45,7 +54,6 @@ public abstract class CardAbility {
 
         if(leftoverFood < 0 || leftoverIndustry < 0 || leftoverMagic < 0){
             //we can't afford to play this card
-            Prompt.ToastCenter($"<color=blue><b>No more cards to draw!</color></b>" , 1 , 35);
             return false;
         }
         player.foodPoints.SetValue(leftoverFood);

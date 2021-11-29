@@ -10,20 +10,19 @@ public class CreatureMaker : CardAbility
 
     protected Creature creature;
 
-    public override void Activate(Vector3Int targetPosition)
+    protected override void _Activate(Vector3Int targetPosition)
     {
         
         if(WorldController.Instance.IsTileExist(targetPosition)){
             WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];
-            if((!tile.walkable && !flying) || tile.CreatureID != 0){
+            if( tile.CreatureID != 0){
+                return;
+            }
+            if(!tile.walkable && !creature.flying){
                 return;
             }
         }
         else{
-            return;
-        }
-
-        if(!CardAbility.CanAfford(ID)){
             return;
         }
 
@@ -47,7 +46,7 @@ public class CreatureMaker : CardAbility
         CardsMannager.Instance.hand.RemoveCard(ID);
     }
 
-    public override void Activate(CardDisplayer targetCard)
+    protected override void _Activate(CardDisplayer targetCard)
     {
         //nothing happenes 
     }

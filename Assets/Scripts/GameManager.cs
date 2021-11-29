@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     internal void GameOver()
     {
         OnGameOver?.Invoke();
-        Prompt.Toast("<color=red><b>All Is Lost!</color></b>" , GetCapitalDisplayer().transform.position , 3 , 50);
+        Prompt.ToastCenter("<color=red><b>All Is Lost!</color></b>", 3 , 50);
         //TODO move to end game scene
     }
     
