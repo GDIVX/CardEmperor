@@ -74,12 +74,8 @@ public class CreatureInspector : MonoBehaviour
             current.GUI.transform.GetChild(3).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
             current.GUI.transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Attack,card.attack);
-            if(creature.Speed > 0){
-                current.GUI.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{creature.movement} / {GetFormatedString(creature.Speed,card.speed)}";
-            }
-            else{
-                current.GUI.transform.GetChild(9).gameObject.SetActive(false);
-            }
+            current.GUI.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{creature.movement} / {GetFormatedString(creature.Speed,card.speed)}";
+
             current.GUI.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Armor ,card.armor);
             current.GUI.transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Hitpoint , card.hitpoint);
 
