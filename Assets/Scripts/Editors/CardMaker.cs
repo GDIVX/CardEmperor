@@ -30,6 +30,9 @@ public class CardMaker : OdinEditorWindow
     public string cardName;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
+    public bool reserve;
+    [VerticalGroup("Data/Info")]
+    [LabelWidth(100)]
     [TextArea]
     public string description;
     [VerticalGroup("Data/Info")]
@@ -111,6 +114,7 @@ public class CardMaker : OdinEditorWindow
         data.UpgradeOptions = UpgradeOptions;
         data.UnlockCards = UnlockCards;
         data.rarity = rarity;
+        data.reserve = reserve;
 
         AssetDatabase.CreateAsset(data , $"{SaveFolder}/{cardName}.asset");
         AssetDatabase.SaveAssets();

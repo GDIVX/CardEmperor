@@ -28,7 +28,7 @@ public abstract class CreatureAgent
     protected WorldTile GetFavorableTile(){
         Creature creature = Creature.GetCreature(ID);
         WorldTile currentTile = WorldController.Instance.world[creature.position.x , creature.position.y];
-        WorldTile tile = SearchFavorablePosition(currentTile  , creature.Speed);
+        WorldTile tile = SearchFavorablePosition(currentTile  , creature.speed);
 
         WorldController.Instance.DrawTileGizmo(tile);
         

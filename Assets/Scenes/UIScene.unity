@@ -2216,7 +2216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8e57a5441f5244fa1f6f49a65d9b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUI: {fileID: 6108676922395768260, guid: d3a1d6b22d3bd2e40b53ebb2edbd51dc, type: 3}
+  GUI: {fileID: 6108676922395768260, guid: 92f49434cbf1d5747a488a7c8430336b, type: 3}
+  effectGUI: {fileID: 8550027261214430171, guid: 57244875c2fdb3f4fb7c768b6a1c4bd5, type: 3}
 --- !u!1 &906003707
 GameObject:
   m_ObjectHideFlags: 0

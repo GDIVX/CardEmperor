@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac70aa301217b1488184b7b3caaca98, type: 3}
+  m_Name: Vigor
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: b5f97de2308448c4e9696a27ff2f4b25, type: 3}
+  color: {r: 1, g: 0.4208217, b: 0, a: 1}
+  toolTipHeader: Vigor
+  tooltipDescription: When this creature is attacked, block _X_ incoming damage.
+    Reduce by 1 by the end of the turn.
