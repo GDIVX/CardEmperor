@@ -60,23 +60,45 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             Debug.LogError("card is not set to CardGUI");
             return;
         }
-        transform.GetChild(1).GetChild(0).
+
+        transform.GetChild(0).GetComponent<Image>().sprite = card.data.image;
+
+        transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
+
+        transform.GetChild(2).GetChild(0).
             GetComponent<TextMeshProUGUI>().text = card.data.cardType.ToString();
 
-        transform.GetChild(3).GetComponent<Image>().sprite = card.data.image;
+        transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
+        transform.GetChild(3).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
-        transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
+        if(card.data.cardType == CardData.CardType.Creature || 
+        card.data.cardType == CardData.CardType.Town || 
+        card.data.cardType == CardData.CardType.Fort || 
+        card.data.cardType == CardData.CardType.worker ){
 
-        transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
-        transform.GetChild(2).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
+            if(card.speed != 0){
+                ActivateAndShowText(transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>() , card.speed.ToString());
+            }
+            else{
+                transform.GetChild(9).gameObject.SetActive(false);
+            }
+            ActivateAndShowText(transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>() , card.attack.ToString());
+            ActivateAndShowText(transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>() , card.armor.ToString());
+            ActivateAndShowText(transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>() , card.hitpoint.ToString());
+            ActivateAndShowText(transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>() ,card.foodPrice.ToString());
+            ActivateAndShowText(transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>() , card.industryPrice.ToString());
+            ActivateAndShowText(transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>() , card.MagicPrice.ToString());          
+        }
+        else{
+            transform.GetChild(4).gameObject.SetActive(false);
+            transform.GetChild(5).gameObject.SetActive(false);
+            transform.GetChild(6).gameObject.SetActive(false);
+            transform.GetChild(7).gameObject.SetActive(false);
+            transform.GetChild(8).gameObject.SetActive(false);
+            transform.GetChild(9).gameObject.SetActive(false);
+            transform.GetChild(10).gameObject.SetActive(false);
+        }
 
-        transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.attack.ToString();
-        transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.speed.ToString();
-        transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.armor.ToString();
-        transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.hitpoint.ToString();
-        transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.foodPrice.ToString();
-        transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.industryPrice.ToString();
-        transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.MagicPrice.ToString();
 
 
         transform.SetParent(UIController.Instance.handGUI.transform);
@@ -84,5 +106,9 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         gameObject.SetActive(true);
     }
 
+    void ActivateAndShowText(TextMeshProUGUI text  , string value){
+        text.text = value; 
+        text.gameObject.SetActive(true);
+    }
 
 }

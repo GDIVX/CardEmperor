@@ -43,10 +43,6 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         Creature creature = Creature.GetCreature(ID);
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = creature.icon;
-        transform.GetChild(1).GetComponent<TextMeshPro>().text = creature.Hitpoint.ToString();
-        transform.GetChild(2).GetComponent<TextMeshPro>().text = creature.Armor.ToString();
-        transform.GetChild(3).GetComponent<TextMeshPro>().text = creature.Attack.ToString();
-        transform.GetChild(4).GetComponent<TextMeshPro>().text = creature.Speed.ToString();
 
         transform.name = Card.GetCard(ID).data.cardName;
 

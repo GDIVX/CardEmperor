@@ -19,8 +19,6 @@ MonoBehaviour:
   keywords:
   - value: 2
     keyword: 0
-  - value: 0
-    keyword: 24
   abilityScriptName: VillageMaker
   foodPrice: 0
   industryPrice: 0
@@ -39,3 +37,7 @@ MonoBehaviour:
     amphibious: 1
     flying: 0
     pioneer: 0
+  rarity: 1
+  UpgradeOptions: []
+  UnlockCards: []
+  reserve: 0

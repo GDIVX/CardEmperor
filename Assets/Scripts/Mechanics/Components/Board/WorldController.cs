@@ -43,10 +43,16 @@ public class WorldController : MonoBehaviour
 
     internal Vector3Int GetRandomTile()
     {
-        int x = UnityEngine.Random.Range(1, world.GetLength(0) - 1);
-        int y = UnityEngine.Random.Range(1, world.GetLength(1) - 1);
+        try{
+            int x = UnityEngine.Random.Range(1, world.GetLength(0) - 1);
+            int y = UnityEngine.Random.Range(1, world.GetLength(1) - 1);
 
-        return new Vector3Int(x,y,0);
+            return new Vector3Int(x,y,0);
+        }
+        catch(NullReferenceException e){
+            Debug.LogError($"Calling world before it was initialized : {e}");
+            return Vector3Int.zero;
+        }
     }
 
     internal void DrawTileGizmo(WorldTile tile)
@@ -63,16 +69,17 @@ public class WorldController : MonoBehaviour
         else{
             _instance = this;
         }
-    }
-
-    void Start()
-    {
+        
         WorldGenerator.GenerateWorld(worldGenData , map);
         
         int x = Mathf.RoundToInt(worldGenData.size.x / 2);
         int y = Mathf.RoundToInt(worldGenData.size.y / 2);
         Creature capital = Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
         GameManager.Instance.capital = capital;
+    }
+
+    void Start()
+    {
     }
 
 

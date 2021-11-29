@@ -63,23 +63,30 @@ public class CreatureInspector : MonoBehaviour
 
         var delay = LeanTween.delayedCall(.2f , ()=>{
 
-            current.GUI.transform.GetChild(1).GetChild(0).
+            current.GUI.transform.GetChild(2).GetChild(0).
                 GetComponent<TextMeshProUGUI>().text = card.data.cardType.ToString();
 
-            current.GUI.transform.GetChild(3).GetComponent<Image>().sprite = card.data.image;
+            current.GUI.transform.GetChild(0).GetComponent<Image>().sprite = card.data.image;
 
-            current.GUI.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
+            current.GUI.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
 
-            current.GUI.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
-            //current.transform.GetChild(2).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
+            current.GUI.transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
+            current.GUI.transform.GetChild(3).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
             current.GUI.transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Attack,card.attack);
-            current.GUI.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{creature.movement} / {GetFormatedString(creature.Speed,card.speed)}";
+            if(creature.Speed > 0){
+                current.GUI.transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{creature.movement} / {GetFormatedString(creature.Speed,card.speed)}";
+            }
+            else{
+                current.GUI.transform.GetChild(9).gameObject.SetActive(false);
+            }
             current.GUI.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Armor ,card.armor);
             current.GUI.transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.Hitpoint , card.hitpoint);
-            current.GUI.transform.GetChild(4).GetChild(0).gameObject.SetActive(false);
-            current.GUI.transform.GetChild(5).GetChild(0).gameObject.SetActive(false);
-            current.GUI.transform.GetChild(6).GetChild(0).gameObject.SetActive(false);
+
+            //TODO remove
+            current.GUI.transform.GetChild(4).gameObject.SetActive(false);
+            current.GUI.transform.GetChild(5).gameObject.SetActive(false);
+            current.GUI.transform.GetChild(6).gameObject.SetActive(false);
 
             current.GUI.gameObject.SetActive(true);
         });
@@ -88,6 +95,8 @@ public class CreatureInspector : MonoBehaviour
     }
 
     static string GetFormatedString(int currentValue , int otherValue){
+
+
         if(currentValue > otherValue){
             return $"<color=green><b>{currentValue}</color></b>";
         }
