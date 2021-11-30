@@ -136,7 +136,7 @@ public class CreatureInspector : MonoBehaviour
             return $"<color=green><b>{currentValue}</color></b>";
         }
         if(currentValue < otherValue){
-            return $"<color=green><b>{currentValue}</color></b>";
+            return $"<color=red><b>{currentValue}</color></b>";
         }
             return currentValue.ToString();
     }

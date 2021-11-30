@@ -156,6 +156,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6efa89e54faa3459985753d4436e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capital:
+    attacksPerTurn: 0
+    damageBonus: 0
+    blockBonus: 0
+    hitpoints: 0
+    armor: 0
+    attack: 0
+    speed: 0
+    attackRange: 0
+    attacksAttempts: 0
   definitions: {fileID: 11400000, guid: acb2431bcd23cc34bbc8f74f7b7ccd59, type: 2}
   level: 0
 --- !u!4 &1181528906

@@ -36,8 +36,10 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         }
 
         public void Remove(){
+            Creature.GetCreature(creatureID).RemoveEffect(this);
             _ID = 0;
             creatureID = 0;
+            OnRemoved();
         }
 
         public bool IsActive(){
@@ -51,6 +53,7 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         }
 
         public void OnTurnEnd(){
+            Debug.Log("!");
             if(IsActive()){
                 _OnTurnEnd();
             }
@@ -64,6 +67,7 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         /// Called when a turn ends
         /// </summary>
         protected abstract void _OnTurnEnd();
+        protected abstract void OnRemoved();
 
         public static Effect GetEffect(int ID){
             return regestry[ID];

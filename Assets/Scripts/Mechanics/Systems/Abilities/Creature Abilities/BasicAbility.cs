@@ -30,6 +30,7 @@ public class BasicAbility : CreatureAbility
                 target.TakeDamage(damage);
             }else{
                 //attack blocked
+                GlobalDelegates.OnAttackBlocked?.Invoke(creature , target);
                 target.OnAttackBlocked(damage);
             }
         }

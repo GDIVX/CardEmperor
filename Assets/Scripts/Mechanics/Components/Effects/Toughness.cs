@@ -4,11 +4,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.Mechanics.Components.Effects
 {
-    public class Heal : Effect
+    public class Toughness : Effect
     {
-        public Heal(int value) : base(value)
+        public Toughness(int value) : base(value)
         {
-            UIData = GetData("Heal");
+            UIData = GetData("Toughness");
+        }
+
+        protected override void OnRemoved()
+        {
         }
 
         protected override void _OnCreated()
@@ -21,7 +25,7 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         protected override void _OnTurnEnd()
         {
             value--;
-            Creature.GetCreature(creatureID).blockBonus = value;
+            Creature.GetCreature(creatureID).blockBonus--;
             if(value <= 0){
                 Remove();
             }

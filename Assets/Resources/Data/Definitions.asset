@@ -66,3 +66,19 @@ MonoBehaviour:
   - keyword: 2
     description: When this creature is attacked, block _X_ incoming damage. Reduce
       by 1 by the end of the turn.
+  - keyword: 3
+    description: Trigger an additionl effect when the creature is near another freindly
+      creature
+  - keyword: 5
+    description: When you have 10 <color=yellow>Omen</color> you draw a card from
+      the <color=yellow>resever pile</color>
+  - keyword: 4
+    description: Attacks deals + _X_ damage. If this creature delt unblocked damage
+      in this turn, adds <color=yellow>+1 Aim</color>. Else, it loose all of its
+      Aim.
+  - keyword: 6
+    description: Adds to the creature _X_ hitpoints each turn. Reduce by 1 by the
+      end of the turn.
+  - keyword: 7
+    description: After playing this card, it is discarded into the exile pile. You
+      don't reshaffle cards from the exile pile.

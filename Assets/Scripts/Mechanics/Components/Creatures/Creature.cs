@@ -15,6 +15,8 @@ public class Creature: IClickable
 {
 
     public Sprite icon { get => _icon;}
+
+
     public Vector3Int position{get => _position;}
     public int ID{get => _ID;}
     public int PlayerID{get => _PlayerID;}
@@ -112,7 +114,7 @@ public class Creature: IClickable
     public void AddEffect(Effect effect){
         if(effects.ContainsKey(effect.GetType())){
             effects[effect.GetType()].value += effect.value;
-            effect.OnCreated();
+            effects[effect.GetType()].OnCreated();
             return;
         }
 
@@ -137,12 +139,12 @@ public class Creature: IClickable
 
     internal void OnAttackPassed(int damage)
     {
-        //TODO Fun animation
+        GlobalDelegates.OnSuccessfulAttack?.Invoke(this);
     }
 
     public static Creature GetCreature(int ID){
         if(CreatureExist(ID) == false){
-            UnityEngine.Debug.LogError("Trying to get a creature that dose not exist");
+            UnityEngine.Debug.LogError($"Trying to get a creature that dose not exist with ID {ID}");
             return null;
         }
         return creaturesRegestry[ID];
@@ -247,6 +249,10 @@ public class Creature: IClickable
         
     }
 
+    public void RemoveEffect(Effect effect){
+        effects.Remove(effect.GetType());
+    }
+
     void OnTurnStart(Turn turn){
         if(turn == null || turn.player == null){
             return;
@@ -264,7 +270,9 @@ public class Creature: IClickable
         }
         if(turn.player == this.Player)
         {
-            foreach (var typeEffectPair in effects)
+            var effectsCopy = new Dictionary<Type,Effect>(effects);
+
+            foreach (var typeEffectPair in effectsCopy)
             {
                 typeEffectPair.Value.OnTurnEnd();
             }
@@ -282,5 +290,19 @@ public class Creature: IClickable
             return null;
         }
         return Creature.GetCreature(tile.CreatureID);
+    }
+    internal static Creature[] GetAll(int playerID)
+    {
+        List<Creature> res = new List<Creature>();
+        List<Creature> regestry = new List<Creature>(creaturesRegestry.Values);
+
+        foreach (Creature creature in regestry)
+        {
+            if(creature.PlayerID == playerID){
+                res.Add(creature);
+            }
+        }
+
+        return res.ToArray();
     }
 }

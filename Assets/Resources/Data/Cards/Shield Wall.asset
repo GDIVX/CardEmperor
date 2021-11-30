@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
-  m_Name: Invigorate
+  m_Name: Shield Wall
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 86ed2ffddb8ae5e4a820ef7930002a0c, type: 3}
-  cardName: Invigorate
+  image: {fileID: 21300000, guid: a8ae1265a60168d4991796c4ca51ac20, type: 3}
+  cardName: Shield Wall
   cardType: 4
-  description: Add 5 Vigor to a creature
+  description: ' <b>Formation:</b> Adds  1 vigor per adjecent friendly creature.'
   keywords:
-  - value: 5
+  - value: 1
     keyword: 2
-  abilityScriptName: AddVigor
-  foodPrice: 0
+  - value: 0
+    keyword: 3
+  abilityScriptName: ShieldWall
+  foodPrice: 1
   industryPrice: 0
-  MagicPrice: 1
+  MagicPrice: 0
   Time: 0
-  priority: 0.584
+  priority: 0.5
   creatureData:
     icon: {fileID: 21300000, guid: b346e960ed97afc43ad56f8df15a908a, type: 3}
     hitpoint: 10

@@ -12,6 +12,7 @@ public class Deck
     internal List<CardData> uncommonCards;
     internal List<CardData> rareCards;
     internal List<CardData> exileCards;
+    public CardData reseveCard;
     private DeckData data;
 
     public Deck(DeckData deckData)
@@ -22,6 +23,7 @@ public class Deck
         uncommonCards = data.uncommonCards;
         rareCards = data.rareCards;
         exileCards = data.exileCards;
+        reseveCard = data.Reserve;
     }
 
         public void AddCardOption(Card from){

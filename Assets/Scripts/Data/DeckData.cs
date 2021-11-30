@@ -11,6 +11,8 @@ public class DeckData : ScriptableObject
     public List<CardData> uncommonCards = new List<CardData>();
     public List<CardData> rareCards = new List<CardData>();
     public List<CardData> exileCards = new List<CardData>();
+
+    public CardData Reserve;
     public Stack<CardData> ExtractDeck(){
         return new Stack<CardData>(starterDeck);
     }

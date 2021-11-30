@@ -12,7 +12,7 @@ public class AddHeal : CardAbility
             return;
         }
 
-        creature.AddEffect(new Heal(5));
+        creature.AddEffect(new Toughness(5));
         CardsMannager.Instance.hand.RemoveCard(ID);
         CardsMannager.Instance.discardPile.Drop(Card.GetCard(ID));
 

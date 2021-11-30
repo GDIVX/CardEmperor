@@ -61,5 +61,14 @@ public abstract class CardAbility {
         player.magicPoints.SetValue(leftoverMagic);
         return true;
     }
-    
+
+    public static void RemoveAndDiscard(int ID){
+        CardsMannager.Instance.hand.RemoveCard(ID);
+        CardsMannager.Instance.discardPile.Drop(Card.GetCard(ID));
+    }
+
+    public static void RemoveAndExile(int ID){
+        CardsMannager.Instance.hand.RemoveCard(ID);
+        CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
+    }
 }

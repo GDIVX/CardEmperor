@@ -11,15 +11,20 @@ namespace Assets.Scripts.Mechanics.Components.Effects
             UIData = GetData("Vigor");
         }
 
+        protected override void OnRemoved()
+        {
+            
+        }
+
         protected override void _OnCreated()
         {
-            Creature.GetCreature(creatureID).blockBonus = value;
+            Creature.GetCreature(creatureID).blockBonus += value;
         }
 
         protected override void _OnTurnEnd()
         {
             value--;
-            Creature.GetCreature(creatureID).blockBonus = value;
+            Creature.GetCreature(creatureID).blockBonus--;
             if(value <= 0){
                 Remove();
             }
