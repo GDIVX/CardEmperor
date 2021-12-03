@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
+  m_Name: Greater Shield Wall
+  m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: a8ae1265a60168d4991796c4ca51ac20, type: 3}
+  cardName: Greater Shield Wall
+  cardType: 4
+  description: ' <b>Formation:</b> Adds  2 vigor per adjecent friendly creature.'
+  keywords:
+  - value: 2
+    keyword: 2
+  - value: 8
+    keyword: 3
+  abilityScriptName: ShieldWall
+  foodPrice: 1
+  industryPrice: 0
+  MagicPrice: 0
+  Time: 0
+  priority: 0.5
+  creatureData:
+    icon: {fileID: 21300000, guid: 892b9fd01b4846848b629ea9f6f37003, type: 3}
+    hitpoint: 10
+    speed: 0
+    armor: 1
+    attack: 2
+    attackRange: 0
+    attacksPerTurn: 1
+    abilityScriptName: BasicAbility
+    amphibious: 0
+    flying: 0
+    pioneer: 0
+  rarity: 1
+  parm1: 2
+  parm2: 0
+  parm3: 0
+  stringParm: 
+  UpgradeOptions: []
+  UnlockCards: []
+  Exile: 0

@@ -40,6 +40,11 @@ MonoBehaviour:
     flying: 1
     pioneer: 0
   rarity: 0
-  UpgradeOptions: []
+  parm1: 0
+  parm2: 0
+  parm3: 0
+  stringParm: 
+  UpgradeOptions:
+  - {fileID: 11400000, guid: 37da1058fbcb7eb41b1ad659a293f02e, type: 2}
   UnlockCards: []
-  reserve: 0
+  Exile: 0

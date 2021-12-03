@@ -6,68 +6,107 @@ using UnityEngine;
 
 
 [System.Serializable]
-public abstract class CardAbility {
+public abstract class CardAbility
+{
 
-[HideInInspector]
-    public int ID{get =>_ID;}
-    
-    protected abstract void _Activate(Vector3Int targetPosition);
-    protected abstract void _Activate(CardDisplayer targetCard);
+    [HideInInspector]
+    public int ID { get => _ID; }
+
+    protected abstract bool _Activate(Vector3Int targetPosition);
     protected abstract void OnStart();
-    protected abstract void OnTriggerEnabled();
 
-    public void Activate(Vector3Int targetPosition){
-        if(CanAfford(ID)){
-            _Activate(targetPosition);
+    public void Activate(Vector3Int targetPosition)
+    {
+        if (CanAfford(ID))
+        {
+            if(_Activate(targetPosition))
+                PayForCard(ID);
+            else
+                Prompt.ToastCenter("<color=blue>Can't Play This Card</color>", 1); 
         }
-        else{
-            Prompt.ToastCenter("<color=blue>Can't Afford To Play The Card</color>" , .8f);
+        else
+        {
+            Prompt.ToastCenter("<color=blue>Can't Afford To Play The Card</color>", 1);
         }
     }
 
-    static Dictionary<int,CardAbility> regestry = new Dictionary<int, CardAbility>();
+    static Dictionary<int, CardAbility> regestry = new Dictionary<int, CardAbility>();
     private int _ID;
 
-    public CardAbility(){
+    public CardAbility()
+    {
         OnStart();
     }
 
-    public void Register(int ID){
+    public void Register(int ID)
+    {
         _ID = ID;
-        regestry.Add(ID , this);
+        regestry.Add(ID, this);
     }
 
-    public static CardAbility GetAbility(int ID){
+    public static CardAbility GetAbility(int ID)
+    {
         return regestry[ID];
     }
 
-    public static bool CanAfford(int ID){
-                Card card = Card.GetCard(ID);
+    public static bool CanAfford(int ID)
+    {
+        Card card = Card.GetCard(ID);
         Player player = GameManager.Instance.CurrentTurnOfPlayer;
-        if(player == null){
+        if (player == null)
+        {
             Debug.LogError("Trying to play a card when its null player turn");
+            return false;
         }
 
         int leftoverFood = player.foodPoints.Value - card.foodPrice;
         int leftoverIndustry = player.industryPoints.Value - card.industryPrice;
         int leftoverMagic = player.magicPoints.Value - card.MagicPrice;
 
-        if(leftoverFood < 0 || leftoverIndustry < 0 || leftoverMagic < 0){
+        if (leftoverFood < 0 || leftoverIndustry < 0 || leftoverMagic < 0)
+        {
             //we can't afford to play this card
             return false;
         }
-        player.foodPoints.SetValue(leftoverFood);
-        player.industryPoints.SetValue(leftoverIndustry);
-        player.magicPoints.SetValue(leftoverMagic);
+
         return true;
     }
 
-    public static void RemoveAndDiscard(int ID){
+    public static void PayForCard(int ID){
+
+        Card card = Card.GetCard(ID);
+        Player player = Player.Main;
+
+        int leftoverFood = player.foodPoints.Value - card.foodPrice;
+        int leftoverIndustry = player.industryPoints.Value - card.industryPrice;
+        int leftoverMagic = player.magicPoints.Value - card.MagicPrice;
+
+        player.foodPoints.SetValue(leftoverFood);
+        player.industryPoints.SetValue(leftoverIndustry);
+        player.magicPoints.SetValue(leftoverMagic);
+    }
+
+    public static void HandleRemoval(int ID)
+    {
+        bool exile = Card.GetCard(ID).data.Exile;
+        if (exile)
+        {
+            RemoveAndExile(ID);
+        }
+        else
+        {
+            RemoveAndDiscard(ID);
+        }
+    }
+
+    public static void RemoveAndDiscard(int ID)
+    {
         CardsMannager.Instance.hand.RemoveCard(ID);
         CardsMannager.Instance.discardPile.Drop(Card.GetCard(ID));
     }
 
-    public static void RemoveAndExile(int ID){
+    public static void RemoveAndExile(int ID)
+    {
         CardsMannager.Instance.hand.RemoveCard(ID);
         CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
     }

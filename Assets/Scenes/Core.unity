@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckData: {fileID: 11400000, guid: eecf5682435c6df44b9ecc04da8a033b, type: 2}
   _cardTamplate: {fileID: 6108676922395768260, guid: d3a1d6b22d3bd2e40b53ebb2edbd51dc, type: 3}
+  debug_cardName: Promote
 --- !u!114 &1181528909
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,48 +9,52 @@ public class Definitions : ScriptableObject
     [SerializeField]
     [TabGroup("Features")]
     List<FeatureDefinition> _FeatureDefinitions;
-    Dictionary<TileFeature , FeatureDefinition> featuresRegestry = new Dictionary<TileFeature, FeatureDefinition>();
+    Dictionary<TileFeature, FeatureDefinition> featuresRegestry = new Dictionary<TileFeature, FeatureDefinition>();
 
     [SerializeField]
     [TabGroup("Keywords")]
     List<KeywordDescription> _keywordDescriptions;
-    Dictionary<KeywordDefinition.Keyword,string> keywordsTooltipTexts = new Dictionary<KeywordDefinition.Keyword, string>();
+    Dictionary<KeywordDefinition.Keyword, string> keywordsTooltipTexts = new Dictionary<KeywordDefinition.Keyword, string>();
     public void Start()
     {
         foreach (var feature in _FeatureDefinitions)
         {
-            featuresRegestry.Add(feature.feature , feature);
+            featuresRegestry.Add(feature.feature, feature);
         }
         foreach (var desc in _keywordDescriptions)
         {
-            keywordsTooltipTexts.Add(desc.keyword , desc.description);
+            keywordsTooltipTexts.Add(desc.keyword, desc.description);
         }
     }
 
-    public FeatureDefinition GetFeatureDefinition(TileFeature feature){
+    public FeatureDefinition GetFeatureDefinition(TileFeature feature)
+    {
         return featuresRegestry[feature];
     }
 
-    public string GetKeywordTooltipText(KeywordDefinition definition){
-        if(keywordsTooltipTexts.ContainsKey(definition.keyword) == false){
+    public string GetKeywordTooltipText(KeywordDefinition definition)
+    {
+        if (keywordsTooltipTexts.ContainsKey(definition.keyword) == false)
+        {
             Debug.LogError($"Keyword {definition.keyword} is not defined. Please check Resources/Data/Definition");
             return null;
         }
         string text = keywordsTooltipTexts[definition.keyword];
         string value = definition.value.ToString();
-        text = text.Replace("_X_",value);
+        text = text.Replace("_X_", value);
         return text;
     }
 
 }
 
 [System.Serializable]
-public class FeatureDefinition{
+public class FeatureDefinition
+{
     [BoxGroup("Feature")]
     public TileFeature feature;
 
     [BoxGroup("Mana")]
-    public float Food , Industry , Magic, Knowledge;
+    public float Food, Industry, Magic, Knowledge;
 }
 
 [System.Serializable]
@@ -62,7 +66,7 @@ internal class KeywordDescription
 [System.Serializable]
 public class KeywordDefinition
 {
-    [Range(0,10)]
+    [Range(0, 10)]
     public int value;
     public Keyword keyword;
     public enum Keyword
@@ -74,6 +78,9 @@ public class KeywordDefinition
         Aim,
         Omen,
         Toughness,
-        Exile
+        Exile,
+        Build,
+        Spikes,
+        Upgrade
     }
 }

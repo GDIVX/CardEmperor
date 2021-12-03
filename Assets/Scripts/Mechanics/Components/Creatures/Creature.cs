@@ -11,36 +11,36 @@ using Debug = UnityEngine.Debug;
 using Assets.Scripts.Mechanics.Components.Effects;
 
 [System.Serializable]
-public class Creature: IClickable
+public class Creature : IClickable
 {
 
-    public Sprite icon { get => _icon;}
+    public Sprite icon { get => _icon; }
 
 
-    public Vector3Int position{get => _position;}
-    public int ID{get => _ID;}
-    public int PlayerID{get => _PlayerID;}
+    public Vector3Int position { get => _position; }
+    public int ID { get => _ID; }
+    public int PlayerID { get => _PlayerID; }
 
-    public int movement{get => _movement;}
-    public Player Player{get{return Player.GetPlayer(PlayerID);}}
-    public bool flying{get{return _flying;}}
+    public int movement { get => _movement; }
+    public Player Player { get { return Player.GetPlayer(PlayerID); } }
+    public bool flying { get { return _flying; } }
 
     public int attacksPerTurn = 1;
 
-    public int damageBonus , blockBonus;
+    public int damageBonus, blockBonus;
 
-    public Dictionary<Type , Effect> effects = new Dictionary<Type, Effect>();
+    public Dictionary<Type, Effect> effects = new Dictionary<Type, Effect>();
 
 
     public static Action<Creature> OnCreatureDeath;
 
 
-    static Dictionary<int,Creature> creaturesRegestry = new Dictionary<int, Creature>();
+    static Dictionary<int, Creature> creaturesRegestry = new Dictionary<int, Creature>();
 
-    public int hitpoints, armor, attack , speed, attackRange , attacksAttempts;
+    public int hitpoints, armor, attack, speed, attackRange, attacksAttempts;
     [ShowInInspector]
     [ReadOnly]
-    int  _ID , _PlayerID , _movement;
+    int _ID, _PlayerID, _movement;
     [ShowInInspector]
     [ReadOnly]
     Sprite _icon;
@@ -50,12 +50,13 @@ public class Creature: IClickable
     Vector3Int _position;
     [ShowInInspector]
     [ReadOnly]
-    private bool _amphibious , _flying , _pioneer;
+    private bool _amphibious, _flying, _pioneer;
     [ShowInInspector]
     [ReadOnly]
     CreatureAbility ability;
 
-    public Creature(CreatureData data , int cardID , Vector3Int position){
+    public Creature(CreatureData data, int cardID, Vector3Int position)
+    {
         this.hitpoints = data.hitpoint;
         this.armor = data.armor;
         this.attack = data.attack;
@@ -72,10 +73,11 @@ public class Creature: IClickable
         _ID = cardID;
         Card card = Card.GetCard(cardID);
         _PlayerID = card.playerID;
-        creaturesRegestry.Add(cardID , this);
-        WorldController.Instance.world[position.x , position.y].CreatureID = cardID;
+        creaturesRegestry.Add(cardID, this);
+        WorldController.Instance.world[position.x, position.y].CreatureID = cardID;
 
-        if(data.abilityScriptName != null && data.abilityScriptName !=""){
+        if (data.abilityScriptName != null && data.abilityScriptName != "")
+        {
             ability = System.Activator.CreateInstance(System.Type.GetType(data.abilityScriptName), cardID) as CreatureAbility;
         }
 
@@ -83,16 +85,18 @@ public class Creature: IClickable
         GameManager.Instance.turnSequenceMannager.OnTurnComplete += OnTurnEnd;
     }
 
-    public static Creature BuildCreatureCardless(string creatureCardName , int playerID , Vector3Int position){
-        Card tempCard = Card.BuildCard(creatureCardName , playerID);
-        return new Creature(tempCard.data.creatureData , tempCard.ID , position);
+    public static Creature BuildCreatureCardless(string creatureCardName, int playerID, Vector3Int position)
+    {
+        Card tempCard = Card.BuildCard(creatureCardName, playerID);
+        return new Creature(tempCard.data.creatureData, tempCard.ID, position);
     }
 
-    public static Creature BuildAndSpawnCardless(string creatureCardName , int playerID , Vector3Int position){
-        Creature creature = BuildCreatureCardless(creatureCardName , playerID , position);
+    public static Creature BuildAndSpawnCardless(string creatureCardName, int playerID, Vector3Int position)
+    {
+        Creature creature = BuildCreatureCardless(creatureCardName, playerID, position);
 
-        var worldPosition =  WorldController.Instance.map.GetCellCenterLocal(position);
-        GameObject _gameObject = CreatureDisplayer.Create(creature , worldPosition);
+        var worldPosition = WorldController.Instance.map.GetCellCenterLocal(position);
+        GameObject _gameObject = CreatureDisplayer.Create(creature, worldPosition);
         CreatureDisplayer displayer = _gameObject.GetComponent<CreatureDisplayer>();
 
         displayer.SetDisplay(true);
@@ -100,25 +104,28 @@ public class Creature: IClickable
         return creature;
     }
 
-    public void Kill(){
+    public void Kill()
+    {
         OnCreatureDeath?.Invoke(this);
         //Clear view
         CreatureDisplayer.GetCreatureDisplayer(ID).SetDisplay(false);
         //Move the card into exile
         CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
         //Remove the creature from the board
-        WorldTile tile = WorldController.Instance.world[position.x , position.y];
+        WorldTile tile = WorldController.Instance.world[position.x, position.y];
         tile.CreatureID = 0;
     }
 
-    public void AddEffect(Effect effect){
-        if(effects.ContainsKey(effect.GetType())){
+    public void AddEffect(Effect effect)
+    {
+        if (effects.ContainsKey(effect.GetType()))
+        {
             effects[effect.GetType()].value += effect.value;
             effects[effect.GetType()].OnCreated();
             return;
         }
 
-        effects.Add(effect.GetType() , effect);
+        effects.Add(effect.GetType(), effect);
         effect.SetCreature(ID);
         effect.OnCreated();
     }
@@ -127,9 +134,10 @@ public class Creature: IClickable
         hitpoints -= damage;
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
         displayer.SetDisplay(true);
-        if(hitpoints <= 0){
+        if (hitpoints <= 0)
+        {
             Kill();
-        } 
+        }
     }
 
     internal void OnAttackBlocked(int damage)
@@ -139,18 +147,21 @@ public class Creature: IClickable
 
     internal void OnAttackPassed(int damage)
     {
-        GlobalDelegates.OnSuccessfulAttack?.Invoke(this);
+
     }
 
-    public static Creature GetCreature(int ID){
-        if(CreatureExist(ID) == false){
+    public static Creature GetCreature(int ID)
+    {
+        if (CreatureExist(ID) == false)
+        {
             UnityEngine.Debug.LogError($"Trying to get a creature that dose not exist with ID {ID}");
             return null;
         }
         return creaturesRegestry[ID];
     }
 
-    public static bool CreatureExist(int ID){
+    public static bool CreatureExist(int ID)
+    {
         return creaturesRegestry.ContainsKey(ID);
     }
 
@@ -161,48 +172,53 @@ public class Creature: IClickable
 
     public void OnRightClick()
     {
-        
+
     }
 
     public void OnSelect()
     {
         GameManager.CurrentSelected = this;
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
-        displayer.OnSelect();       
+        displayer.OnSelect();
     }
 
     public void OnDeselect()
     {
         GameManager.CurrentSelected = null;
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
-        displayer.OnDeselect();       
+        displayer.OnDeselect();
     }
 
-    public void InteractWithCreature(Creature creature){
-        if(ability == null) {return;}
-        if(creature.Player ==  Player){
+    public void InteractWithCreature(Creature creature)
+    {
+        if (ability == null) { return; }
+        if (creature.Player == Player)
+        {
             ability.ActionOnFriendlyCreature(creature);
         }
-        else if(attacksPerTurn > attacksAttempts) {
+        else if (attacksPerTurn > attacksAttempts)
+        {
             attacksAttempts++;
             ability.ActionOnEnemyCreature(creature);
         }
     }
 
 
-    public void MoveTo(Vector3Int target){      
-        int distance = WorldController.DistanceOf(position , target);
-        if(distance <= _movement && (flying || WorldController.Instance.world[target.x,target.y].walkable))
-            {
-                _movement -= distance;
-                UpdatePosition(target);
-            }
+    public void MoveTo(Vector3Int target)
+    {
+        int distance = WorldController.DistanceOf(position, target);
+        if (distance <= _movement && (flying || WorldController.Instance.world[target.x, target.y].walkable))
+        {
+            _movement -= distance;
+            UpdatePosition(target);
+        }
     }
 
     public override string ToString()
     {
         Card card = Card.GetCard(ID);
-        if(card != null){
+        if (card != null)
+        {
             return card.data.ToString();
         }
         return null;
@@ -211,11 +227,11 @@ public class Creature: IClickable
     public void UpdatePosition(Vector3Int newPosition)
     {
         //Clean old tile
-        WorldTile tile = WorldController.Instance.world[position.x , position.y];
+        WorldTile tile = WorldController.Instance.world[position.x, position.y];
         tile.CreatureID = 0;
-        
+
         //Set Creature ID to new tile
-        tile = WorldController.Instance.world[newPosition.x , newPosition.y];
+        tile = WorldController.Instance.world[newPosition.x, newPosition.y];
         tile.CreatureID = ID;
 
         //Move the displayer
@@ -224,53 +240,60 @@ public class Creature: IClickable
 
         _position = newPosition;
 
-        
+
     }
-    public void ToastAttackFormated(int damage , int targetHitpoint)
+    public void ToastAttackFormated(int damage, int targetHitpoint)
     {
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
 
-        if(damage <= 0){
+        if (damage <= 0)
+        {
             //Missed!
-            displayer.Toast($"<color=grey><b><i>Missed! {damage}</color></b></I>" , 1);
+            displayer.Toast($"<color=grey><b><i>Missed! {damage}</color></b></I>", 1);
             return;
         }
 
         float damageRelativeToHitpoints = damage / targetHitpoint;
-        float fontSize = Mathf.Clamp( 35 * damageRelativeToHitpoints , 24 , 50);
+        float fontSize = Mathf.Clamp(35 * damageRelativeToHitpoints, 24, 50);
 
-        if(damageRelativeToHitpoints >= 1){
+        if (damageRelativeToHitpoints >= 1)
+        {
             //fatal hit
-        displayer.Toast($"<color=red><b><i>FATAL! {damage}!</color></b></I>" , 1 , fontSize);
+            displayer.Toast($"<color=red><b><i>FATAL! {damage}!</color></b></I>", 1, fontSize);
             return;
         }
-            displayer.Toast($"<color=blue><b><i>{damage}</color></b></I>" , 1 ,fontSize);
+        displayer.Toast($"<color=blue><b><i>{damage}</color></b></I>", 1, fontSize);
 
-        
+
     }
 
-    public void RemoveEffect(Effect effect){
+    public void RemoveEffect(Effect effect)
+    {
         effects.Remove(effect.GetType());
     }
 
-    void OnTurnStart(Turn turn){
-        if(turn == null || turn.player == null){
+    void OnTurnStart(Turn turn)
+    {
+        if (turn == null || turn.player == null)
+        {
             return;
         }
-        if(turn.player == this.Player)
+        if (turn.player == this.Player)
         {
             _movement = speed;
             attacksAttempts = 0;
         }
     }
 
-    void OnTurnEnd(Turn turn){
-        if(turn == null || turn.player == null){
+    void OnTurnEnd(Turn turn)
+    {
+        if (turn == null || turn.player == null)
+        {
             return;
         }
-        if(turn.player == this.Player)
+        if (turn.player == this.Player)
         {
-            var effectsCopy = new Dictionary<Type,Effect>(effects);
+            var effectsCopy = new Dictionary<Type, Effect>(effects);
 
             foreach (var typeEffectPair in effectsCopy)
             {
@@ -282,11 +305,13 @@ public class Creature: IClickable
 
     internal static Creature GetCreatureByPosition(Vector3Int targetPosition)
     {
-        if(!WorldController.Instance.IsTileExist(targetPosition)){
+        if (!WorldController.Instance.IsTileExist(targetPosition))
+        {
             return null;
         }
-        WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];
-        if(tile.CreatureID == 0){
+        WorldTile tile = WorldController.Instance.world[targetPosition.x, targetPosition.y];
+        if (tile.CreatureID == 0)
+        {
             return null;
         }
         return Creature.GetCreature(tile.CreatureID);
@@ -298,7 +323,8 @@ public class Creature: IClickable
 
         foreach (Creature creature in regestry)
         {
-            if(creature.PlayerID == playerID){
+            if (creature.PlayerID == playerID)
+            {
                 res.Add(creature);
             }
         }

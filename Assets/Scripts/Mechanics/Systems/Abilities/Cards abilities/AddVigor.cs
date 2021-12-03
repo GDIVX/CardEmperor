@@ -5,28 +5,24 @@ using UnityEngine;
 
 public class AddVigor : CardAbility
 {
-    protected override void _Activate(Vector3Int targetPosition)
+    protected override bool _Activate(Vector3Int targetPosition)
     {
         Creature creature = Creature.GetCreatureByPosition(targetPosition);
         if(creature == null){
-            return;
+            return false;
         }
 
         creature.AddEffect(new Vigor(5));
         CardsMannager.Instance.hand.RemoveCard(ID);
         CardsMannager.Instance.discardPile.Drop(Card.GetCard(ID));
 
+        return true;
+
     }
 
-    protected override void _Activate(CardDisplayer targetCard)
-    {
-    }
 
     protected override void OnStart()
     {
     }
 
-    protected override void OnTriggerEnabled()
-    {
-    }
 }

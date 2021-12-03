@@ -152,4 +152,12 @@ public class CardsMannager : MonoBehaviour
         CardData data = cards[rand];
         return new Card(data , Player.Main.ID);
     }
+
+    [TabGroup("Debug")]
+    public string debug_cardName;
+    [TabGroup("Debug")]
+    [Button]
+    public void Debug_AddCard(){
+        hand.AddCard(Card.BuildCard(debug_cardName , Player.Main.ID));
+    }
 }

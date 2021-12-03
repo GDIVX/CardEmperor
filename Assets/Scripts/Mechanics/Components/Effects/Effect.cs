@@ -53,7 +53,6 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         }
 
         public void OnTurnEnd(){
-            Debug.Log("!");
             if(IsActive()){
                 _OnTurnEnd();
             }

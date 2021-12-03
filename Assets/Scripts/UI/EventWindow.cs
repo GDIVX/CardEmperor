@@ -13,19 +13,22 @@ public class EventWindow : MonoBehaviour
     Transform cardHolder;
     [SerializeField]
     TextMeshProUGUI title;
+    [ShowInInspector]
     List<CardButton> cardButtons = new List<CardButton>();
 
 
     [Button]
     public void Show(){
 
+        Debug.Log(cardButtons.Count);
         if(cardButtons.Count > 0){
-            foreach (CardButton btn in cardButtons)
+            for (var i = 0; i < cardButtons.Count; i++)
             {
-                btn.SetDisplayActive(true);
-                btn.gameObject.SetActive(true);
-                btn.gameObject.transform.SetParent(cardHolder);
+                cardButtons[i].SetDisplayActive(true);
+                cardButtons[i].gameObject.transform.SetParent(cardHolder);
+                cardButtons[i].gameObject.SetActive(true);
             }
+
         }
 
         tweener.Showcase();
@@ -40,6 +43,7 @@ public class EventWindow : MonoBehaviour
             }
         }
         tweener.Hide();
+        cardButtons.Clear();
     }
 
     public void SetEvent(GameEvent gameEvent){
@@ -47,18 +51,23 @@ public class EventWindow : MonoBehaviour
 
         if(gameEvent.GetType() == typeof(CardEvent)){
             CardEvent cardEvent = gameEvent as CardEvent;
+            GameObject[] buttons = UIController.GetDisableChildren(cardHolder);
 
-            foreach (var card in cardEvent.cards)
+            for (var i = 0; i < cardEvent.cards.Count; i++)
             {
                 CardButton btn = null;
-                if(UIController.GetDisabledChildrenCount(cardHolder) > 0){
-                    btn = UIController.GetDisabledChild(cardHolder).GetComponent<CardButton>();
-                    btn.SetID(card.ID);
+                if(buttons.Length <= i){
+                    //no aviable button
+                    btn = CardButton.Create(cardEvent.cardAction , cardEvent.cards[i].ID).GetComponent<CardButton>();
                 }
-                else{
-                    btn = CardButton.Create(cardEvent.cardAction , card.ID).GetComponent<CardButton>();
-                    cardButtons.Add(btn);
+                else
+                {
+                    btn = buttons[i].GetComponent<CardButton>();
+                    btn.SetID(cardEvent.cards[i].ID);
+                    btn.SetAction(cardEvent.cardAction);
+                    
                 }
+                cardButtons.Add(btn);
             }
         }
     }

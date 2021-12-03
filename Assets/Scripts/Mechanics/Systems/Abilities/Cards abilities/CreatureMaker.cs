@@ -10,28 +10,28 @@ public class CreatureMaker : CardAbility
 
     protected Creature creature;
 
-    protected override void _Activate(Vector3Int targetPosition)
+    protected override bool _Activate(Vector3Int targetPosition)
     {
+        Card parent = Card.GetCard(ID);
         
         if(WorldController.Instance.IsTileExist(targetPosition)){
             WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];
             if( tile.CreatureID != 0){
-                return;
+                return false;
             }
-            if(!tile.walkable && !creature.flying){
-                return;
+            if(!tile.walkable && !parent.data.creatureData.flying){
+                return false;
             }
         }
         else{
-            return;
+            return false;
         }
 
-        Card parent = Card.GetCard(ID);
         var position = WorldController.Instance.map.GetCellCenterLocal(targetPosition);
 
         if(Creature.CreatureExist(ID)){
             Debug.LogError("Trying to create a creature that already was created");
-            return;
+            return false;
         }
 
         creature = new Creature(parent.data.creatureData , ID , targetPosition);
@@ -44,19 +44,11 @@ public class CreatureMaker : CardAbility
         displayer.SetDisplay(true);
 
         CardsMannager.Instance.hand.RemoveCard(ID);
-    }
 
-    protected override void _Activate(CardDisplayer targetCard)
-    {
-        //nothing happenes 
+        return true;
     }
 
     protected override void OnStart()
-    {
-        
-    }
-
-    protected override void OnTriggerEnabled()
     {
         
     }

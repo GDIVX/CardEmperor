@@ -10,15 +10,12 @@ public class ShieldWall : CardAbility
     {
     }
 
-    protected override void OnTriggerEnabled()
-    {
-    }
 
-    protected override void _Activate(Vector3Int targetPosition)
+    protected override bool _Activate(Vector3Int targetPosition)
     {
         Creature creature = Creature.GetCreatureByPosition(targetPosition);
 
-        if(creature == null) return;
+        if(creature == null) return false;
         
         WorldTile tile = WorldController.Instance.world[targetPosition.x , targetPosition.y];
 
@@ -35,9 +32,8 @@ public class ShieldWall : CardAbility
 
         creature.AddEffect(new Vigor(vigorValue));
         RemoveAndDiscard(ID);
+
+        return true;
     }
 
-    protected override void _Activate(CardDisplayer targetCard)
-    {
-    }
 }

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Aim
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5449851342f907a4db3fab0be751e928, type: 3}
-  color: {r: 1, g: 0.15588708, b: 0.0039215684, a: 1}
+  color: {r: 0, g: 1, b: 0, a: 1}
   toolTipHeader: Aim
-  tooltipDescription: Attacks deals + _X_ damage. If this creature delt unblocked
-    damage in this turn, adds <color=yellow>+1 Aim</color>. Else, it loose all of
-    its Aim.
+  tooltipDescription: Add additional _X_ attack dices. Removed by the end of the
+    turn.

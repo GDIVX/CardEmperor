@@ -32,7 +32,18 @@ MonoBehaviour:
     armor: 1
     attack: 1
     attackRange: 2
+    attacksPerTurn: 0
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 0
     pioneer: 0
+  rarity: 0
+  parm1: 0
+  parm2: 0
+  parm3: 0
+  stringParm: 
+  UpgradeOptions:
+  - {fileID: 11400000, guid: 2878f5132b95de84fbf0088b2ce87f7f, type: 2}
+  - {fileID: 11400000, guid: 404c61ebf4164d343bfaea25bb47b7ae, type: 2}
+  UnlockCards: []
+  Exile: 0

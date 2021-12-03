@@ -17,22 +17,28 @@ public class BasicAbility : CreatureAbility
         //Find the attacking creature
         Creature creature = Creature.GetCreature(ID);
         //Find the distance between the creature and the target
-        int distance = WorldController.DistanceOf(creature.position , target.position);
-        
-        if(distance <= creature.attackRange){
-            int damage = GetAttackDamage(creature , target);
+        int distance = WorldController.DistanceOf(creature.position, target.position);
 
-            target.ToastAttackFormated(damage , target.hitpoints);
+        if (distance <= creature.attackRange)
+        {
+            int damage = GetAttackDamage(creature, target);
 
-            if(damage > 0){
+            target.ToastAttackFormated(damage, target.hitpoints);
+
+            if (damage > 0)
+            {
                 //attack passed
+                GlobalDelegates.OnSuccessfulAttack?.Invoke(creature, target);
                 creature.OnAttackPassed(damage);
                 target.TakeDamage(damage);
-            }else{
+            }
+            else
+            {
                 //attack blocked
-                GlobalDelegates.OnAttackBlocked?.Invoke(creature , target);
+                GlobalDelegates.OnAttackBlocked?.Invoke(creature, target);
                 target.OnAttackBlocked(damage);
             }
+            GlobalDelegates.OnAttackAttempt?.Invoke(creature, target);
         }
     }
 

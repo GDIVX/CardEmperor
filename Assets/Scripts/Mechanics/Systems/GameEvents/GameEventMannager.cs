@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameEventMannager 
+public static class GameEventMannager
 {
     public static Action onAnyEventDone;
     public static bool isPlayingEvent;
-    public static GameEvent FireEvent(GameEvent gameEvent){
+    private static GameEvent _FireEvent(GameEvent gameEvent)
+    {
         isPlayingEvent = true;
         EventWindow eventWindow = UIController.Instance.eventWindow;
         eventWindow.Hide();
@@ -17,8 +18,23 @@ public static class GameEventMannager
         return gameEvent;
     }
 
-    public static CardEvent FireAddCardEvent(){
-        
+    public static GameEvent FireEvent(GameEvent gameEvent){
+        if(isPlayingEvent){
+        EventWindow eventWindow = UIController.Instance.eventWindow;
+        eventWindow.SetEvent(gameEvent);
+        eventWindow.Show();
+        }
+        else
+        {
+            _FireEvent(gameEvent);
+        }
+
+        return gameEvent;
+    }
+
+    public static CardEvent FireAddCardEvent()
+    {
+
         List<Card> cards = new List<Card>();
 
         for (var i = 0; i < 3; i++)
@@ -28,11 +44,12 @@ public static class GameEventMannager
 
         cards.Add(CardsMannager.Instance.CreateExileCard());
 
-        CardEvent cardEvent = new CardEvent("End of the day. New forces wish to join you. Choose one:" , cards , (x)=>{
-            Card card = Card.Copy(x,x.playerID);
+        CardEvent cardEvent = new CardEvent("End of the day. New forces wish to join you. Choose one:", cards, (x) =>
+        {
+            Card card = Card.Copy(x, x.playerID);
             CardsMannager.Instance.discardPile.Drop(card);
             CardsMannager.Instance.deck.AddCardOption(card);
-            
+
             UIController.Instance.eventWindow.Hide();
             GameManager.Instance.level++;
 
@@ -40,7 +57,9 @@ public static class GameEventMannager
             onAnyEventDone?.Invoke();
         });
 
-        return FireEvent(cardEvent) as CardEvent;
+        return _FireEvent(cardEvent) as CardEvent;
     }
-    
+
+
+
 }

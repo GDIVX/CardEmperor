@@ -10,21 +10,14 @@ public class BirdsCounting : CardAbility
         
     }
 
-    protected override void OnTriggerEnabled()
-    {
-        
-    }
-
-    protected override void _Activate(Vector3Int targetPosition)
+    protected override bool _Activate(Vector3Int targetPosition)
     {
         GameManager.Instance.capital.AddEffect(new Omen(1));
         Creature.GetCreatureByPosition(targetPosition).AddEffect(new Aim(2));
 
         RemoveAndDiscard(ID);
+
+        return true;
     }
 
-    protected override void _Activate(CardDisplayer targetCard)
-    {
-        
-    }
 }

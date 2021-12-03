@@ -102,4 +102,15 @@ public class UIController : MonoBehaviour
         }
         return null;
     }
+    public static GameObject[] GetDisableChildren(Transform t){
+        List<GameObject> res = new List<GameObject>();
+        
+        foreach (Transform child in t)
+        {
+            if(child.gameObject.activeInHierarchy == false) 
+                res.Add(child.gameObject);
+        }
+
+        return res.ToArray();
+    }
 }

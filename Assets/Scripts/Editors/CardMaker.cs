@@ -11,7 +11,8 @@ using static RandomSelector;
 public class CardMaker : OdinEditorWindow
 {
     [MenuItem("Cards/Card Maker")]
-    private static void OpenWindow(){
+    private static void OpenWindow()
+    {
         GetWindow<CardMaker>().Show();
     }
 
@@ -20,21 +21,27 @@ public class CardMaker : OdinEditorWindow
     [HideLabel]
     CardData.CardType cardType;
 
-    [HorizontalGroup("Data" , 75)]
+    [HorizontalGroup("Data", 75)]
     [PreviewField(75)]
     [HideLabel]
     public Sprite image;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
-    [InfoBox("Must provide a valid name" ,InfoMessageType.Error , "NotValidName" )]
+    [InfoBox("Must provide a valid name", InfoMessageType.Error, "NotValidName")]
     public string cardName;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
-    public bool reserve;
+    public bool exile;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
     [TextArea]
     public string description;
+    [VerticalGroup("Data/Info")]
+    [LabelWidth(100)]
+    public int parm1, parm2, parm3;
+    [VerticalGroup("Data/Info")]
+    [LabelWidth(100)]
+    public string stringParm;
     [VerticalGroup("Data/Info")]
     [LabelWidth(100)]
     public Rarity rarity;
@@ -43,37 +50,37 @@ public class CardMaker : OdinEditorWindow
     public KeywordDefinition[] keywords;
     [VerticalGroup("Data/Associated Cards")]
     [LabelWidth(100)]
-    public List<CardData> UpgradeOptions , UnlockCards;
+    public List<CardData> UpgradeOptions, UnlockCards;
     [BoxGroup("Script")]
     [HideLabel]
     [LabelWidth(100)]
     [Sirenix.OdinInspector.FilePath]
     public string abilityScript = "Assets/Scripts/Mechanics/Systems/Abilities/Cards abilities";
-    [HideIf("cardType" , CardData.CardType.Fate)]
+    [HideIf("cardType", CardData.CardType.Fate)]
     [BoxGroup("Mana Cost")]
-    [GUIColor(0,1,0)]
+    [GUIColor(0, 1, 0)]
     [LabelWidth(100)]
-    [Range(0,50)]
+    [Range(0, 50)]
     public int foodPrice;
-    [HideIf("cardType" , CardData.CardType.Fate)]
+    [HideIf("cardType", CardData.CardType.Fate)]
     [BoxGroup("Mana Cost")]
     [LabelWidth(100)]
-    [Range(0,50)]
-    [GUIColor(1,0,0)]
+    [Range(0, 50)]
+    [GUIColor(1, 0, 0)]
     public int industryPrice;
-    [HideIf("cardType" , CardData.CardType.Fate)]
+    [HideIf("cardType", CardData.CardType.Fate)]
     [BoxGroup("Mana Cost")]
     [LabelWidth(100)]
-    [Range(0,50)]
-    [GUIColor(0,0,1)]
-    public int MagicPrice ;
-    [ShowIf("cardType" , CardData.CardType.Fate)]
+    [Range(0, 50)]
+    [GUIColor(0, 0, 1)]
+    public int MagicPrice;
+    [ShowIf("cardType", CardData.CardType.Fate)]
     [BoxGroup("Mana Cost")]
     [LabelWidth(100)]
-    [Range(0,50)]
-    [GUIColor(.8f,.4f,0)]
-    public int Time ;
-    [Range(0,1)]
+    [Range(0, 50)]
+    [GUIColor(.8f, .4f, 0)]
+    public int Time;
+    [Range(0, 1)]
     public float priority;
     [BoxGroup("Creature")]
     [ShowIf("ToggleShowCreatureData")]
@@ -91,10 +98,11 @@ public class CardMaker : OdinEditorWindow
     [HideLabel]
     [InlineProperty()]
     [FolderPath]
-    [InfoBox("Must provide a valid folder path" ,InfoMessageType.Error , "NotValidPath" )]
+    [InfoBox("Must provide a valid folder path", InfoMessageType.Error, "NotValidPath")]
     public string SaveFolder = "Assets/Resources/Data/Cards";
     [Button("Save")]
-    public void CreateCard(){
+    public void CreateCard()
+    {
         CardData data = ScriptableObject.CreateInstance<CardData>();
 
         data.cardType = cardType;
@@ -102,7 +110,7 @@ public class CardMaker : OdinEditorWindow
         data.cardName = cardName;
         data.description = description;
         data.keywords = keywords;
-        char[] charsToTrim = { 'c', ' ', '\'' , 's' , '.'};
+        char[] charsToTrim = { 'c', ' ', '\'', 's', '.' };
         data.abilityScriptName = Path.GetFileName(abilityScript).Trim(charsToTrim);
         data.foodPrice = foodPrice;
         data.industryPrice = industryPrice;
@@ -114,26 +122,34 @@ public class CardMaker : OdinEditorWindow
         data.UpgradeOptions = UpgradeOptions;
         data.UnlockCards = UnlockCards;
         data.rarity = rarity;
-        data.reserve = reserve;
+        data.Exile = exile;
 
-        AssetDatabase.CreateAsset(data , $"{SaveFolder}/{cardName}.asset");
+        data.parm1 = parm1;
+        data.parm2 = parm2;
+        data.parm3 = parm3;
+        data.stringParm = stringParm;
+
+        AssetDatabase.CreateAsset(data, $"{SaveFolder}/{cardName}.asset");
         AssetDatabase.SaveAssets();
     }
 
-    bool ToggleShowCreatureData(){
+    bool ToggleShowCreatureData()
+    {
         return (cardType == CardData.CardType.Creature ||
         cardType == CardData.CardType.Town ||
         cardType == CardData.CardType.Fort ||
         cardType == CardData.CardType.worker);
     }
 
-    bool NotValidName(){
+    bool NotValidName()
+    {
         return (cardName == null || cardName == "");
     }
-    bool NotValidPath(){
+    bool NotValidPath()
+    {
         return !AssetDatabase.IsValidFolder(SaveFolder);
     }
 
 
-    public enum CardType{Creature , Town , Fort , outpost , Magic , Miracle , Fate , Curse}
+    public enum CardType { Creature, Town, Fort, outpost, Magic, Miracle, Fate, Curse }
 }

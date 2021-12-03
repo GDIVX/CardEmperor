@@ -10,6 +10,8 @@ public class GameEvent
     {
         this.title = title;
     }
+    public Action OnInvoked;
+
 }
 
 public class CardEvent : GameEvent{

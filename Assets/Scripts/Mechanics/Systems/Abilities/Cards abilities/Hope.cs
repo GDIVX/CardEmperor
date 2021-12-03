@@ -11,12 +11,7 @@ public class Hope : CardAbility
 
     }
 
-    protected override void OnTriggerEnabled()
-    {
-
-    }
-
-    protected override void _Activate(Vector3Int targetPosition)
+    protected override bool _Activate(Vector3Int targetPosition)
     {
         Creature[] allCreatures = Creature.GetAll(Player.Main.ID);
 
@@ -26,9 +21,8 @@ public class Hope : CardAbility
         }
 
         RemoveAndExile(ID);
+
+        return true;
     }
 
-    protected override void _Activate(CardDisplayer targetCard)
-    {
-    }
 }
