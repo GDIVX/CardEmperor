@@ -37,6 +37,12 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         _ID = 0;
     }
 
+    public void Reload(){
+        if(isActiveAndEnabled){
+            ShowDisplay();
+        }
+    }
+
     public void SetDisplayActive(bool isActive){
         if(isActive){
             ShowDisplay();

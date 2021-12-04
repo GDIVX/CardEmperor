@@ -15,9 +15,15 @@ public class Upgrade : CardAbility
 
     protected override bool _Activate(Vector3Int targetPosition)
     {
+        //Get cards in hand minus this card
         List<Card> cardsInHand = CardsMannager.Instance.hand.ToList();
+        cardsInHand.Remove(Card.GetCard(ID));
+
         if(cardsInHand.Count > 0){
+            //use this parametere to determine if the delta function was successful 
             bool res = false;
+
+            //Call an event to choose a card
             CardEvent cardEvent = new CardEvent("Choose a card To Upgrade" , cardsInHand , (x)=>{
                 List<CardData> data = x.data.UpgradeOptions;
                 chosenCard = x;
@@ -40,17 +46,20 @@ public class Upgrade : CardAbility
                 //Clear the current GUI
                 cardsInHand.Clear();
 
+                //Call an event to upgrade a card
                 CardEvent upgradeEvent = new CardEvent("Choose an Upgrade" , options , (y)=>{
 
-                CardsMannager.Instance.hand.RemoveCard(y.ID);
-                Card card = Card.Replace(chosenCard,y);
-                CardsMannager.Instance.hand.AddCard(card);
+                    Card card = Card.Replace(chosenCard,y);
+                    if(card == null){
+                        res = false;
+                        return;
+                    }
 
 
-
-                GameEventMannager.isPlayingEvent = false;
-                GameEventMannager.onAnyEventDone?.Invoke();
-            });
+                    GameEventMannager.isPlayingEvent = false;
+                    GameEventMannager.onAnyEventDone?.Invoke();
+                    UIController.Instance.eventWindow.Hide();
+                });
 
                 GameEventMannager.FireEvent(upgradeEvent);
                 res = true;

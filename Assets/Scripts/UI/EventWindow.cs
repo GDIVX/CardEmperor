@@ -34,16 +34,21 @@ public class EventWindow : MonoBehaviour
         tweener.Showcase();
     }
 
-    [Button]
-    public void Hide(){
+    internal void Clear()
+    {
         if(cardButtons.Count > 0){
             foreach (Transform c in cardHolder)
             {
                 c.gameObject.SetActive(false);
             }
         }
-        tweener.Hide();
         cardButtons.Clear();
+    }
+
+    [Button]
+    public void Hide(){
+        Clear();
+        tweener.Hide();
     }
 
     public void SetEvent(GameEvent gameEvent){

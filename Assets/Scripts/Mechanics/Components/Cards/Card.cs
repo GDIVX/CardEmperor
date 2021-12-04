@@ -75,28 +75,33 @@ public class Card
    {
       Card newCard = Card.BuildCard(newCardName, original.playerID);
 
-      newCard._ID = original.ID;
-      original._ID = 0;
-
-      CardDisplayer displayer = CardDisplayer.GetDisplayer(newCard.ID);
-      if (displayer != null && displayer.isActiveAndEnabled)
-      {
-         displayer.SetDisplayActive(true);
-      }
-
-      return newCard;
+      return Replace(original , newCard);
    }
 
    public static Card Replace(Card original, Card newCard)
    {
-      newCard._ID = original.ID;
-      original._ID = 0;
 
-      CardDisplayer displayer = CardDisplayer.GetDisplayer(newCard.ID);
-      if (displayer != null && displayer.isActiveAndEnabled)
-      {
-         displayer.SetDisplayActive(true);
+      if(original == null || newCard == null){
+         Debug.LogError("Can't replace a card with null and vice versa");
+         return null;
       }
+
+      original._data = newCard.data;
+
+      original.foodPrice = newCard.foodPrice;
+      original.industryPrice = newCard.industryPrice;
+      original.MagicPrice = newCard.MagicPrice;
+      original.hitpoint = newCard.hitpoint;
+      original.speed = newCard.speed;
+      original.armor = newCard.armor;
+      original.attack = newCard.attack;
+      original._priority = newCard.priority;
+
+      CardDisplayer displayer = CardDisplayer.GetDisplayer(original.ID);
+      if(displayer != null){
+         displayer.Reload();
+      }
+
 
       return newCard;
    }

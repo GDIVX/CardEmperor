@@ -7,30 +7,17 @@ public static class GameEventMannager
 {
     public static Action onAnyEventDone;
     public static bool isPlayingEvent;
-    private static GameEvent _FireEvent(GameEvent gameEvent)
+    public static GameEvent FireEvent(GameEvent gameEvent)
     {
         isPlayingEvent = true;
         EventWindow eventWindow = UIController.Instance.eventWindow;
-        eventWindow.Hide();
+        eventWindow.Clear();
         eventWindow.SetEvent(gameEvent);
         eventWindow.Show();
 
         return gameEvent;
     }
 
-    public static GameEvent FireEvent(GameEvent gameEvent){
-        if(isPlayingEvent){
-        EventWindow eventWindow = UIController.Instance.eventWindow;
-        eventWindow.SetEvent(gameEvent);
-        eventWindow.Show();
-        }
-        else
-        {
-            _FireEvent(gameEvent);
-        }
-
-        return gameEvent;
-    }
 
     public static CardEvent FireAddCardEvent()
     {
@@ -57,7 +44,7 @@ public static class GameEventMannager
             onAnyEventDone?.Invoke();
         });
 
-        return _FireEvent(cardEvent) as CardEvent;
+        return FireEvent(cardEvent) as CardEvent;
     }
 
 
