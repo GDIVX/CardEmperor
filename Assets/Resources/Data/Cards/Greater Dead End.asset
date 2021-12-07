@@ -10,30 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
-  m_Name: Elite Spearman
+  m_Name: Greater Dead End
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: edee7042f2d99a6449fb00fd4199fb64, type: 3}
-  cardName: Elite Spearman
-  cardType: 0
-  description: '<color=yellow>Formation: </color>By the end of the turn, Have at
-    least <color=green>Spikes</color> 2 for every adjecent friendly creature.'
+  image: {fileID: 21300000, guid: a8ae1265a60168d4991796c4ca51ac20, type: 3}
+  cardName: Greater Dead End
+  cardType: 4
+  description: Deal 7 damage. <color=yellow>Formation:</color> Deals additional 1
+    damage per formation.
   keywords:
-  - value: 2
-    keyword: 9
   - value: 0
     keyword: 3
-  abilityScriptName: Spearman
-  foodPrice: 2
+  abilityScriptName: DeadEnd
+  foodPrice: 1
   industryPrice: 0
   MagicPrice: 0
   Time: 0
-  priority: 0.5
+  priority: 0.7
   creatureData:
-    icon: {fileID: 21300000, guid: 892b9fd01b4846848b629ea9f6f37003, type: 3}
-    hitpoint: 15
+    icon: {fileID: 21300000, guid: 4f420d13545eb0e499c1d54437bfb165, type: 3}
+    hitpoint: 10
     speed: 0
-    armor: 2
-    attack: 1
+    armor: 1
+    attack: 2
     attackRange: 0
     attacksPerTurn: 1
     abilityScriptName: BasicAbility
@@ -41,8 +39,8 @@ MonoBehaviour:
     flying: 0
     pioneer: 0
   rarity: 0
-  parm1: 3
-  parm2: 0
+  parm1: 7
+  parm2: 1
   parm3: 0
   stringParm: 
   UpgradeOptions: []

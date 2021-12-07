@@ -88,6 +88,12 @@ public abstract class CardAbility
 
     public static void HandleRemoval(int ID)
     {
+        if(!CardsMannager.Instance.hand.Has(ID)){
+            //card is not in hand
+            //Most likely the ability was called off hand by another card
+            //Do not remove or discard, let the calling card handle removal
+            return;
+        }
         bool exile = Card.GetCard(ID).data.Exile;
         if (exile)
         {
@@ -109,5 +115,34 @@ public abstract class CardAbility
     {
         CardsMannager.Instance.hand.RemoveCard(ID);
         CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
+    }
+
+    public static void ForceExile(Card card){
+        if(CardsMannager.Instance.hand.Has(card.ID))
+            RemoveAndExile(card.ID);
+        else if(!CardsMannager.Instance.exilePile.Has(card)){
+            card.GetPile().Remove(card);
+            CardsMannager.Instance.exilePile.Drop(card);
+        }
+    }
+
+    public int GetFormationCount(Vector3Int targetPosition){
+        
+            WorldTile tile = WorldController.Instance.world[targetPosition.x, targetPosition.y];
+            WorldTile[] tiles = tile.GetNeighbors();
+            int formationCount = 0;
+
+            foreach (var n in tiles)
+            {
+                if (n.CreatureID != 0)
+                {
+                    if (Creature.GetCreatureByPosition((Vector3Int)n.position).Player.IsMain())
+                    {
+                        formationCount++;
+                    }
+                }
+            }
+
+            return formationCount;
     }
 }

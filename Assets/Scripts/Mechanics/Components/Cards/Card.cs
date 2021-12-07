@@ -15,6 +15,7 @@ public class Card
    public float priority { get => _priority; }
    public int playerID { get { return _playerID; } }
    public CardAbility ability { get { return _ability; } }
+   public string description;
 
    private static Dictionary<int, Card> CardsRegistry = new Dictionary<int, Card>();
 
@@ -35,7 +36,8 @@ public class Card
    [ShowInInspector]
    private float _priority;
 
-   public Card(CardData data, int playerID)
+
+    public Card(CardData data, int playerID)
    {
 
       this.foodPrice = data.foodPrice;
@@ -46,6 +48,7 @@ public class Card
       this.armor = data.creatureData.armor;
       this.attack = data.creatureData.attack;
       this._priority = data.priority;
+      this.description = data.description;
 
       _playerID = playerID;
 
@@ -61,6 +64,19 @@ public class Card
       Card.CardsRegistry.Add(ID, this);
    }
 
+   internal Pile GetPile()
+   {
+      if(CardsMannager.Instance.discardPile.Has(this)){
+         return CardsMannager.Instance.discardPile;
+      }
+      if(CardsMannager.Instance.drawPile.Has(this)){
+         return CardsMannager.Instance.drawPile;
+      }
+      if(CardsMannager.Instance.exilePile.Has(this)){
+         return CardsMannager.Instance.exilePile;
+      }
+      return null;
+   }
 
    public static Card Copy(Card original, int playerID)
    {
@@ -96,6 +112,7 @@ public class Card
       original.armor = newCard.armor;
       original.attack = newCard.attack;
       original._priority = newCard.priority;
+      original.description = newCard.description;
 
       CardDisplayer displayer = CardDisplayer.GetDisplayer(original.ID);
       if(displayer != null){

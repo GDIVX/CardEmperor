@@ -9,23 +9,7 @@ public class Spearman : CreatureMaker
     {
         if (base._Activate(targetPosition))
         {
-
-            WorldTile tile = WorldController.Instance.world[targetPosition.x, targetPosition.y];
-            WorldTile[] tiles = tile.GetNeighbors();
-            int formationCount = 0;
-
-            foreach (var n in tiles)
-            {
-                if (n.CreatureID != 0)
-                {
-                    if (Creature.GetCreatureByPosition((Vector3Int)n.position).Player.IsMain())
-                    {
-                        formationCount++;
-                    }
-                }
-            }
-
-            creature.AddEffect(new Spikes(Card.GetCard(ID).data.parm1 + formationCount));
+            creature.AddEffect(new Formation_Spikes(Card.GetCard(ID).data.parm1));
             return true;
         }
         return false;

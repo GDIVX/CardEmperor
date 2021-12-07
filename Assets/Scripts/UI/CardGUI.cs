@@ -74,7 +74,7 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
         transform.GetChild(2).GetChild(0).
             GetComponent<TextMeshProUGUI>().text = card.data.cardType.ToString();
 
-        transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.description;
+        transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.description;
         transform.GetChild(3).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
         if(card.data.cardType == CardData.CardType.Creature || 

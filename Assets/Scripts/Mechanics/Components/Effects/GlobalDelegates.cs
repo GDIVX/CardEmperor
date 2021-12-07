@@ -11,4 +11,5 @@ public static class GlobalDelegates
     public static Action<Creature, Creature> OnSuccessfulAttack;
     public static Action<Creature, Creature> OnAttackBlocked;
     public static Action<Creature, Creature> OnAttackAttempt;
+
 }

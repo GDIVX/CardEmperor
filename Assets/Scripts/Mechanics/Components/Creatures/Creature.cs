@@ -129,6 +129,22 @@ public class Creature : IClickable
         effect.SetCreature(ID);
         effect.OnCreated();
     }
+    public void SetEffect(Effect effect , bool allowBiggerValues = true)
+    {
+        if (effects.ContainsKey(effect.GetType()))
+        {
+            if(allowBiggerValues == true && effects[effect.GetType()].value >= effect.value){
+                return;
+            }
+            effects[effect.GetType()].value = effect.value;
+            effects[effect.GetType()].OnCreated();
+            return;
+        }
+
+        effects.Add(effect.GetType(), effect);
+        effect.SetCreature(ID);
+        effect.OnCreated();
+    }
     internal void TakeDamage(int damage)
     {
         hitpoints -= damage;

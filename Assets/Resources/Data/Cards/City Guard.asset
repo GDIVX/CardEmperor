@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 7c4e1131f603b2d47a667713fcee444f, type: 3}
   cardName: City Guard
-  cardType: 3
+  cardType: 0
   description: <color=yellow>Range 2</color>.
   keywords:
   - value: 2
@@ -28,16 +28,16 @@ MonoBehaviour:
   creatureData:
     icon: {fileID: 21300000, guid: 892b9fd01b4846848b629ea9f6f37003, type: 3}
     hitpoint: 10
-    speed: 0
+    speed: 3
     armor: 1
     attack: 2
-    attackRange: 0
+    attackRange: 2
     attacksPerTurn: 1
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 0
     pioneer: 0
-  rarity: 1
+  rarity: 0
   parm1: 0
   parm2: 0
   parm3: 0

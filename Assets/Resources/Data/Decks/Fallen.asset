@@ -32,13 +32,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e8011a07300c0846a8d1feba4d2319c, type: 2}
   - {fileID: 11400000, guid: 45358f512324acc49bb973591376811e, type: 2}
   - {fileID: 11400000, guid: e68821c1c78a3bc4f861c8681ea6ae00, type: 2}
+  - {fileID: 11400000, guid: baa1c79988ff4fe4397690872a881f7e, type: 2}
   uncommonCards:
   - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
   - {fileID: 11400000, guid: 8236969027c6f834ab07d9ea4c6c8a37, type: 2}
   - {fileID: 11400000, guid: 050f6e6fcf4ddde4f81c79d12a6d5a46, type: 2}
   - {fileID: 11400000, guid: 703cea14cb4a56f47938aa646d7ca84d, type: 2}
+  - {fileID: 11400000, guid: 3b199ccefa1ff3a48ad42242c48881e5, type: 2}
   rareCards:
   - {fileID: 11400000, guid: 5dda647d2983716488ebd349cd0e34fc, type: 2}
+  - {fileID: 11400000, guid: bba8233f2e1c53c4091d4d46fdab790b, type: 2}
   exileCards:
   - {fileID: 11400000, guid: c6cb0100b2aae8744a3e579f6827b6db, type: 2}
   Reserve: {fileID: 11400000, guid: 1f67b450f2eb2954a87ffb49c6005c23, type: 2}

@@ -15,11 +15,13 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: edee7042f2d99a6449fb00fd4199fb64, type: 3}
   cardName: Levy Spearman
   cardType: 0
-  description: '<color=yellow>Spikes 1. Formation: </color>When summoned, gain additional
-    stack of <color=yellow>Spikes</color> for each adjecent friendly creature.'
+  description: '<color=yellow>Formation: </color>By the end of the turn, Have at
+    least <color=green>Spikes</color> 1 for every adjecent friendly creature.'
   keywords:
   - value: 1
     keyword: 9
+  - value: 0
+    keyword: 3
   abilityScriptName: Spearman
   foodPrice: 1
   industryPrice: 0

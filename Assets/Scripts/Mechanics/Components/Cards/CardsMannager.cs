@@ -11,6 +11,7 @@ public class CardsMannager : MonoBehaviour
 {
     private static CardsMannager _instance;
     public static CardsMannager Instance{get{return _instance;}}
+    public static Action<Card> OnDraw;
     public Pile discardPile{get{return _discardPile;}}
     public Pile drawPile{get{return _drawPile;}}
     public Pile exilePile{get{return _exilePile;}}
@@ -121,7 +122,9 @@ public class CardsMannager : MonoBehaviour
     public void DrawCards(int amount){
         for (int i = 0; i < amount; i++)
         {
-            hand.AddCard(_drawPile.Draw());
+            Card card = _drawPile.Draw();
+            hand.AddCard(card);
+            OnDraw?.Invoke(card);
         }
     }
 
