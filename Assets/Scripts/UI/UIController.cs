@@ -12,7 +12,6 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI food,ind,magic, drawPileTxt ,discardPileTxt, exilePileTxt;
 
     public HandGUI handGUI;
-    public ClockUI clockUI;
     public EventWindow eventWindow;
 
 

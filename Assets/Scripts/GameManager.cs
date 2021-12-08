@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        turnSequenceMannager.StartNewRound();
+        turnSequenceMannager.Init(Player.Main);
     }
 
     internal void GameOver()
