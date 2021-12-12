@@ -18,6 +18,7 @@ public class Creature : IClickable
 
 
     public Vector3Int position { get => _position; }
+    public bool isAlive{get =>_isAlive;}
     public int ID { get => _ID; }
     public int PlayerID { get => _PlayerID; }
 
@@ -32,7 +33,7 @@ public class Creature : IClickable
     public Dictionary<Type, Effect> effects = new Dictionary<Type, Effect>();
 
 
-    public static Action<Creature> OnCreatureDeath;
+    public static Action<Creature> OnCreatureDeath , OnTurnEnds;
 
 
     static Dictionary<int, Creature> creaturesRegestry = new Dictionary<int, Creature>();
@@ -50,7 +51,7 @@ public class Creature : IClickable
     Vector3Int _position;
     [ShowInInspector]
     [ReadOnly]
-    private bool _amphibious, _flying, _pioneer;
+    private bool  _flying , _isAlive;
     [ShowInInspector]
     [ReadOnly]
     CreatureAbility ability;
@@ -65,10 +66,9 @@ public class Creature : IClickable
         this._icon = data.icon;
         _position = position;
         _movement = speed;
-
-        _amphibious = data.amphibious;
+        
+        _isAlive = true;
         _flying = data.flying;
-        _pioneer = data.pioneer;
 
         _ID = cardID;
         Card card = Card.GetCard(cardID);
@@ -114,6 +114,7 @@ public class Creature : IClickable
         //Remove the creature from the board
         WorldTile tile = WorldController.Instance.world[position.x, position.y];
         tile.CreatureID = 0;
+        _isAlive = false;
     }
 
     public void AddEffect(Effect effect)
@@ -290,7 +291,7 @@ public class Creature : IClickable
 
     void OnTurnStart(Turn turn)
     {
-        if (turn == null || turn.player == null)
+        if (turn == null || turn.player == null || !isAlive)
         {
             return;
         }
@@ -303,7 +304,7 @@ public class Creature : IClickable
 
     void OnTurnEnd(Turn turn)
     {
-        if (turn == null || turn.player == null)
+        if (turn == null || turn.player == null || !isAlive)
         {
             return;
         }

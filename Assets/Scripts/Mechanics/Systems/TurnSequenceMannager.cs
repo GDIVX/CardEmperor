@@ -13,7 +13,6 @@ public class TurnSequenceMannager
 {
     public Action<Turn> OnTurnStart , OnTurnComplete;
     public Turn currentTurn;    
-    public int RoundsCount = 0;
 
     public void Init(Player player){
         currentTurn = new Turn(player);

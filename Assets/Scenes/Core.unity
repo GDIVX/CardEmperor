@@ -166,7 +166,11 @@ MonoBehaviour:
     speed: 0
     attackRange: 0
     attacksAttempts: 0
+  currentLevel: 0
+  currentRound: 0
+  roundsPerLevel: 7
   definitions: {fileID: 11400000, guid: acb2431bcd23cc34bbc8f74f7b7ccd59, type: 2}
+  spawnTable: {fileID: 11400000, guid: 6b010ca70c483da479ea5702979beac5, type: 2}
   level: 0
 --- !u!4 &1181528906
 Transform:

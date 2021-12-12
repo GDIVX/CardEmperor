@@ -30,6 +30,8 @@ public class WorldController : MonoBehaviour
     [ReadOnly]
     [TabGroup("Debug")]
     Vector3Int _Debug_gridPosition;
+
+
     [ShowInInspector]
     [ReadOnly]
     [TabGroup("Debug")]
@@ -53,6 +55,18 @@ public class WorldController : MonoBehaviour
             Debug.LogError($"Calling world before it was initialized : {e}");
             return Vector3Int.zero;
         }
+    }
+    internal Vector3Int GetRandomEmptyTile(int iterations = 40)
+    {
+        if(iterations <= 0){
+            Debug.LogWarning("Can't find an empty tile");
+            return new Vector3Int(-1,-1,-1);
+        }
+        Vector3Int pos = GetRandomTile();
+        if(world[pos.x ,pos.y].CreatureID == 0 ||!world[pos.x ,pos.y].walkable){
+            return pos;
+        }
+        return GetRandomEmptyTile(iterations-1);
     }
 
     internal void DrawTileGizmo(WorldTile tile)

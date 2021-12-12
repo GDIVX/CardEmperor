@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Mechanics.Systems.Players;
 using UnityEngine;
 
 public class CreatureMaker : CardAbility
@@ -43,7 +44,8 @@ public class CreatureMaker : CardAbility
 
         displayer.SetDisplay(true);
 
-        CardsMannager.Instance.hand.RemoveCard(ID);
+        if(creature.PlayerID == Player.Main.ID)
+            CardsMannager.Instance.hand.RemoveCard(ID);
 
         return true;
     }

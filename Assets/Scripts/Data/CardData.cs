@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using Sirenix.OdinInspector;
 using static RandomSelector;
 
-[InlineEditor]
+[PreviewField]
 [CreateAssetMenu(menuName = "Cards/Deck Data")]
 public class CardData : ScriptableObject
 {

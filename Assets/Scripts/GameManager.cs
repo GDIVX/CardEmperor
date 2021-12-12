@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     static GameManager _instance;
 
     public Creature capital;
+    public int currentLevel, currentRound, roundsPerLevel;
 
     public Player CurrentTurnOfPlayer{get{
         if(turnSequenceMannager.currentTurn == null){return null;}
@@ -21,7 +22,11 @@ public class GameManager : MonoBehaviour
         }}
 
 
+    [InlineEditor]
     public Definitions definitions;
+    [InlineEditor]
+    public EnemiesSpawnTable spawnTable;
+    [HideInInspector]
     public Action OnGameOver , OnGameStart;
     public TurnSequenceMannager turnSequenceMannager {get{ return GetTurnMannager();}}
     public RandomSelector randomSelector{get{return GetRandomSelector();}}
@@ -57,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        turnSequenceMannager.Init(Player.Main);
+        turnSequenceMannager.Init(Player.Rival);
     }
 
     internal void GameOver()
@@ -98,11 +103,6 @@ public class GameManager : MonoBehaviour
     [Button]
     public void debug_fireCardEvent(){
         GameEventMannager.FireAddCardEvent();
-    }
-
-    [Button]
-    public void debug_spawnMonster(){
-        MonsterSpawner.Spawn("Militia" , new Vector3Int(0,0,0) , new WanderAgent());
     }
 
 }

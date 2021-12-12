@@ -17,6 +17,12 @@ public abstract class CardAbility
 
     public void Activate(Vector3Int targetPosition)
     {
+        //The rival don't need to pay for his cards
+        if(Card.GetCard(ID).playerID == Player.Rival.ID){
+            _Activate(targetPosition);
+            return;
+        }
+        
         if (CanAfford(ID))
         {
             if(_Activate(targetPosition))
