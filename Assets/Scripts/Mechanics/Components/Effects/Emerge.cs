@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Mechanics.AI;
 using UnityEngine;
 
 namespace Assets.Scripts.Mechanics.Components.Effects

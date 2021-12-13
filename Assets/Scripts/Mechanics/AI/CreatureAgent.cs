@@ -6,16 +6,14 @@ using UnityEngine;
 public abstract class CreatureAgent 
 {
     public int ID => _ID;
-    protected AgentState agentState;
     static Dictionary<int,CreatureAgent> agentsRegestry = new Dictionary<int, CreatureAgent>();
 
     protected int _ID;
-    protected Creature creature {get{return Creature.GetCreature(ID);}}
+    public Creature creature {get{return Creature.GetCreature(ID);}}
 
     public void SetID(int ID){
         _ID = ID;
         agentsRegestry.Add(_ID , this);
-        agentState = AgentState.moving;
     }
 
     public static CreatureAgent GetAgent(int ID){
@@ -25,7 +23,7 @@ public abstract class CreatureAgent
     protected abstract float GetPositionScore(WorldTile tile , int depth);
     public abstract void OnTurnStart();
 
-    protected WorldTile GetFavorableTile(){
+    public WorldTile GetFavorableTile(){
         Creature creature = Creature.GetCreature(ID);
         WorldTile currentTile = WorldController.Instance.world[creature.position.x , creature.position.y];
         WorldTile tile = SearchFavorablePosition(currentTile  , creature.speed);
@@ -55,5 +53,4 @@ public abstract class CreatureAgent
         return res;
     }
 
-    protected enum AgentState {moving , attacking }
 }

@@ -16,7 +16,7 @@ public static class MonsterSpawner
 
     internal static void HandleWaveSpawning()
     {
-        int spawnCount = Mathf.RoundToInt(GameManager.Instance.currentRound +1/2);
+        int spawnCount = GameManager.Instance.currentRound <= 3 ? 1 : 2;
 
         for (var i = 0; i < spawnCount; i++)
         {
