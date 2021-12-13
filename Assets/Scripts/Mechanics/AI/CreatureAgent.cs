@@ -30,7 +30,6 @@ public abstract class CreatureAgent
         WorldTile currentTile = WorldController.Instance.world[creature.position.x , creature.position.y];
         WorldTile tile = SearchFavorablePosition(currentTile  , creature.speed);
 
-        WorldController.Instance.DrawTileGizmo(tile);
         
         return tile;
     }

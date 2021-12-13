@@ -209,6 +209,9 @@ public class Creature : IClickable
     public void InteractWithCreature(Creature creature)
     {
         if (ability == null) { return; }
+        int distanceToCreature = WorldController.DistanceOf(position , creature.position);
+        if(distanceToCreature > attackRange) return;
+
         if (creature.Player == Player)
         {
             ability.ActionOnFriendlyCreature(creature);
@@ -217,6 +220,8 @@ public class Creature : IClickable
         {
             attacksAttempts++;
             ability.ActionOnEnemyCreature(creature);
+            var interactionTable = BoardInteractionMatrix.GetInteractionTable(this);
+            WorldController.Instance.overlayController.PaintTheMap(interactionTable);
         }
     }
 
@@ -253,9 +258,9 @@ public class Creature : IClickable
 
         //Move the displayer
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
-        displayer.UpdatePosition(newPosition);
 
         _position = newPosition;
+        displayer.UpdatePosition(newPosition);
 
 
     }

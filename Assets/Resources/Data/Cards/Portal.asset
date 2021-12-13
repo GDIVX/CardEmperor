@@ -15,7 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 25346897f86838c4e9523b5fddea15b8, type: 3}
   cardName: Portal
   cardType: 2
-  description: 'After a turn, spawn a monster. If destroyed '
+  description: 'After a turn, spawn a monster. '
   keywords:
   - value: 0
     keyword: 3
@@ -26,8 +26,8 @@ MonoBehaviour:
   Time: 0
   priority: 0.7
   creatureData:
-    icon: {fileID: 21300000, guid: 322f004f6a33e1946a9a8204a671aa38, type: 3}
-    hitpoint: 5
+    icon: {fileID: 21300000, guid: 294015ba9d73fc244b5b89a8998c02eb, type: 3}
+    hitpoint: 10
     speed: 0
     armor: 1
     attack: 0

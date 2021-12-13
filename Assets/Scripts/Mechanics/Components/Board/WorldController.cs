@@ -38,11 +38,38 @@ public class WorldController : MonoBehaviour
     WorldTile _Debug_sampledTile;
     [TabGroup("Debug")]
     public TileBase tileGizmo;
-
+    public OverlayController overlayController;
 
 
     public GameObject CreatureTemplate;
 
+    private void Awake() {
+        if(_instance != null && _instance != this){
+            Destroy(this.gameObject);
+            return;
+        }
+        else{
+            _instance = this;
+        }
+        
+        WorldGenerator.GenerateWorld(worldGenData , map);
+        
+        int x = Mathf.RoundToInt(worldGenData.size.x / 2);
+        int y = Mathf.RoundToInt(worldGenData.size.y / 2);
+        Creature capital = Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
+        GameManager.Instance.capital = capital;
+    }
+
+
+
+    private void Update() {
+        if(Input.GetMouseButtonDown(0)){
+            OnMouseClick(true);
+        }
+        else if(Input.GetMouseButtonDown(1)){
+            OnMouseClick(false);
+        }
+    }
     internal Vector3Int GetRandomTile()
     {
         try{
@@ -69,42 +96,7 @@ public class WorldController : MonoBehaviour
         return GetRandomEmptyTile(iterations-1);
     }
 
-    internal void DrawTileGizmo(WorldTile tile)
-    {
-        indicatorsMap.ClearAllTiles();
-        indicatorsMap.SetTile((Vector3Int)tile.position , tileGizmo);
-    }
 
-    private void Awake() {
-        if(_instance != null && _instance != this){
-            Destroy(this.gameObject);
-            return;
-        }
-        else{
-            _instance = this;
-        }
-        
-        WorldGenerator.GenerateWorld(worldGenData , map);
-        
-        int x = Mathf.RoundToInt(worldGenData.size.x / 2);
-        int y = Mathf.RoundToInt(worldGenData.size.y / 2);
-        Creature capital = Creature.BuildAndSpawnCardless("Capital" , Player.Main.ID  , new Vector3Int(x,y,0));
-        GameManager.Instance.capital = capital;
-    }
-
-    void Start()
-    {
-    }
-
-
-    private void Update() {
-        if(Input.GetMouseButtonDown(0)){
-            OnMouseClick(true);
-        }
-        else if(Input.GetMouseButtonDown(1)){
-            OnMouseClick(false);
-        }
-    }
 
 
     internal void AddWorkingTile(WorldTile tile)

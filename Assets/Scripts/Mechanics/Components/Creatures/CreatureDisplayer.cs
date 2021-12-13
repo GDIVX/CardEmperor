@@ -70,7 +70,8 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         GameManager.CurrentSelected = this;
 
         //TODO activate some shader
-        transform.localScale = new Vector3(1.2f , 1.2f , 1.2f);
+        var interactionTable = BoardInteractionMatrix.GetInteractionTable(Creature.GetCreature(ID));
+        WorldController.Instance.overlayController.PaintTheMap(interactionTable);
     }
 
     public void OnDeselect()
@@ -78,7 +79,7 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         GameManager.CurrentSelected = null;
 
         //TODO activate some shader
-        transform.localScale = new Vector3(1 , 1 , 1);
+        WorldController.Instance.overlayController.Clear();
         
     }
 
@@ -89,17 +90,22 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
     void OnMouseEnter()
     {
         CreatureInspector.ShowCreatureCard(ID);
+        transform.LeanScale(new Vector3(1.2f , 1.2f , 1.2f) , .2f).setEase(LeanTweenType.easeInOutSine);
     }
 
     void  OnMouseExit()
     {
         if(GameManager.CurrentSelected != this)
             CreatureInspector.Hide();
+
+        transform.LeanScale(new Vector3(1 , 1 , 1) , .2f).setEase(LeanTweenType.easeInOutSine);
     }
 
     internal void UpdatePosition(Vector3Int newPosition)
     {
         var worldPosition = WorldController.Instance.map.CellToWorld(newPosition);
         transform.LeanMove(worldPosition , 1).setEase(LeanTweenType.easeInSine);
+        var interactionTable = BoardInteractionMatrix.GetInteractionTable(Creature.GetCreature(ID));
+        WorldController.Instance.overlayController.PaintTheMap(interactionTable);
     }
 }
