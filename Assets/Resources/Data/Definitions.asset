@@ -87,3 +87,5 @@ MonoBehaviour:
       attacker.
   - keyword: 10
     description: Replace the card with an improve version.
+  - keyword: 11
+    description: The creature can attacks _X_ times per turn.

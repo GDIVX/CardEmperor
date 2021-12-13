@@ -7,13 +7,15 @@ namespace Assets.Scripts.Mechanics.AI
     {
         public override void Activate(CreatureAgent agent)
         {
-            WorldTile tile = agent.GetFavorableTile();
-
-            if(tile.CreatureID == 0) return;
-            Creature other = Creature.GetCreature(tile.CreatureID);
-            if(other.PlayerID == Player.Main.ID){
-                Creature creature = agent.creature;
-                creature.InteractWithCreature(other);
+            for (var i = 0; i < agent.creature.attacksPerTurn; i++)
+            {
+                WorldTile tile = agent.GetFavorableTile();
+                if(tile.CreatureID == 0) return;
+                Creature other = Creature.GetCreature(tile.CreatureID);
+                if(other.PlayerID == Player.Main.ID){
+                    Creature creature = agent.creature;
+                    creature.InteractWithCreature(other);
+                }
             }
         }
 

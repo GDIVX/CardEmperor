@@ -10,27 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
-  m_Name: Observer
+  m_Name: Sting Devil
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: b346e960ed97afc43ad56f8df15a908a, type: 3}
-  cardName: Observer
+  image: {fileID: 21300000, guid: affaa1e82edb54c4ab94ec765891a5a3, type: 3}
+  cardName: Sting Devil
   cardType: 0
-  description: <b>Flying</b>
-  keywords: []
-  abilityScriptName: CreatureMaker
+  description: <color=yellow>Spikes 3. Flying</color>
+  keywords:
+  - value: 3
+    keyword: 9
+  abilityScriptName: PortalMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
   Time: 0
-  priority: 0
+  priority: 0.7
   creatureData:
-    icon: {fileID: 21300000, guid: b346e960ed97afc43ad56f8df15a908a, type: 3}
+    icon: {fileID: 21300000, guid: affaa1e82edb54c4ab94ec765891a5a3, type: 3}
     hitpoint: 10
     speed: 2
-    armor: 1
-    attack: 2
-    attackRange: 1
-    attacksPerTurn: 0
+    armor: 2
+    attack: 1
+    attackRange: 0
+    attacksPerTurn: 1
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 1

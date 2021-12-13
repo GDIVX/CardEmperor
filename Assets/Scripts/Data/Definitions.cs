@@ -81,6 +81,7 @@ public class KeywordDefinition
         Exile,
         Build,
         Spikes,
-        Upgrade
+        Upgrade,
+        Multistrike
     }
 }
