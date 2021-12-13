@@ -17,7 +17,7 @@ MonoBehaviour:
   cardType: 0
   description: <b>Flying</b>
   keywords: []
-  abilityScriptName: 
+  abilityScriptName: CreatureMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
@@ -30,7 +30,16 @@ MonoBehaviour:
     armor: 1
     attack: 1
     attackRange: 1
+    attacksPerTurn: 0
     abilityScriptName: BasicAbility
     amphibious: 0
     flying: 1
     pioneer: 0
+  rarity: 0
+  parm1: 0
+  parm2: 0
+  parm3: 0
+  stringParm: 
+  UpgradeOptions: []
+  UnlockCards: []
+  Exile: 0
