@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Mana 
 {
-    private int value;
+    public int value;
     public int income;
     public ManaType manaType;
 
@@ -15,7 +15,6 @@ public class Mana
 
     Action<int , ManaType> valueChangedDelegate;
 
-    public int Value { get => value;}
 
     public void RegisterOnValueChange(Action<int , ManaType> action){
         valueChangedDelegate += action;

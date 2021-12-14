@@ -65,9 +65,9 @@ public abstract class CardAbility
             return false;
         }
 
-        int leftoverFood = player.foodPoints.Value - card.foodPrice;
-        int leftoverIndustry = player.industryPoints.Value - card.industryPrice;
-        int leftoverMagic = player.magicPoints.Value - card.MagicPrice;
+        int leftoverFood = player.foodPoints.value - card.foodPrice;
+        int leftoverIndustry = player.industryPoints.value - card.industryPrice;
+        int leftoverMagic = player.magicPoints.value - card.MagicPrice;
 
         if (leftoverFood < 0 || leftoverIndustry < 0 || leftoverMagic < 0)
         {
@@ -83,9 +83,9 @@ public abstract class CardAbility
         Card card = Card.GetCard(ID);
         Player player = Player.Main;
 
-        int leftoverFood = player.foodPoints.Value - card.foodPrice;
-        int leftoverIndustry = player.industryPoints.Value - card.industryPrice;
-        int leftoverMagic = player.magicPoints.Value - card.MagicPrice;
+        int leftoverFood = player.foodPoints.value - card.foodPrice;
+        int leftoverIndustry = player.industryPoints.value - card.industryPrice;
+        int leftoverMagic = player.magicPoints.value - card.MagicPrice;
 
         player.foodPoints.SetValue(leftoverFood);
         player.industryPoints.SetValue(leftoverIndustry);

@@ -109,6 +109,11 @@ public class WorldController : MonoBehaviour
         Player.Main.foodPoints.income += income[0];
         Player.Main.industryPoints.income += income[1];
         Player.Main.magicPoints.income += income[2];
+
+        Player.Main.foodPoints.value += income[0];
+        Player.Main.industryPoints.value += income[1];
+        Player.Main.magicPoints.value += income[2];
+
     }
     void OnMouseClick(bool isLeftClick){
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));
