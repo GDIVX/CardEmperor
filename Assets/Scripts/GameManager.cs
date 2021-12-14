@@ -5,6 +5,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Assets.Scripts.Mechanics.Systems.Players;
 using Assets.Scripts.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,14 +46,6 @@ public class GameManager : MonoBehaviour
         else{
             _instance = this;
         }
-
-        //Create players
-        new MainPLayer();
-        new Rival();
-
-        //Track the capital
-        Creature.OnCreatureDeath += CheckIfCapitalDestroyed;
-
     }
 
     internal CreatureDisplayer GetCapitalDisplayer()
@@ -62,9 +55,30 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        turnSequenceMannager.Init(Player.Rival);
+        SceneManager.LoadScene("MainMenu" , LoadSceneMode.Additive);
     }
 
+    AsyncOperation UIOperation;
+    public void StartNewGame(){
+        SceneManager.UnloadSceneAsync("MainMenu");
+        UIOperation = SceneManager.LoadSceneAsync("UIScene" , LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("WorldScene" , LoadSceneMode.Additive).completed += OnWorldLoaded;
+
+    }
+
+    void OnWorldLoaded(AsyncOperation operation){
+        //Create players
+        new MainPLayer();
+        new Rival();
+
+        //Track the capital
+        WorldController.Instance.Init();
+        CardsMannager.Instance.Init();
+        UIController.Instance.Init();
+
+        Creature.OnCreatureDeath += CheckIfCapitalDestroyed;
+        turnSequenceMannager.Init(Player.Rival);
+    }
     internal void GameOver()
     {
         OnGameOver?.Invoke();

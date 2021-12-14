@@ -41,6 +41,10 @@ public class CardsMannager : MonoBehaviour
             _instance = this;
         }
 
+    }
+
+    public void Init(){
+
         _hand = new Hand();
 
         _discardPile = new Pile(Pile.PileType.Discard);

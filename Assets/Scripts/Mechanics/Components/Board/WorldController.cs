@@ -52,6 +52,10 @@ public class WorldController : MonoBehaviour
             _instance = this;
         }
         
+    }
+
+    public void Init(){
+
         WorldGenerator.GenerateWorld(worldGenData , map);
         
         int x = Mathf.RoundToInt(worldGenData.size.x / 2);

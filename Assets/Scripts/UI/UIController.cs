@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
 
     }
 
-    void Start()
+    public void Init()
     {
         //Register to delegates
         Player.Main.foodPoints.RegisterOnValueChange(OnManaValueChange);
