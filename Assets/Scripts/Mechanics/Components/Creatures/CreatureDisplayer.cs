@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.UI;
 using System;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class CreatureDisplayer : MonoBehaviour , IClickable
@@ -32,6 +33,20 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         else{
             gameObject.SetActive(false);
         }
+    }
+
+    public void AttackAnimation(Vector3Int target){
+        var worldPosition = WorldController.Instance.map.CellToWorld(target);
+        transform.LeanMove(worldPosition , .8f).setEase(LeanTweenType.easeInExpo).setLoopPingPong(1);
+    }
+
+    public void DamagedAnimation(){
+        transform.LeanMoveLocal(((Vector3)Random.insideUnitCircle *0.8f) + transform.position , .8f).setEase(LeanTweenType.easeInElastic).setLoopPingPong(1);
+    }
+
+    internal void BlockedAnimation()
+    {
+        transform.LeanMoveLocalY(transform.position.y + .5f, 0.25f).setEaseInElastic().setEaseOutBounce().setLoopPingPong(1);
     }
 
     void ShowDisplay(){
@@ -69,7 +84,6 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         selected.OnDeselect();
         GameManager.CurrentSelected = this;
 
-        //TODO activate some shader
         var interactionTable = BoardInteractionMatrix.GetInteractionTable(Creature.GetCreature(ID));
         WorldController.Instance.overlayController.PaintTheMap(interactionTable);
     }
@@ -78,7 +92,6 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
     {
         GameManager.CurrentSelected = null;
 
-        //TODO activate some shader
         WorldController.Instance.overlayController.Clear();
         
     }
@@ -107,5 +120,7 @@ public class CreatureDisplayer : MonoBehaviour , IClickable
         transform.LeanMove(worldPosition , 1).setEase(LeanTweenType.easeInSine);
         var interactionTable = BoardInteractionMatrix.GetInteractionTable(Creature.GetCreature(ID));
         WorldController.Instance.overlayController.PaintTheMap(interactionTable);
+
     }
+
 }

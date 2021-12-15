@@ -179,4 +179,8 @@ public class WorldController : MonoBehaviour
 
         return res.ToArray();
     }
+
+    public Vector3 MapToWorldPosition(Vector3Int mapPosition){
+        return map.CellToWorld(mapPosition);
+    }
 }

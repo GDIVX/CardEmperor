@@ -166,10 +166,12 @@ public class Creature : IClickable
     {
         if(!isAlive) return;
         armor--;
+        CreatureDisplayer.GetCreatureDisplayer(ID).BlockedAnimation();
     }
 
     internal void OnAttackPassed(int damage)
     {
+        CreatureDisplayer.GetCreatureDisplayer(ID).DamagedAnimation();
 
     }
 
@@ -226,6 +228,7 @@ public class Creature : IClickable
         {
             attacksAttempts++;
             ability.ActionOnEnemyCreature(creature);
+            CreatureDisplayer.GetCreatureDisplayer(ID).AttackAnimation(creature.position);
             var interactionTable = BoardInteractionMatrix.GetInteractionTable(this);
             WorldController.Instance.overlayController.PaintTheMap(interactionTable);
         }

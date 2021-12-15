@@ -74,11 +74,14 @@ public class CardDisplayer : CardGUI ,IClickable
     {
         if(GameManager.CurrentSelected != this) {return;}
 
+        GameManager.CurrentSelected = null;
         UIController.Instance.handGUI.RearrangeCards();
+        //if the card no longer exist (was used) there is not displayer to manipulate
+        if(!Card.CardExist(ID)) return;
+
         UIController.Instance.handGUI.ArrangeCard(ID);
         LeanTween.scale(gameObject , new Vector3(1,1,1), .2f);
         transform.LeanMoveLocalY(0 , .5f).setEase(LeanTweenType.easeInOutSine);
-        GameManager.CurrentSelected = null;
     }
 
     public override void OnPointerClick(PointerEventData eventData)
