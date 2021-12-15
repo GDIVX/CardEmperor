@@ -58,12 +58,15 @@ public class CardDisplayer : CardGUI ,IClickable
 
     public void OnRightClick(){}
 
-    Vector3 originalScale;
     public void OnSelect()
     {
         if(GameManager.CurrentSelected == this) {return;}
 
-        originalScale = transform.localScale;
+        LeanTween.scale(gameObject ,new Vector3(1.2f,1.2f,1.2f) , .2f);
+        transform.LeanMoveLocalY(50 , .5f).setEase(LeanTweenType.easeInExpo);
+        UIController.Instance.handGUI.RearrangeCards(
+            GetComponent<RectTransform>().rect.width*.8f);
+        transform.SetAsLastSibling();
         GameManager.CurrentSelected = this;
     }
 
@@ -71,7 +74,10 @@ public class CardDisplayer : CardGUI ,IClickable
     {
         if(GameManager.CurrentSelected != this) {return;}
 
-        
+        UIController.Instance.handGUI.RearrangeCards();
+        UIController.Instance.handGUI.ArrangeCard(ID);
+        LeanTween.scale(gameObject , new Vector3(1,1,1), .2f);
+        transform.LeanMoveLocalY(0 , .5f).setEase(LeanTweenType.easeInOutSine);
         GameManager.CurrentSelected = null;
     }
 
@@ -82,6 +88,9 @@ public class CardDisplayer : CardGUI ,IClickable
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        var CurrentSelected = GameManager.CurrentSelected as CardDisplayer;
+        if(CurrentSelected != null) return;
+
         LeanTween.scale(gameObject ,new Vector3(1.2f,1.2f,1.2f) , .2f);
         UIController.Instance.handGUI.RearrangeCards(
             GetComponent<RectTransform>().rect.width*.8f);
@@ -90,6 +99,9 @@ public class CardDisplayer : CardGUI ,IClickable
 
     public override void OnPointerExit(PointerEventData eventData)
     {
+        var CurrentSelected = GameManager.CurrentSelected as CardDisplayer;
+        if(CurrentSelected != null) return;
+
         UIController.Instance.handGUI.RearrangeCards();
         UIController.Instance.handGUI.ArrangeCard(ID);
         LeanTween.scale(gameObject , new Vector3(1,1,1), .2f);

@@ -67,41 +67,42 @@ public class CardGUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
             return;
         }
 
-        transform.GetChild(0).GetComponent<Image>().sprite = card.data.image;
+        transform.Find("Image").GetComponent<Image>().sprite = card.data.image;
 
-        transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
+        transform.Find("Header").GetChild(0).GetComponent<TextMeshProUGUI>().text = card.data.cardName;
 
-        transform.GetChild(2).GetChild(0).
+        transform.Find("Tail").GetChild(0).
             GetComponent<TextMeshProUGUI>().text = card.data.cardType.ToString();
 
-        transform.GetChild(3).GetChild(0).GetComponent<TextMeshProUGUI>().text = card.description;
-        transform.GetChild(3).GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
+        transform.Find("Description").GetChild(0).GetComponent<TextMeshProUGUI>().text = card.description;
+        transform.Find("Description").GetComponent<TooltipTrigger>().SetTextFromCard(card.data.keywords);
 
         if(card.data.cardType == CardData.CardType.Creature || 
         card.data.cardType == CardData.CardType.Town || 
         card.data.cardType == CardData.CardType.Fort || 
-        card.data.cardType == CardData.CardType.worker ){
+        card.data.cardType == CardData.CardType.worker )
+        {
 
             if(card.speed != 0){
-                ActivateAndShowText(transform.GetChild(9).GetChild(0).GetComponent<TextMeshProUGUI>() , card.speed.ToString());
+                ActivateAndShowText(transform.Find("Speed Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.speed.ToString());
             }
             else{
-                transform.GetChild(9).gameObject.SetActive(false);
+                transform.Find("Speed Indicator").gameObject.SetActive(false);
             }
-            ActivateAndShowText(transform.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>() , card.attack.ToString());
-            ActivateAndShowText(transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>() , card.armor.ToString());
-            ActivateAndShowText(transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>() , card.hitpoint.ToString());
+            ActivateAndShowText(transform.Find("Attack Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.attack.ToString());
+            ActivateAndShowText(transform.Find("Armor Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.armor.ToString());
+            ActivateAndShowText(transform.Find("Hitpoint Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.hitpoint.ToString());
         }
         else{
-            transform.GetChild(7).gameObject.SetActive(false);
-            transform.GetChild(8).gameObject.SetActive(false);
-            transform.GetChild(9).gameObject.SetActive(false);
-            transform.GetChild(10).gameObject.SetActive(false);
+            transform.Find("Attack Indicator").gameObject.SetActive(false);
+            transform.Find("Armor Indicator").gameObject.SetActive(false);
+            transform.Find("Speed Indicator").gameObject.SetActive(false);
+            transform.Find("Hitpoint Indicator").gameObject.SetActive(false);
         }
 
-            ActivateAndShowText(transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>() ,card.foodPrice.ToString());
-            ActivateAndShowText(transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>() , card.industryPrice.ToString());
-            ActivateAndShowText(transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>() , card.MagicPrice.ToString());          
+            ActivateAndShowText(transform.Find("Food Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() ,card.foodPrice.ToString());
+            ActivateAndShowText(transform.Find("Industry Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.industryPrice.ToString());
+            ActivateAndShowText(transform.Find("Magic Indicator").GetChild(0).GetComponent<TextMeshProUGUI>() , card.MagicPrice.ToString());          
 
 
         transform.SetParent(UIController.Instance.handGUI.transform);
