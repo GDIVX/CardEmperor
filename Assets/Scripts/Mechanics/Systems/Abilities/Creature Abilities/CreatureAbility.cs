@@ -16,11 +16,9 @@ public abstract class CreatureAbility
         //Roll attack dice
         int attackRoll = Dice.Roll(attacker.attack) + attacker.damageBonus;
         int attackAvarage = Mathf.RoundToInt(attackRoll / attacker.attack);
-        //Roll armor dice
-        //Missing often is not fun, push the avarage roll to be lower then the attack roll
-        int armorRoll = Dice.Roll(defender.armor ,Mathf.RoundToInt( attackAvarage /2) + defender.blockBonus );
 
-        int damage = attackRoll - armorRoll;
+
+        int damage = attackRoll - defender.armor;
 
         if(attacker.Player.IsMain()){
             //nudge the numbers slightly in favour of the player

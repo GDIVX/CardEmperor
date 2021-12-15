@@ -32,9 +32,9 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 892b9fd01b4846848b629ea9f6f37003, type: 3}
     hitpoint: 15
     speed: 0
-    armor: 2
+    armor: 10
     attack: 1
-    attackRange: 0
+    attackRange: 1
     attacksPerTurn: 1
     abilityScriptName: BasicAbility
     amphibious: 0

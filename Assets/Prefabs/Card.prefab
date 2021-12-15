@@ -131,7 +131,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 17.100006}
-  m_SizeDelta: {x: 48, y: 32}
+  m_SizeDelta: {x: 72, y: 32}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6108676921871944856
 CanvasRenderer:
@@ -227,7 +227,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 17.1}
-  m_SizeDelta: {x: 48, y: 32}
+  m_SizeDelta: {x: 72, y: 32}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6108676921933085138
 CanvasRenderer:
@@ -2323,7 +2323,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 17.100006}
-  m_SizeDelta: {x: 48, y: 32}
+  m_SizeDelta: {x: 72, y: 32}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6108676923417008290
 CanvasRenderer:
@@ -2378,8 +2378,8 @@ MonoBehaviour:
   headers:
   - Armor
   contents:
-  - When the craeture is being attacked, it rolls this ammount of 10 sided dices.
-    The sums of the dices reduce the incoming damage.
+  - Block incoming damage. If the incoming damage is less then the armor value, the
+    creasture take no damage but the armor is reduced by 1.
   anchor: {fileID: 8947715465320624341}
   containerGameObjectName: Cards TTC
 --- !u!1 &8900435886546077373

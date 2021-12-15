@@ -15,5 +15,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b5f97de2308448c4e9696a27ff2f4b25, type: 3}
   color: {r: 0, g: 1, b: 0, a: 1}
   toolTipHeader: Vigor
-  tooltipDescription: When this creature is attacked, block _X_ incoming damage.
-    Reduce by 1 by the end of the turn.
+  tooltipDescription: Adds _X_ armor per turn. Reduce by 1 by the end of the turn.

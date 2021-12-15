@@ -64,8 +64,7 @@ MonoBehaviour:
   - keyword: 1
     description: 'Attacks deals +_X_ damage. Reduce by 1 by the end of the turn. '
   - keyword: 2
-    description: When this creature is attacked, block _X_ incoming damage. Reduce
-      by 1 by the end of the turn.
+    description: Adds _X_ armor per turn. Reduce by 1 by the end of the turn.
   - keyword: 3
     description: Trigger an additionl effect when the creature is near another freindly
       creature

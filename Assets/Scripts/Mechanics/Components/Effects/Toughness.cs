@@ -25,7 +25,7 @@ namespace Assets.Scripts.Mechanics.Components.Effects
         protected override void _OnTurnEnd()
         {
             value--;
-            Creature.GetCreature(creatureID).blockBonus--;
+            Creature.GetCreature(creatureID).hitpoints--;
             if(value <= 0){
                 Remove();
             }

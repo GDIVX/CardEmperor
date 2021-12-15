@@ -19,7 +19,7 @@ MonoBehaviour:
   keywords:
   - value: 3
     keyword: 9
-  abilityScriptName: PortalMaker
+  abilityScriptName: Spearman
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: affaa1e82edb54c4ab94ec765891a5a3, type: 3}
     hitpoint: 10
     speed: 2
-    armor: 2
+    armor: 3
     attack: 1
     attackRange: 0
     attacksPerTurn: 1

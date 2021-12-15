@@ -23,6 +23,7 @@ public class BasicAbility : CreatureAbility
         {
             int damage = GetAttackDamage(creature, target);
 
+
             target.ToastAttackFormated(damage, target.hitpoints);
 
             if (damage > 0)

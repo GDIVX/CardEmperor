@@ -18,13 +18,13 @@ namespace Assets.Scripts.Mechanics.Components.Effects
 
         protected override void _OnCreated()
         {
-            Creature.GetCreature(creatureID).blockBonus += value;
+            Creature.GetCreature(creatureID).armor += value;
         }
 
         protected override void _OnTurnEnd()
         {
             value--;
-            Creature.GetCreature(creatureID).blockBonus--;
+            Creature.GetCreature(creatureID).armor--;
             if(value <= 0){
                 Remove();
             }

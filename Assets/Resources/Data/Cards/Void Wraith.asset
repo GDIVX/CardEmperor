@@ -21,7 +21,7 @@ MonoBehaviour:
     keyword: 0
   - value: 2
     keyword: 11
-  abilityScriptName: PortalMaker
+  abilityScriptName: CreatureMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   priority: 0.7
   creatureData:
     icon: {fileID: 21300000, guid: 639845d78711a884494c207617212e64, type: 3}
-    hitpoint: 5
+    hitpoint: 10
     speed: 4
     armor: 0
     attack: 1

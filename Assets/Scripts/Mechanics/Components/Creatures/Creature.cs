@@ -28,7 +28,7 @@ public class Creature : IClickable
 
     public int attacksPerTurn = 1;
 
-    public int damageBonus, blockBonus;
+    public int damageBonus;
 
     public Dictionary<Type, Effect> effects = new Dictionary<Type, Effect>();
 
@@ -108,9 +108,10 @@ public class Creature : IClickable
     {
         OnCreatureDeath?.Invoke(this);
         //Clear view
-        CreatureDisplayer.GetCreatureDisplayer(ID).SetDisplay(false);
+        GameObject.Destroy(CreatureDisplayer.GetCreatureDisplayer(ID).gameObject);
         //Move the card into exile
-        CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
+        if(PlayerID == Player.Main.ID)
+            CardsMannager.Instance.exilePile.Drop(Card.GetCard(ID));
         //Remove the creature from the board
         WorldTile tile = WorldController.Instance.world[position.x, position.y];
         tile.CreatureID = 0;
@@ -119,6 +120,8 @@ public class Creature : IClickable
 
     public void AddEffect(Effect effect)
     {
+        if(!isAlive) return;
+
         if (effects.ContainsKey(effect.GetType()))
         {
             effects[effect.GetType()].value += effect.value;
@@ -132,6 +135,8 @@ public class Creature : IClickable
     }
     public void SetEffect(Effect effect , bool allowBiggerValues = true)
     {
+        if(!isAlive) return;
+
         if (effects.ContainsKey(effect.GetType()))
         {
             if(allowBiggerValues == true && effects[effect.GetType()].value >= effect.value){
@@ -148,9 +153,9 @@ public class Creature : IClickable
     }
     internal void TakeDamage(int damage)
     {
+        if(!isAlive) return;
+
         hitpoints -= damage;
-        CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
-        displayer.SetDisplay(true);
         if (hitpoints <= 0)
         {
             Kill();
@@ -159,7 +164,8 @@ public class Creature : IClickable
 
     internal void OnAttackBlocked(int damage)
     {
-        //TODO fun animation
+        if(!isAlive) return;
+        armor--;
     }
 
     internal void OnAttackPassed(int damage)
@@ -208,7 +214,7 @@ public class Creature : IClickable
 
     public void InteractWithCreature(Creature creature)
     {
-        if (ability == null) { return; }
+        if (ability == null || !isAlive || !creature.isAlive) { return; }
         int distanceToCreature = WorldController.DistanceOf(position , creature.position);
         if(distanceToCreature > attackRange) return;
 
@@ -228,6 +234,8 @@ public class Creature : IClickable
 
     public void MoveTo(Vector3Int target)
     {
+        if(!isAlive) return;
+
         int distance = WorldController.DistanceOf(position, target);
         if (distance <= _movement && (flying || WorldController.Instance.world[target.x, target.y].walkable))
         {
@@ -248,6 +256,7 @@ public class Creature : IClickable
 
     public void UpdatePosition(Vector3Int newPosition)
     {
+        if(!isAlive) return;
         //Clean old tile
         WorldTile tile = WorldController.Instance.world[position.x, position.y];
         tile.CreatureID = 0;
@@ -271,20 +280,14 @@ public class Creature : IClickable
         if (damage <= 0)
         {
             //Missed!
-            displayer.Toast($"<color=grey><b><i>Missed! {damage}</color></b></I>", 1);
+            displayer.Toast($"<color=orange><b><i>Blocked!</color></b></I>", 1,50);
             return;
         }
 
         float damageRelativeToHitpoints = damage / targetHitpoint;
         float fontSize = Mathf.Clamp(35 * damageRelativeToHitpoints, 24, 50);
 
-        if (damageRelativeToHitpoints >= 1)
-        {
-            //fatal hit
-            displayer.Toast($"<color=red><b><i>FATAL! {damage}!</color></b></I>", 1, fontSize);
-            return;
-        }
-        displayer.Toast($"<color=blue><b><i>{damage}</color></b></I>", 1, fontSize);
+        displayer.Toast($"<color=red><b><i>{damage}</color></b></I>", 1, fontSize);
 
 
     }

@@ -29,7 +29,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 294015ba9d73fc244b5b89a8998c02eb, type: 3}
     hitpoint: 10
     speed: 0
-    armor: 1
+    armor: 10
     attack: 0
     attackRange: 0
     attacksPerTurn: 0
