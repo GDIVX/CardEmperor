@@ -28,7 +28,14 @@ namespace Assets.Scripts.Mechanics.Components.Effects
                 Vector3Int position = Creature.GetCreature(creatureID).position;
 
                 Creature.GetCreature(creatureID).Kill();
-                MonsterSpawner.Spawn(data , position , new WanderAgent());
+                
+                string agentScriptName = data.creatureData.AIAgentScriptName;
+                if(agentScriptName == null || agentScriptName == ""){
+                    Debug.LogError($"Agent script name is null or empty");
+                    return;
+                }
+                CreatureAgent agent = System.Activator.CreateInstance(System.Type.GetType("Assets.Scripts.Mechanics.AI."+agentScriptName)) as CreatureAgent;
+                MonsterSpawner.Spawn(data , position ,agent);
                 
             }
         }

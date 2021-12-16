@@ -29,6 +29,7 @@ public class CardData : ScriptableObject
     [HideLabel]
     [LabelWidth(100)]
     public string abilityScriptName;
+
     [BoxGroup("Mana Cost")]
     [GUIColor(0, 1, 0)]
     [LabelWidth(100)]
@@ -78,8 +79,12 @@ public class CreatureData
     [LabelWidth(100)]
     [HideInInlineEditors]
     public string abilityScriptName;
+    [BoxGroup("Script")]
+    [LabelWidth(100)]
+    public string AIAgentScriptName;
     [BoxGroup("Properties")]
     [LabelWidth(100)]
+    
     public bool amphibious, flying, pioneer;
 }
 

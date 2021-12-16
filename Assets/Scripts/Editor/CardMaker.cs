@@ -56,6 +56,11 @@ public class CardMaker : OdinEditorWindow
     [LabelWidth(100)]
     [Sirenix.OdinInspector.FilePath]
     public string abilityScript = "Assets/Scripts/Mechanics/Systems/Abilities/Cards abilities";
+    [BoxGroup("Script")]
+    [LabelWidth(100)]
+    [Sirenix.OdinInspector.FilePath]
+    public string aiAgentScript = "Assets/Scripts/Mechanics/AI/Agents";
+
     [HideIf("cardType", CardData.CardType.Fate)]
     [BoxGroup("Mana Cost")]
     [GUIColor(0, 1, 0)]
@@ -110,8 +115,11 @@ public class CardMaker : OdinEditorWindow
         data.cardName = cardName;
         data.description = description;
         data.keywords = keywords;
+
         char[] charsToTrim = { 'c', ' ', '\'', 's', '.' };
         data.abilityScriptName = Path.GetFileName(abilityScript).Trim(charsToTrim);
+        data.creatureData.AIAgentScriptName = Path.GetFileName(aiAgentScript).Trim(charsToTrim);
+
         data.foodPrice = foodPrice;
         data.industryPrice = industryPrice;
         data.MagicPrice = MagicPrice;
