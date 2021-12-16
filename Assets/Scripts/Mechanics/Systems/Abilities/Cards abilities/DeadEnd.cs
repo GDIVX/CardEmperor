@@ -19,4 +19,9 @@ public class DeadEnd : CardAbility
         HandleRemoval(ID);
         return true;
     }
+
+        public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return tile.CreatureID !=0;
+    }
 }

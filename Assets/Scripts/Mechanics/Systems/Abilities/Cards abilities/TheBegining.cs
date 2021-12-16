@@ -15,7 +15,7 @@ public class TheBegining : DealDamage
             CardsMannager.Instance.drawPile.Drop(newCard);
             CardsMannager.Instance.drawPile.Shuffle();
 
-            RemoveAndExile(ID);
+            HandleRemoval(ID);
 
             return true;
         }

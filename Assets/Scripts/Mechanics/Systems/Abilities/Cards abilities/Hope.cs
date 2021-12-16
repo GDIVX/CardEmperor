@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class Hope : CardAbility
 {
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
+
     protected override void OnStart()
     {
 
@@ -20,9 +25,11 @@ public class Hope : CardAbility
             creature.AddEffect(new Toughness(5));
         }
 
-        RemoveAndExile(ID);
+        HandleRemoval(ID);
 
         return true;
     }
+
+    
 
 }

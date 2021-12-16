@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LastDitchEffort : CardAbility
 {
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
+
     protected override void OnStart()
     {
         

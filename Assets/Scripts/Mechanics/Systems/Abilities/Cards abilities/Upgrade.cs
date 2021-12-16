@@ -8,6 +8,12 @@ public class Upgrade : CardAbility
 {
     List<Card> options = new List<Card>();
     Card chosenCard;
+
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
+
     protected override void OnStart()
     {
 

@@ -7,6 +7,12 @@ public class Saga : CardAbility
 {
 
     int value;
+
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
+
     protected override void OnStart()
     {
         value = Card.GetCard(ID).data.parm1;

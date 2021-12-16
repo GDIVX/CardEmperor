@@ -25,4 +25,9 @@ public class AddVigor : CardAbility
     {
     }
 
+        public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return tile.CreatureID !=0;
+    }
+
 }

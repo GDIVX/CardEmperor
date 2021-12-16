@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class TowerDrive : CardAbility
 {
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
+
     protected override void OnStart()
     {
 
@@ -25,14 +30,7 @@ public class TowerDrive : CardAbility
             CardsMannager.Instance.hand.AddCard(towerCard);
         }
 
-        if (card.data.Exile)
-        {
-            RemoveAndExile(ID);
-        }
-        else
-        {
-            RemoveAndDiscard(ID);
-        }
+        HandleRemoval(ID);
         return true;
     }
 }

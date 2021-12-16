@@ -15,9 +15,14 @@ public class BirdsCounting : CardAbility
         GameManager.Instance.capital.AddEffect(new Omen(1));
         Creature.GetCreatureByPosition(targetPosition).AddEffect(new Aim(2));
 
-        RemoveAndDiscard(ID);
+        HandleRemoval(ID);
 
         return true;
+    }
+
+        public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return tile.CreatureID !=0;
     }
 
 }

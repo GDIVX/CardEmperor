@@ -19,15 +19,13 @@ public class DealDamage : CardAbility
 
         creature.TakeDamage(card.data.parm1);
 
-        if (card.data.Exile)
-        {
-            RemoveAndExile(ID);
-        }
-        else
-        {
-            RemoveAndDiscard(ID);
-        }
+        HandleRemoval(ID);
 
         return true;
+    }
+
+        public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return tile.CreatureID !=0;
     }
 }

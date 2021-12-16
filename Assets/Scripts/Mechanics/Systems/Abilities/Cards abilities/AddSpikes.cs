@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class AddSpikes : CardAbility
 {
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return tile.CreatureID !=0;
+    }
+
     protected override void OnStart()
     {
 

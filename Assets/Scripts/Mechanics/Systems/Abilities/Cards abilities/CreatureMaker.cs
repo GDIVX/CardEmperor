@@ -44,8 +44,11 @@ public class CreatureMaker : CardAbility
 
         displayer.SetDisplay(true);
 
-        if(creature.PlayerID == Player.Main.ID)
+        if(creature.PlayerID == Player.Main.ID){
+            CardDisplayer.GetDisplayer(ID).OnDeselect();
             CardsMannager.Instance.hand.RemoveCard(ID);
+        }
+            
 
         return true;
     }
@@ -53,5 +56,11 @@ public class CreatureMaker : CardAbility
     protected override void OnStart()
     {
         
+    }
+
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        CreatureData data = Card.GetCard(ID).data.creatureData;
+        return tile.CreatureID == 0 && (data.flying || tile.walkable);
     }
 }

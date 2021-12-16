@@ -23,5 +23,8 @@ public class Apocalypse : CardAbility
         GameManager.Instance.capital.TakeDamage(Card.GetCard(ID).data.parm2);
     }
 
-
+    public override bool isPlayableOnTile(WorldTile tile)
+    {
+        return false;
+    }
 }

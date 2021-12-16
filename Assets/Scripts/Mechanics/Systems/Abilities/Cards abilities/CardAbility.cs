@@ -14,6 +14,7 @@ public abstract class CardAbility
 
     protected abstract bool _Activate(Vector3Int targetPosition);
     protected abstract void OnStart();
+    public abstract bool isPlayableOnTile(WorldTile tile);
 
     public void Activate(Vector3Int targetPosition)
     {
@@ -26,7 +27,9 @@ public abstract class CardAbility
         if (CanAfford(ID))
         {
             if(_Activate(targetPosition))
+            {
                 PayForCard(ID);
+            }
             else
                 Prompt.ToastCenter("<color=blue>Can't Play This Card</color>", 1); 
         }
@@ -53,6 +56,21 @@ public abstract class CardAbility
     public static CardAbility GetAbility(int ID)
     {
         return regestry[ID];
+    }
+
+    public Dictionary<Vector3Int , string> GetBoardInteractions(){
+        Dictionary<Vector3Int , string> res = new Dictionary<Vector3Int, string>();
+
+        //don't show options for a card the player can't play
+        if(!CanAfford(ID)) return res;
+
+        foreach (WorldTile tile in WorldController.Instance.world)
+        {
+            if(isPlayableOnTile(tile)){
+                res.Add((Vector3Int)tile.position , "Blue");
+            }
+        }
+        return res;
     }
 
     public static bool CanAfford(int ID)
@@ -100,7 +118,10 @@ public abstract class CardAbility
             //Do not remove or discard, let the calling card handle removal
             return;
         }
+        CardDisplayer.GetDisplayer(ID).OnDeselect();
+
         bool exile = Card.GetCard(ID).data.Exile;
+        Debug.Log("?!?");
         if (exile)
         {
             RemoveAndExile(ID);

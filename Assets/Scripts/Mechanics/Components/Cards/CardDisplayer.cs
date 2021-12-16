@@ -62,11 +62,18 @@ public class CardDisplayer : CardGUI ,IClickable
     {
         if(GameManager.CurrentSelected == this) {return;}
 
+        //Move the card forward to mark him as selected
         LeanTween.scale(gameObject ,new Vector3(1.2f,1.2f,1.2f) , .2f);
         transform.LeanMoveLocalY(50 , .5f).setEase(LeanTweenType.easeInExpo);
+
         UIController.Instance.handGUI.RearrangeCards(
             GetComponent<RectTransform>().rect.width*.8f);
         transform.SetAsLastSibling();
+
+        //Show availble actions on the board
+        var interactions = Card.GetCard(ID).ability.GetBoardInteractions();
+        WorldController.Instance.overlayController.PaintTheMap(interactions);
+
         GameManager.CurrentSelected = this;
     }
 
@@ -76,6 +83,8 @@ public class CardDisplayer : CardGUI ,IClickable
 
         GameManager.CurrentSelected = null;
         UIController.Instance.handGUI.RearrangeCards();
+        WorldController.Instance.overlayController.Clear();
+        
         //if the card no longer exist (was used) there is not displayer to manipulate
         if(!Card.CardExist(ID)) return;
 
