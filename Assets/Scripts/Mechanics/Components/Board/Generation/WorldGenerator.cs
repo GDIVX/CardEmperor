@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,150 +9,208 @@ public static class WorldGenerator
     public static void GenerateWorld(WorldGenData data , Tilemap map){
         
         int seed = GenerateSeed(data);
-
-        float[,] noiseMap = Noise.GenerateNoiseMap(
-            data.size.x , data.size.y,
-            seed,
-            data.scale,
-            data.octaves,
-            data.persistance, 
-            data.lacunarity,
-            data.offset,
-            data.normalizeMode
-        );
+        Random.InitState(seed);
 
         map.ClearAllTiles();
 
-        if(WorldController.Instance.world == null){
-            WorldController.Instance.world = GenerateWorldData(noiseMap , data);
-            //WorldController.Instance.world = UpdateWorldData(WorldController.Instance.world , data);
-        }
-        
-        AddManaNodes(data);
+        WorldController.Instance.world = new WorldTile[data.size.x , data.size.y ];
 
-        UpdateWorldVisuals(new RectInt(0 , 0 , data.size.x ,data.size.y) , data , map );
+    for (var x = 0; x < data.size.x; x++)
+    {
+        for (var y = 0; y < data.size.y; y++)
+        {
+            WorldTile tile = WorldTileFactory.GenerateTile(new Vector2Int(x,y) , TileFeature.PLAINS);
+            WorldController.Instance.SetTile(tile);
+        }
+    }
+
+    GenerateCoastlie(data);
+
+    GenerateRiver(data);
+
+    GenerateTiles(TileFeature.MOUNTIAN , data.mountains);
+    GenerateTiles(TileFeature.FIELD , data.farms);
+    GenerateTiles(TileFeature.FOREST , data.forests);
+    GenerateTiles(TileFeature.ORBS , data.orbs);
 
     }
 
+    private static void GenerateTiles(TileFeature feature , int amount)
+    {
+        for (var i = 0; i < amount; i++)
+        {
+            GenerateTile(feature);
+        }
+    }
+
+    private static void GenerateTile(TileFeature feature)
+    {
+        WorldTile tile = WorldController.Instance.GetRandomTile();
+        if(tile.feature != TileFeature.PLAINS){
+            //if the position is not valid, try again
+            GenerateTile(feature);
+            return;
+        }
+
+        tile = WorldTileFactory.GenerateTile(tile.position , feature);
+        WorldController.Instance.SetTile(tile);
+    }
+
+    private static void GenerateRiver(WorldGenData data)
+    {
+        WorldTile start = WorldController.Instance.GetRandomTile();
+        WorldTile end = WorldController.Instance.GetRandomTile();
+
+        int distance = WorldController.DistanceOf((Vector3Int)start.position , (Vector3Int)end.position);
+        Vector2Int center = new Vector2Int(Mathf.RoundToInt(data.size.x/2) ,Mathf.RoundToInt(data.size.y/2));
+
+        //avoid starting in the center of the map
+        //The river must be at a minimal length
+        if(start.position.x == center.x
+            || start.position.y == center.y
+            || end.position.x == center.x
+            || end.position.y == center.y
+            || distance < Mathf.Min(data.size.x , data.size.y)){
+            GenerateRiver(data);
+            return;
+        }
+
+        GenerateRiver(start , end);
+        foreach (WorldTile tile in WorldController.Instance.world)
+        {
+            if(tile.feature == TileFeature.SHALLOW_WATER){
+                GenerateBridge(tile);
+            }
+        }
+    }
+
+
+    private static void GenerateRiver(WorldTile currentTile, WorldTile end)
+    {
+        List<WorldTile> res = new List<WorldTile>();
+        if(currentTile.position == end.position){
+            return;
+        }
+        //set the current tile to shalow waters or bridge
+        currentTile = WorldTileFactory.GenerateTile(currentTile.position , TileFeature.SHALLOW_WATER);
+        WorldController.Instance.SetTile(currentTile);
+
+        var neighbors = currentTile.GetNeighbors();
+        var list = neighbors.ToList();
+        int currentDistanceToEnd = WorldController.DistanceOf((Vector3Int)currentTile.position , (Vector3Int)end.position);
+
+        foreach (var n in neighbors)
+        {
+            if(n.feature == TileFeature.SHALLOW_WATER){
+                list.Remove(n);
+                continue;
+            }
+            //Remove any neighbor that is further away from the end tile then the current tile
+            int distanceToEnd = WorldController.DistanceOf((Vector3Int)n.position , (Vector3Int)end.position);
+            if(distanceToEnd > currentDistanceToEnd){
+                list.Remove(n);
+                continue;
+            }
+            //also remove any tile that is surrounded by rivers
+            int count = 0;
+            var _neighbors = n.GetNeighbors();
+            foreach (var j in _neighbors)
+            {
+                if(count >= 2){
+                    list.Remove(n);
+                    break;
+                }
+                if(j.feature == TileFeature.SHALLOW_WATER){
+                    count++;
+                }
+            }
+        }
+
+        if(list.Count == 0){
+            //no valid options.
+            return;
+        }
+
+        //choose a neighbor in random
+        int rand = Random.Range(0 , list.Count);
+        GenerateRiver(list[rand] , end);
+    }
+
+    private static void GenerateBridge(WorldTile currentTile)
+    {
+        var neighbors = currentTile.GetNeighbors();
+        int count = 0;
+        
+        foreach (var n in neighbors)
+        {
+            if(n.feature == TileFeature.PLAINS){
+                count++;
+            }
+        }
+        if(count >= 2 && count <= 4 ){
+            var tilesInRange = currentTile.GetTilesInRange(5);
+            foreach (var t in tilesInRange)
+            {
+                if(t.feature == TileFeature.BRIDGE){
+                    return;
+                }
+            }
+            currentTile = WorldTileFactory.GenerateTile(currentTile.position , TileFeature.BRIDGE);
+            WorldController.Instance.SetTile(currentTile);
+        }
+
+    }
+
+    private static void GenerateLake(WorldTile centerTile)
+    {
+        centerTile = WorldTileFactory.GenerateTile(centerTile.position , TileFeature.WATER);
+        WorldController.Instance.SetTile(centerTile);
+        List<WorldTile> neighbors = centerTile.GetNeighbors().ToList();
+        foreach (var n in neighbors)
+        {
+            SetToWaterByChance(n);
+        }
+    }
+
+    private static void GenerateCoastlie(WorldGenData data)
+    {
+        GenerateCoastlie(new Vector2Int(0,0) , new Vector2Int(data.size.x-1 , 0));
+        GenerateCoastlie(new Vector2Int(0,0) , new Vector2Int(0 , data.size.y-1));
+        GenerateCoastlie( new Vector2Int(0 , data.size.y-1) , new Vector2Int(data.size.x -1, data.size.y-1));
+        GenerateCoastlie(new Vector2Int(data.size.x -1, 0) , new Vector2Int(data.size.x -1, data.size.y-1));
+    }
+
+    private static void GenerateCoastlie(Vector2Int from, Vector2Int to)
+    {
+        for (var x = from.x; x <= to.x; x++)
+        {
+            for (var y = from.y; y <= to.y; y++)
+            {
+                if(!WorldController.Instance.IsTileExist(new Vector3Int(x,y,0))){
+                    continue;
+                }
+                WorldTile tile = WorldController.Instance.world[x,y];
+                var arr = tile.GetNeighbors();
+
+                foreach (var n in arr)
+                {
+                    SetToWaterByChance(n);
+                }
+            }
+        }
+    }
+
+    private static void SetToWaterByChance(WorldTile tile){
+
+        float rand = Random.value;
+        if(rand <= 0.15f){
+            WorldTile newTile = WorldTileFactory.GenerateTile(tile.position , TileFeature.WATER);
+            WorldController.Instance.SetTile(newTile);
+        }
+    }
 
     private static int GenerateSeed(WorldGenData data){
         return data.seed == 0 ? Random.Range(-9999,9999) : data.seed;
     }
 
-    public static WorldTile[,] GenerateWorldData(float[,] noiseMap, WorldGenData data){
-
-        WorldTile[,] worldData = new WorldTile[data.size.x , data.size.y];
-
-        for (int x = 0; x < data.size.x; x++)
-        {
-            for (int y = 0; y < data.size.y; y++)
-            {
-                float hight = noiseMap[x,y];
-                TileGenDefinition[] definitions = data.tileGenDefinition;
-                for (int i = 0; i < definitions.Length; i++)
-                {
-                    if(hight <= definitions[i].maxhight){
-                        TileFeature feature = definitions[i].feature;
-                        worldData[x,y] = new WorldTile(new Vector2Int(x,y) , feature , definitions[i].walkable);
-                        break;
-                    }
-                    worldData[x,y] = new WorldTile(new Vector2Int(x,y) , definitions[definitions.Length-1].feature , definitions[definitions.Length-1].walkable);
-                }
-            }
-        }
-
-        return worldData;
-    }
-
-    private static void AddManaNodes( WorldGenData data)
-    {
-        List<WorldTile> landTiles = new List<WorldTile>();
-
-        //save the center for the capital
-        int hX = Mathf.RoundToInt(data.size.x / 2);
-        int hY = Mathf.RoundToInt(data.size.y / 2);
-        WorldTile savedTile = WorldController.Instance.world[hX,hY];
-        landTiles.Remove(savedTile);
-        foreach (var t in savedTile.GetNeighbors())
-        {
-            landTiles.Remove(t);
-        }
-
-
-        //Create a list of walkable tiles
-        for (var x = 0; x < data.size.x; x++)
-        {
-            for (var y = 0; y < data.size.y; y++)
-            {
-                if(WorldController.Instance.world[x,y].walkable){
-                    landTiles.Add(WorldController.Instance.world[x,y]);
-                }
-            }
-        }
-
-        landTiles = GenerateNodesOfType(data.farms , data.nodesGenDefinitions[0] , landTiles);
-        landTiles = GenerateNodesOfType(data.forests , data.nodesGenDefinitions[1], landTiles);
-        GenerateNodesOfType(data.orbs  , data.nodesGenDefinitions[2], landTiles);
-    }
-
-    private static List<WorldTile> GenerateNodesOfType(int amount , NodesGenDefinition nodesGenDefinition, List<WorldTile> landTiles)
-    {
-        while(amount > 0){
-            int rand = Mathf.RoundToInt(Random.Range(0 , landTiles.Count));
-            WorldTile tile = landTiles[rand];
-
-            tile.feature = nodesGenDefinition.heartFeature;
-            tile.walkable = false;
-            landTiles.Remove(tile);
-            foreach (var n in tile.GetNeighbors())
-            {
-                n.feature = nodesGenDefinition.nodesFeature;
-                landTiles.Remove(n);
-            }
-            amount--;
-        }
-
-        return landTiles;
-    }
-
-    public static void UpdateWorldVisuals(RectInt area , WorldGenData data , Tilemap map ){
-        
-
-        TileGenDefinition[] definitions = data.tileGenDefinition;
-        NodesGenDefinition[] nodesDef = data.nodesGenDefinitions;
-
-        for(int x = area.xMin ; x < area.xMax ; x++){
-            for(int y = area.yMin ; y < area.yMax ; y++ ){
-
-                TileFeature feature = WorldController.Instance.world[x,y].feature;
-                TileBase tile = null;
-
-                //Loop trough all definitions to find the one that match
-                foreach(TileGenDefinition def in definitions){
-                    if(feature == def.feature){
-                        tile = def.tile;
-                        break;
-                    }
-                }
-                if(tile == null){
-                    foreach (var def in nodesDef)
-                    {
-                        if(feature == def.heartFeature){
-                            tile = def.heartTile;
-                            break;
-                        }
-                        if(feature == def.nodesFeature){
-                            tile = def.nodesTile;
-                            break;
-                        }
-                    }
-                }
-
-                if(tile == null){Debug.LogWarning("Can't find a tile for visuals update"); return;}
-
-                //update tilebase
-                map.SetTile(new Vector3Int(x,y,0) , tile);
-            }
-        }     
-    }
 }

@@ -25,7 +25,7 @@ public class DebugConsole : MonoBehaviour
         SummonMonster = new DebugCommand("Summon monster" , ()=>{
             Card card = Card.BuildCard("Archer" , Player.Rival.ID);
             CardData data = card.data;
-            Vector3Int cellPosition = WorldController.Instance.GetRandomTile();
+            Vector3Int cellPosition = WorldController.Instance.GetRandomTilePosition();
             Vector3 position = WorldController.Instance.map.CellToWorld(cellPosition);
             Creature creature = new Creature(data.creatureData , card.ID , cellPosition);
             

@@ -14,49 +14,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 0
   size: {x: 10, y: 8}
-  Padding: {x: 3, y: 2}
-  offset: {x: 0, y: 0}
-  normalizeMode: 0
-  scale: 25
-  octaves: 4
-  persistance: 0.7
-  lacunarity: 2.5
   tileGenDefinition:
   - tile: {fileID: 11400000, guid: f520a133fecc9d94ea48be0246552503, type: 2}
-    maxhight: 0.2
     feature: 0
     walkable: 0
+    speedCost: 1
+    attackBonus: 0
+    armorBonus: 0
+    foodOutput: 0
+    industryOutput: 0
+    magicOutput: 0
   - tile: {fileID: 11400000, guid: 2bb7ad77f08365a48a3b434f23ff85fb, type: 2}
-    maxhight: 0.7
     feature: 1
     walkable: 1
-  - tile: {fileID: 11400000, guid: e38cd905be700a741803c8fce19f1381, type: 2}
-    maxhight: 0.8
+    speedCost: 1
+    attackBonus: 0
+    armorBonus: 0
+    foodOutput: 0
+    industryOutput: 0
+    magicOutput: 0
+  - tile: {fileID: 11400000, guid: 3720b865a8159f64bb39923b1ca95216, type: 2}
     feature: 2
     walkable: 1
-  nodesGenDefinitions:
-  - heartTile: {fileID: 11400000, guid: 5df0f61b7dda734479018dbc77ee7333, type: 2}
-    nodesTile: {fileID: 11400000, guid: a5e274457a7deae449fe7ba79443e87f, type: 2}
+    speedCost: 2
+    attackBonus: 0
+    armorBonus: 1
+    foodOutput: 0
+    industryOutput: 0
+    magicOutput: 0
+  - tile: {fileID: 11400000, guid: 9192d60ed5b738e4eaeb4d58a701ae0d, type: 2}
+    feature: 3
+    walkable: 1
+    speedCost: 2
+    attackBonus: 0
+    armorBonus: -1
+    foodOutput: 0
+    industryOutput: 0
+    magicOutput: 0
+  - tile: {fileID: 11400000, guid: b4065d2ee8d2b1c4aafaed0a3efdb295, type: 2}
+    feature: 4
+    walkable: 1
+    speedCost: 1
+    attackBonus: 0
+    armorBonus: 1
+    foodOutput: 0
+    industryOutput: 0
+    magicOutput: 0
+  - tile: {fileID: 11400000, guid: 351c0e1e50234b24bbf74e732d3e46ea, type: 2}
+    feature: 5
+    walkable: 1
+    speedCost: 2
+    attackBonus: 0
+    armorBonus: 0
+    foodOutput: 0
+    industryOutput: 1
+    magicOutput: 0
+  - tile: {fileID: 11400000, guid: a5e274457a7deae449fe7ba79443e87f, type: 2}
+    feature: 6
+    walkable: 1
+    speedCost: 2
+    attackBonus: 0
+    armorBonus: 0
     foodOutput: 1
     industryOutput: 0
     magicOutput: 0
-    heartFeature: 5
-    nodesFeature: 6
-  - heartTile: {fileID: 11400000, guid: eb230921683b2a14cbeff959042433f1, type: 2}
-    nodesTile: {fileID: 11400000, guid: 351c0e1e50234b24bbf74e732d3e46ea, type: 2}
-    foodOutput: 1
+  - tile: {fileID: 11400000, guid: e1c63e4756bfdee4b97846f1b7db319b, type: 2}
+    feature: 7
+    walkable: 1
+    speedCost: 2
+    attackBonus: 0
+    armorBonus: 0
+    foodOutput: 0
     industryOutput: 0
-    magicOutput: 0
-    heartFeature: 4
-    nodesFeature: 3
-  - heartTile: {fileID: 11400000, guid: e1c63e4756bfdee4b97846f1b7db319b, type: 2}
-    nodesTile: {fileID: 11400000, guid: 611971f667706c04ea9f3856cf86d2dc, type: 2}
-    foodOutput: 1
-    industryOutput: 0
-    magicOutput: 0
-    heartFeature: 7
-    nodesFeature: 8
+    magicOutput: 1
   teritoryTile: {fileID: 11400000, guid: 4a2c70e161e85ae478a35a030d8582d7, type: 2}
   farms: 3
   forests: 2
   orbs: 1
+  mountains: 8

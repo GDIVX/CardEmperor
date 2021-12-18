@@ -9,11 +9,14 @@ public class WorldTile : IClickable
 {
     public Vector2Int position{get => _position;}
     public Vector3Int CubePosition{get => _cubePosition;}
-    public TileFeature feature{get=>_feature; set => SetFeature(value);}
+    public TileFeature feature{get=>_feature;}
     [ShowInInspector]
     [ReadOnly]
     public int CreatureID = 0;
     public bool walkable;
+    public int speedCost;
+    public int attackBonus , armorBonus;
+    public int foodOutput , industryOutput , magicOutput;
 
     [ShowInInspector]
     [ReadOnly]
@@ -29,7 +32,7 @@ public class WorldTile : IClickable
         _position = position;
         _cubePosition = WorldController.CordsToCube((Vector3Int)position);
         this.walkable = walkable;
-        SetFeature(feature);
+        _feature = feature;
 
 
     }
@@ -61,22 +64,7 @@ public class WorldTile : IClickable
         return res.ToArray();
     }
 
-    private void SetFeature(TileFeature feature)
-    {
-        _feature = feature;
-    }
 
-    internal int[] GetIncome()
-    {
-        var definition = GameManager.Instance.definitions.GetFeatureDefinition(feature);
-        int[] res = new int[4];
-        res[0] = Mathf.FloorToInt(definition.Food);
-        res[1] = Mathf.FloorToInt(definition.Industry);
-        res[2] = Mathf.FloorToInt(definition.Magic);
-        res[3] = Mathf.FloorToInt(definition.Knowledge);
-
-        return res;
-    }
     public void OnLeftClick()
     {
         IClickable CurrentSelectedID = GameManager.CurrentSelected;
@@ -140,7 +128,7 @@ public class WorldTile : IClickable
 
 [System.Serializable]
 public enum TileFeature{
-    WATER , PLAINS,MOUNTIAN  
-    ,FOREST, FOREST_HEART , FARM, FIELD , ORB_HEART , ORBS
+    WATER , PLAINS,MOUNTIAN,SHALLOW_WATER, BRIDGE  
+    ,FOREST, FIELD , ORBS
 
 }

@@ -10,39 +10,28 @@ public class WorldGenData : ScriptableObject {
     [TabGroup("Base")]
     public int seed = 0;
     [TabGroup("Base")]
-    public Vector2Int size , Padding;
-    [TabGroup("Noise")]
-    public Vector2 offset;
-    [TabGroup("Noise")]
-    public Noise.NormalizeMode normalizeMode;
-
-    [TabGroup("Noise")]
-    public float scale;
-    [TabGroup("Noise")]
-    public int octaves;
-    [TabGroup("Noise")]
-    public float persistance;
-    [TabGroup("Noise")]
-    public float lacunarity;
+    public Vector2Int size;
 
 
 [TabGroup("Tiles Definitions")]
-    public TileGenDefinition[] tileGenDefinition;
+    public TileData[] tileGenDefinition;
 [TabGroup("Mana Nodes")]
-    public NodesGenDefinition[] nodesGenDefinitions;
-[PreviewField]
+
     public TileBase teritoryTile;
 
-    [TabGroup("Mana Nodes")]
-    public int farms , forests , orbs;
+    [TabGroup("Base")]
+    public int farms , forests , orbs , mountains;
 }
 
 [System.Serializable]
-public class TileGenDefinition{
+public class TileData{
     public TileBase tile;
-    public float maxhight;
     public TileFeature feature;
     public bool walkable;
+    public int speedCost;
+    public int attackBonus , armorBonus;
+    public int foodOutput , industryOutput , magicOutput;
+
 }
 
 [System.Serializable]

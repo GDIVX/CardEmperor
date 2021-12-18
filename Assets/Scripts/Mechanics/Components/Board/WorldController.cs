@@ -38,6 +38,8 @@ public class WorldController : MonoBehaviour
     WorldTile _Debug_sampledTile;
     [TabGroup("Debug")]
     public TileBase tileGizmo;
+
+
     public OverlayController overlayController;
 
 
@@ -74,7 +76,16 @@ public class WorldController : MonoBehaviour
             OnMouseClick(false);
         }
     }
-    internal Vector3Int GetRandomTile()
+    internal WorldTile GetTile(Vector3Int position)
+    {
+        if(!IsTileExist(position)) return null;
+        return world[position.x , position.y];
+    }
+
+    public WorldTile GetRandomTile(){
+        return GetTile(GetRandomTilePosition());
+    }
+    internal Vector3Int GetRandomTilePosition()
     {
         try{
             int x = UnityEngine.Random.Range(1, world.GetLength(0) - 1);
@@ -93,7 +104,7 @@ public class WorldController : MonoBehaviour
             Debug.LogWarning("Can't find an empty tile");
             return new Vector3Int(-1,-1,-1);
         }
-        Vector3Int pos = GetRandomTile();
+        Vector3Int pos = GetRandomTilePosition();
         if(world[pos.x ,pos.y].CreatureID == 0 ||!world[pos.x ,pos.y].walkable){
             return pos;
         }
@@ -105,14 +116,13 @@ public class WorldController : MonoBehaviour
 
     internal void AddWorkingTile(WorldTile tile)
     {
-        int[] income = tile.GetIncome();
-        Player.Main.foodPoints.income += income[0];
-        Player.Main.industryPoints.income += income[1];
-        Player.Main.magicPoints.income += income[2];
+        Player.Main.foodPoints.income += tile.foodOutput;
+        Player.Main.industryPoints.income +=tile.industryOutput;
+        Player.Main.magicPoints.income += tile.magicOutput;
 
-        Player.Main.foodPoints.value += income[0];
-        Player.Main.industryPoints.value += income[1];
-        Player.Main.magicPoints.value += income[2];
+        Player.Main.foodPoints.value += tile.foodOutput;
+        Player.Main.industryPoints.value += tile.industryOutput;
+        Player.Main.magicPoints.value += tile.magicOutput;
 
     }
     void OnMouseClick(bool isLeftClick){
@@ -136,7 +146,11 @@ public class WorldController : MonoBehaviour
 
     public bool IsTileExist(Vector3Int position)
     {
-        return position.x >= 0 && position.y >= 0 && position.x < world.GetLength(0) && position.y < world.GetLength(1);
+        Vector2Int max = new Vector2Int(world.GetLength(0) -1, world.GetLength(1) -1);
+
+        if(position.x < 0 || position.x > max.x) return false;
+        if(position.y < 0 || position.y > max.y) return false;
+        return true; 
     }
     public static Vector3Int CordsToCube(Vector3Int cords){
         int q = cords.x - (cords.y - (cords.y&1)) / 2;
@@ -182,5 +196,34 @@ public class WorldController : MonoBehaviour
 
     public Vector3 MapToWorldPosition(Vector3Int mapPosition){
         return map.CellToWorld(mapPosition);
+    }
+
+    internal TileData GetTileData(TileFeature feature)
+    {
+        var arr = worldGenData.tileGenDefinition;
+        foreach (var data in arr)
+        {
+            if(data.feature == feature){
+                return data;
+            }
+        }
+        //fallback option
+        Debug.LogWarning($"Can't find feature of type {feature.ToString()}, using fallback option.");
+        return arr[0];
+    }
+
+    public void SetTile(WorldTile tile){
+        if(!IsTileExist((Vector3Int)tile.position)){
+            Debug.LogError($"Can't place a tile outside of world borders in position {tile.position}");
+            return;
+        }
+        TileData data = GetTileData(tile.feature);
+        map.SetTile((Vector3Int)tile.position , data.tile);
+        try{
+            world[tile.position.x , tile.position.y] = tile;
+        }
+        catch(IndexOutOfRangeException ){
+            Debug.LogError(tile.position);
+        }
     }
 }
