@@ -121,7 +121,6 @@ public abstract class CardAbility
         CardDisplayer.GetDisplayer(ID).OnDeselect();
 
         bool exile = Card.GetCard(ID).data.Exile;
-        Debug.Log("?!?");
         if (exile)
         {
             RemoveAndExile(ID);

@@ -15,6 +15,11 @@ public static class WorldGenerator
 
         WorldController.Instance.world = new WorldTile[data.size.x , data.size.y ];
 
+        //reserve the center
+        Vector2Int center = new Vector2Int(Mathf.RoundToInt(data.size.x/2) ,Mathf.RoundToInt(data.size.y/2));
+        WorldTile centerTile = WorldTileFactory.GenerateTile(center , TileFeature.WATER);
+        WorldController.Instance.SetTile(centerTile);
+
     for (var x = 0; x < data.size.x; x++)
     {
         for (var y = 0; y < data.size.y; y++)
@@ -24,15 +29,17 @@ public static class WorldGenerator
         }
     }
 
-    GenerateCoastlie(data);
+        GenerateCoastlie(data);
 
-    GenerateRiver(data);
+        GenerateRiver(data);
 
-    GenerateTiles(TileFeature.MOUNTIAN , data.mountains);
-    GenerateTiles(TileFeature.FIELD , data.farms);
-    GenerateTiles(TileFeature.FOREST , data.forests);
-    GenerateTiles(TileFeature.ORBS , data.orbs);
+        GenerateTiles(TileFeature.MOUNTIAN , data.mountains);
+        GenerateTiles(TileFeature.FIELD , data.farms);
+        GenerateTiles(TileFeature.FOREST , data.forests);
+        GenerateTiles(TileFeature.ORBS , data.orbs);
 
+        centerTile = WorldTileFactory.GenerateTile(center , TileFeature.PLAINS);
+        WorldController.Instance.SetTile(centerTile);
     }
 
     private static void GenerateTiles(TileFeature feature , int amount)
