@@ -32,6 +32,7 @@ MonoBehaviour:
     attackRange: 1
     attacksPerTurn: 0
     abilityScriptName: BasicAbility
+    AIAgentScriptName: WanderAgent
     amphibious: 0
     flying: 1
     pioneer: 0

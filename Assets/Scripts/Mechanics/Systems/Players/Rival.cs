@@ -29,6 +29,9 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             
             if(GameManager.Instance.currentRound <= GameManager.Instance.roundsPerLevel){
                 MonsterSpawner.HandleWaveSpawning();
+                if(GameManager.Instance.currentRound == 1){
+                    MonsterSpawner.SpawnBoss();
+                }
             }
 
             foreach (var agent in Agents)

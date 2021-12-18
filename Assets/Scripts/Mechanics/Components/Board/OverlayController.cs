@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Tilemaps;
 using Assets.Scripts.Mechanics.Systems.Players;
+using System;
 
 public class OverlayController : MonoBehaviour
 {
@@ -47,4 +48,8 @@ public class OverlayController : MonoBehaviour
         }
     }
 
+    internal void Display(WorldTile tile, TileBase tileBase)
+    {
+        map.SetTile((Vector3Int)tile.position , tileBase);
+    }
 }

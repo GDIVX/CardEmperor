@@ -15,7 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 09240bde08b0a9547aba3bb6e8956243, type: 3}
   cardName: Void Wraith
   cardType: 0
-  description: <color=yellow> Range 2. Multistrike . Flying</color>
+  description: <color=yellow> Range 1. Multistrike . Flying</color>
   keywords:
   - value: 2
     keyword: 0
@@ -33,9 +33,10 @@ MonoBehaviour:
     speed: 4
     armor: 0
     attack: 1
-    attackRange: 0
+    attackRange: 2
     attacksPerTurn: 2
     abilityScriptName: BasicAbility
+    AIAgentScriptName: WanderAgent
     amphibious: 0
     flying: 1
     pioneer: 0

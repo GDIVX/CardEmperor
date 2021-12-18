@@ -27,4 +27,50 @@ public static class MonsterSpawner
             card.ability.Activate(position);
         }
     }
+
+    public static void SpawnBoss(){
+        Vector3Int position = GetBossSpawnPosition();
+        CardData data = GameManager.Instance.spawnTable.spawnTable[GameManager.Instance.currentLevel ,0];
+
+        string agentScriptName = data.creatureData.AIAgentScriptName;
+        if(agentScriptName == null || agentScriptName == ""){
+            Debug.LogError($"Agent script name is null or empty");
+            return;
+        }
+
+        CreatureAgent agent = System.Activator.CreateInstance(System.Type.GetType("Assets.Scripts.Mechanics.AI."+agentScriptName)) as CreatureAgent;
+        MonsterSpawner.Spawn(data , position ,agent);
+
+        //TODO Add chained effect
+
+        //TODO link to a level won delegate
+    }
+
+    static Vector3Int GetBossSpawnPosition(){
+        int x = Mathf.RoundToInt(WorldController.Instance.world.GetLength(0) / 2);
+        return GetBossSpawnPosition(new Vector3Int(x,0,0));
+    }
+
+    private static Vector3Int GetBossSpawnPosition(Vector3Int position)
+    {
+        WorldTile tile = WorldController.Instance.world[position.x , position.y];
+
+        if(tile.walkable && tile.CreatureID == 0 && walkableCount(tile) >= 3){
+            return (Vector3Int)tile.position;
+        }
+        var neighbors = tile.GetNeighbors();
+        WorldTile newTile = neighbors[Random.Range(0 , neighbors.Length-1)];
+        return GetBossSpawnPosition((Vector3Int)newTile.position);
+    }
+
+    public static int walkableCount(WorldTile tile){
+        var group = tile.GetNeighbors();
+        int res = 0;
+        foreach (var t in group)
+        {
+            if(t.walkable) res++;
+        }
+
+        return res;
+    }
 }

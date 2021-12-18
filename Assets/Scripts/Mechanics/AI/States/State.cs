@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Mechanics.AI
 {
+    [System.Serializable]
     public abstract class State
     {
-        public abstract State GetNextState(WorldTile tile , int creatureID);
         public abstract float GetPositionScore(WorldTile tile , int depth , int creatureID);
         public abstract void Activate(CreatureAgent agent);
     }

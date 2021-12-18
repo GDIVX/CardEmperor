@@ -31,9 +31,10 @@ MonoBehaviour:
     speed: 2
     armor: 3
     attack: 1
-    attackRange: 0
+    attackRange: 1
     attacksPerTurn: 1
     abilityScriptName: BasicAbility
+    AIAgentScriptName: WanderAgent
     amphibious: 0
     flying: 1
     pioneer: 0

@@ -72,6 +72,10 @@ public class DebugConsole : MonoBehaviour
     [ShowInInspector]
     [ReadOnly]
     [TabGroup("Creatures")]
+    private CreatureAgent agent;
+    [ShowInInspector]
+    [ReadOnly]
+    [TabGroup("Creatures")]
     private CreatureDisplayer CreatureDisplayer;
     [ShowInInspector]
     [TabGroup("Creatures")]
@@ -87,6 +91,14 @@ public class DebugConsole : MonoBehaviour
 
         creature = Creature.GetCreature(creatureID);
         CreatureDisplayer = CreatureDisplayer.GetCreatureDisplayer(creatureID);
+
+        if(CreatureAgent.AgentExist(creatureID)){
+            agent = CreatureAgent.GetAgent(creatureID);
+            agent.debug_currentState = agent.state.ToString();
+        }
+        else{
+            agent = null;
+        }
     }
     
 }

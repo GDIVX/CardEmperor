@@ -12,35 +12,14 @@ namespace Assets.Scripts.Mechanics.AI
                 WorldTile tile = agent.GetFavorableTile();
                 if(tile.CreatureID == 0) return;
                 Creature other = Creature.GetCreature(tile.CreatureID);
-                if(other.PlayerID == Player.Main.ID){
-                    Creature creature = agent.creature;
+                Creature creature = agent.creature;
+                int distance = WorldController.DistanceOf(creature.position , other.position);
+                if(other.PlayerID == Player.Main.ID && distance <= creature.attackRange){
                     creature.InteractWithCreature(other);
                 }
             }
-        }
 
-        public override State GetNextState(WorldTile tile, int creatureID)
-        {
-            Creature creature = Creature.GetCreature(creatureID);
-            if(creature == null){
-                Debug.LogError("Can't find creature");
-                return null;
-            }
-
-            WorldTile[] tilesInMovementRange = tile.GetTilesInRange(creature.movement);
-            foreach (var t in tilesInMovementRange)
-            {
-                if(t.CreatureID != 0){
-                    Creature other = Creature.GetCreature(t.CreatureID);
-                    if(other.PlayerID == Player.Main.ID){
-                        if(WorldController.DistanceOf(other.position , (Vector3Int)tile.position) <= creature.attackRange){
-                            return new AttackState();
-                        }
-                        return new ChargeState();
-                    }
-                }
-            }
-            return new WanderState();
+            //agent.OnStateActivatedDone();
         }
 
         public override float GetPositionScore(WorldTile tile, int depth, int creatureID)

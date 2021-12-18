@@ -11,32 +11,24 @@ namespace Assets.Scripts.Mechanics.AI
 
             if(tile.CreatureID == 0){
                 agent.creature.UpdatePosition((Vector3Int)tile.position);
+                WorldTile[] tilesInRange = tile.GetTilesInRange(agent.creature.attackRange);
+
+                // foreach (var t in tilesInRange)
+                // {
+                //     if(t.CreatureID != 0){
+                //         Creature other = Creature.GetCreature(t.CreatureID);
+                //         if(other.Player.IsMain()){
+                //             agent.states.Push(new AttackState());
+                //             break;
+                //         }
+                //     }
+                // }
             }        
+
+            //agent.OnStateActivatedDone();
         }
 
-        public override State GetNextState(WorldTile tile, int creatureID)
-        {
-            Creature creature = Creature.GetCreature(creatureID);
-            if(creature == null){
-                Debug.LogError("Can't find creature");
-                return null;
-            }
 
-            WorldTile[] tilesInMovementRange = tile.GetTilesInRange(creature.movement);
-            foreach (var t in tilesInMovementRange)
-            {
-                if(t.CreatureID != 0){
-                    Creature other = Creature.GetCreature(t.CreatureID);
-                    if(other.PlayerID == Player.Main.ID){
-                        if(WorldController.DistanceOf(other.position , (Vector3Int)tile.position) <= creature.attackRange){
-                            return new AttackState();
-                        }
-                        return new ChargeState();
-                    }
-                }
-            }
-            return new WanderState();
-        }
 
         public override float GetPositionScore(WorldTile tile, int depth ,int creatureID)
         {
@@ -55,7 +47,6 @@ namespace Assets.Scripts.Mechanics.AI
             //Normal tile, look at its neighbor avarage
 
             WorldTile[] tiles = tile.GetTilesInRange(creature.attackRange);
-            float sum = 0;
             foreach (WorldTile t in tiles)
             {
                 if (t.CreatureID != 0)
@@ -68,12 +59,8 @@ namespace Assets.Scripts.Mechanics.AI
                         return WorldController.DistanceOf((Vector3Int)t.position , (Vector3Int)tile.position);
                     }
                 }
-
-                sum += GetPositionScore(t, depth - 1 , creatureID);
             }
-            float avarage = sum / tiles.Length;
-            float res = avarage + UnityEngine.Random.Range(0, .25f);
-            return res;
+            return 0;
         }
     }
 }

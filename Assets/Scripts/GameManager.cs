@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager Instance{get{return _instance;}}
     public static IClickable CurrentSelected;
     static GameManager _instance;
@@ -117,6 +116,19 @@ public class GameManager : MonoBehaviour
     [Button]
     public void debug_fireCardEvent(){
         GameEventMannager.FireAddCardEvent();
+    }
+
+    [Button]
+    public void debug_ShowAgentFavorableTile(){
+        CreatureDisplayer displayer = CurrentSelected as CreatureDisplayer;
+        if(displayer == null) return;
+        int ID = displayer.ID;
+
+        if(!CreatureAgent.AgentExist(ID)) return;
+        CreatureAgent agent = CreatureAgent.GetAgent(ID);
+
+        WorldTile tile = agent.GetFavorableTile();
+        WorldController.Instance.overlayController.Display(tile , WorldController.Instance.overlayController.red);
     }
 
 }
