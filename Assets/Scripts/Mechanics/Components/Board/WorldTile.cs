@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,6 +65,30 @@ public class WorldTile : IClickable
         return res.ToArray();
     }
 
+    public WorldTile[] GetTilesInMovementRange(int movement, bool flying, List<WorldTile> list = null ){
+
+        if(list == null)
+            list = new List<WorldTile>();
+
+        if(!IsReachable(movement , flying)){
+            return list.ToArray();
+        }
+
+        if(!list.Contains(this))
+            list.Add(this);
+
+        var neighbors = GetNeighbors();
+        foreach (var tile in neighbors)
+        {
+            list = tile.GetTilesInMovementRange(movement - speedCost , flying , list).ToList();
+        }
+        return list.ToArray();
+    }
+
+
+    protected bool IsReachable(int movement , bool flying){
+        return (movement - speedCost) >= 0 && (flying || walkable);
+    }
 
     public void OnLeftClick()
     {
@@ -123,6 +148,11 @@ public class WorldTile : IClickable
             Creature.GetCreature(CreatureID).OnDeselect();
         }
         
+    }
+
+    public override string ToString()
+    {
+        return position.ToString();
     }
 }
 

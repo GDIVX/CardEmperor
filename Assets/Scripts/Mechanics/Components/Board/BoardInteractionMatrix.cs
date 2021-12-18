@@ -9,7 +9,8 @@ public static class BoardInteractionMatrix
         Dictionary<Vector3Int , string> res = new Dictionary<Vector3Int, string>();
 
         WorldTile tile = WorldController.Instance.world[creature.position.x , creature.position.y];
-        var tilesInMovementRange = tile.GetTilesInRange(creature.movement).ToList();
+        var tilesInMovementRange = tile.GetTilesInMovementRange(creature.movement, creature.flying).ToList();
+
         tilesInMovementRange.Remove(tile);
         var tilesInAttackRange = tile.GetTilesInRange(creature.attackRange).ToList();
 
@@ -32,7 +33,7 @@ public static class BoardInteractionMatrix
         //Get tiles for movement
         foreach (var currentTile in tilesInMovementRange)
         {
-            if(currentTile.walkable && currentTile.CreatureID == 0)
+            if(currentTile.walkable && currentTile.CreatureID == 0 && !res.ContainsKey((Vector3Int)currentTile.position))
                 res.Add((Vector3Int)currentTile.position , "Blue");
         }
 
