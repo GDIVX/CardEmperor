@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Diagnostics;
 using System.Numerics;
 using System;
@@ -9,6 +10,8 @@ using Vector3 = UnityEngine.Vector3;
 using Assets.Scripts.Mechanics.Systems.Players;
 using Debug = UnityEngine.Debug;
 using Assets.Scripts.Mechanics.Components.Effects;
+using Assets.Scripts.Mechanics.Components.Board.Pathfinding;
+using Assets.Scripts.UI;
 
 [System.Serializable]
 public class Creature : IClickable
@@ -236,16 +239,37 @@ public class Creature : IClickable
     }
 
 
-    public void MoveTo(Vector3Int target)
+    public void MoveTo(WorldTile target)
     {
         if(!isAlive) return;
 
-        int distance = WorldController.DistanceOf(position, target);
-        if (distance <= _movement && (flying || WorldController.Instance.world[target.x, target.y].walkable))
-        {
-            _movement -= distance;
-            UpdatePosition(target);
+        WorldTile start = WorldController.Instance.GetTile(position);
+        var tilesInMovementrange = start.GetTilesInMovementRange(movement , flying).ToList();
+
+        if(!tilesInMovementrange.Contains(target)){
+            Prompt.Toast("<color=red> I can't get there...</color>" , position , 1);
+            return;
         }
+
+        Pathfinder pathfinder = new Pathfinder();
+        var path = pathfinder.FindPath(start , target);
+
+        if(path == null){
+            Prompt.Toast("<color=red> I can't get there...</color>" , position , 1);
+            return;
+        }
+
+        WorldTile currTile = path[0].tile;
+        for (var i = 1; i < path.Count; i++)
+        {
+            currTile = path[i].tile;
+
+            _movement -= currTile.speedCost;
+            if(_movement < 0) _movement = 0;
+
+        }
+
+        UpdatePosition((Vector3Int)currTile.position);
     }
 
     public override string ToString()
@@ -272,9 +296,9 @@ public class Creature : IClickable
 
         //Move the displayer
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);
+        displayer.UpdatePosition(newPosition);
 
         _position = newPosition;
-        displayer.UpdatePosition(newPosition);
 
         ApplyTileBonuses();
     }

@@ -9,6 +9,10 @@ public class AddSpikes : CardAbility
     {
         return tile.CreatureID !=0;
     }
+    
+    public AddSpikes(){
+        
+    }
 
     protected override void OnStart()
     {
