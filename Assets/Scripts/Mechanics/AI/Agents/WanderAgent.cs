@@ -17,7 +17,7 @@ namespace Assets.Scripts.Mechanics.AI
             }
 
             //can move to attack?
-            if(CanChange(tile)){
+            if(CanCharge(tile)){
                 return new ChargeState();
             }
 
@@ -27,11 +27,11 @@ namespace Assets.Scripts.Mechanics.AI
             return null;
         }
 
-        private bool CanChange(WorldTile tile)
+        private bool CanCharge(WorldTile tile)
         {
             if(creature.movement <= 0) return false;
 
-            WorldTile[] tilesInRange = tile.GetTilesInRange(creature.attackRange);
+            WorldTile[] tilesInRange = tile.GetTilesInMovementRange(creature.movement , creature.flying);
             foreach (var t in tilesInRange)
             {
                 if(CanAttack(t))

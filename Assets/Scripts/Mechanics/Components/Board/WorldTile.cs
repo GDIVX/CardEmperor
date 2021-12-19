@@ -69,18 +69,21 @@ public class WorldTile : IClickable
 
         if(list == null)
             list = new List<WorldTile>();
+        else
+            movement -= speedCost;
 
+        if(!list.Contains(this))
+            list.Add(this);
+            
         if(!IsReachable(movement , flying)){
             return list.ToArray();
         }
 
-        if(!list.Contains(this))
-            list.Add(this);
 
         var neighbors = GetNeighbors();
         foreach (var tile in neighbors)
         {
-            list = tile.GetTilesInMovementRange(movement - speedCost , flying , list).ToList();
+            list = tile.GetTilesInMovementRange(movement , flying , list).ToList();
         }
         return list.ToArray();
     }

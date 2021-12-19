@@ -7,7 +7,8 @@ namespace Assets.Scripts.Mechanics.AI
     {
         public override void Activate(CreatureAgent agent)
         {
-            WorldTile tile = agent.GetFavorableTile();
+            WorldTile currTile = WorldController.Instance.GetTile(agent.creature.position);
+            WorldTile tile = agent.GetFavorableTile(currTile.GetTilesInMovementRange(agent.creature.movement , agent.creature.flying));
 
             if(tile.CreatureID == 0){
                 agent.creature.UpdatePosition((Vector3Int)tile.position);

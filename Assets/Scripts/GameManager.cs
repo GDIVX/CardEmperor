@@ -118,17 +118,4 @@ public class GameManager : MonoBehaviour
         GameEventMannager.FireAddCardEvent();
     }
 
-    [Button]
-    public void debug_ShowAgentFavorableTile(){
-        CreatureDisplayer displayer = CurrentSelected as CreatureDisplayer;
-        if(displayer == null) return;
-        int ID = displayer.ID;
-
-        if(!CreatureAgent.AgentExist(ID)) return;
-        CreatureAgent agent = CreatureAgent.GetAgent(ID);
-
-        WorldTile tile = agent.GetFavorableTile();
-        WorldController.Instance.overlayController.Display(tile , WorldController.Instance.overlayController.red);
-    }
-
 }

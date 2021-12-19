@@ -9,7 +9,8 @@ namespace Assets.Scripts.Mechanics.AI
         {
             for (var i = 0; i < agent.creature.attacksPerTurn; i++)
             {
-                WorldTile tile = agent.GetFavorableTile();
+                WorldTile currTile = WorldController.Instance.GetTile(agent.creature.position);
+                WorldTile tile = agent.GetFavorableTile(currTile.GetTilesInRange(agent.creature.attackRange));
                 if(tile.CreatureID == 0) return;
                 Creature other = Creature.GetCreature(tile.CreatureID);
                 Creature creature = agent.creature;

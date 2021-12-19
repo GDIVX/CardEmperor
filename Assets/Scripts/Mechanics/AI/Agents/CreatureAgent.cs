@@ -57,16 +57,15 @@ public abstract class CreatureAgent
         }
     }
 
-    public WorldTile GetFavorableTile(){
+    public WorldTile GetFavorableTile(WorldTile[] tilesToSearch){
         Creature creature = Creature.GetCreature(ID);
         WorldTile currentTile = WorldController.Instance.world[creature.position.x , creature.position.y];
-        WorldTile tile = SearchFavorablePosition(currentTile  , Mathf.Max(creature.speed , creature.attackRange));
+        WorldTile tile = SearchFavorablePosition(currentTile  , tilesToSearch);
         
         return tile;
     }
 
-    protected WorldTile SearchFavorablePosition(WorldTile currentPosition, int searchRang){
-        WorldTile[] tilesToSearch = currentPosition.GetTilesInRange(searchRang);
+    protected WorldTile SearchFavorablePosition(WorldTile currentPosition, WorldTile[] tilesToSearch){
 
         float highestScore = 0;
         WorldTile res = currentPosition;
