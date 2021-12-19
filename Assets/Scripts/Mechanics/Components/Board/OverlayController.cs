@@ -8,7 +8,7 @@ using System;
 
 public class OverlayController : MonoBehaviour
 {
-    public TileBase red, blue;
+    public TileBase red, blue , yellow;
     Tilemap map;
 
     void Awake()
@@ -31,6 +31,13 @@ public class OverlayController : MonoBehaviour
                     map.SetTile(position.Key , blue);
                     break;
             }
+        }
+    }
+
+    public void PaintArea(Vector3Int[] path , TileBase tileBase){
+        foreach (var pos in path)
+        {
+            map.SetTile(pos ,tileBase);
         }
     }
 

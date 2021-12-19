@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Assets.Scripts.Mechanics.Systems.Players;
+using Assets.Scripts.Mechanics.Components.Board.Pathfinding;
 
 public class WorldController : MonoBehaviour
 {
@@ -20,16 +21,14 @@ public class WorldController : MonoBehaviour
     [TabGroup("Generation")]
     public Tilemap map , indicatorsMap;
     public WorldTile[,] world;
+    public Vector3Int mouseGridPosition => GetMouseGridPosition();
 
 
     [ShowInInspector]
     [ReadOnly]
     [TabGroup("Debug")]
     Vector3 _Debug_mousePosition;
-    [ShowInInspector]
-    [ReadOnly]
-    [TabGroup("Debug")]
-    Vector3Int _Debug_gridPosition;
+
 
 
     [ShowInInspector]
@@ -40,7 +39,7 @@ public class WorldController : MonoBehaviour
     public TileBase tileGizmo;
 
 
-    public OverlayController overlayController;
+    public OverlayController overlayController, tooltipOverlayController;
 
 
     public GameObject CreatureTemplate;
@@ -75,7 +74,55 @@ public class WorldController : MonoBehaviour
         else if(Input.GetMouseButtonDown(1)){
             OnMouseClick(false);
         }
+
+        if(Input.GetKeyDown(KeyCode.F11)){
+            ShowPath();
+        }
     }
+
+    [Button]
+    public void ShowPath(){
+
+        CreatureDisplayer displayer = GameManager.CurrentSelected as CreatureDisplayer;
+        if(displayer != null){
+            ShowPathToMouse(displayer);
+        }
+    }
+
+    private void ShowPathToMouse(CreatureDisplayer displayer)
+    {
+        
+        WorldTile end = GetMouseTile();
+        if(end == null) return;
+
+        WorldTile start = GetTile(Creature.GetCreature(displayer.ID).position);
+
+        Pathfinder pathfinder = new Pathfinder();
+        var path = pathfinder.FindPath(start , end);
+
+        if(path == null){
+            Debug.Log("null path");
+            return;
+        }
+
+        List<Vector3Int> pathVectors = new List<Vector3Int>();
+        foreach (var node in path)
+        {
+            pathVectors.Add((Vector3Int)node.tile.position);
+        }
+
+        //tooltipOverlayController.Clear();
+        tooltipOverlayController.PaintArea(pathVectors.ToArray() , overlayController.yellow);
+    }
+
+    public WorldTile GetMouseTile()
+    {
+        if(IsTileExist(mouseGridPosition)){
+            return GetTile(mouseGridPosition);
+        }
+        return null;
+    }
+
     internal WorldTile GetTile(Vector3Int position)
     {
         if(!IsTileExist(position)) return null;
@@ -126,11 +173,7 @@ public class WorldController : MonoBehaviour
 
     }
     void OnMouseClick(bool isLeftClick){
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));
-        Vector3Int gridPosition = map.WorldToCell(new Vector3(mousePosition.x , mousePosition.y , 0));
-
-        _Debug_mousePosition = mousePosition;
-        _Debug_gridPosition = gridPosition;
+        Vector3Int gridPosition = mouseGridPosition;
 
         if(map.HasTile(gridPosition)){
             WorldTile tile = world[gridPosition.x , gridPosition.y];
@@ -176,6 +219,10 @@ public class WorldController : MonoBehaviour
         int distance = Mathf.Max(x,y,z);
 
         return distance;
+    }
+
+    public static int DistanceOf(Vector2Int a , Vector2Int b){
+        return DistanceOf((Vector3Int)a , (Vector3Int)b);
     }
 
     public WorldTile[] GetLine(Vector3Int start , Vector3Int end , int maxLength = 999){
@@ -225,5 +272,11 @@ public class WorldController : MonoBehaviour
         catch(IndexOutOfRangeException ){
             Debug.LogError(tile.position);
         }
+    }
+    private Vector3Int GetMouseGridPosition()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Vector3Int.RoundToInt(Input.mousePosition));
+        Vector3Int gridPosition = map.WorldToCell(new Vector3(mousePosition.x , mousePosition.y , 0));
+        return gridPosition;
     }
 }

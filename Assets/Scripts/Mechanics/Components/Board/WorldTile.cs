@@ -4,11 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Assets.Scripts.Mechanics.Components.Board.Pathfinding;
 
 [System.Serializable]
 public class WorldTile : IClickable 
 {
     public Vector2Int position{get => _position;}
+
+    internal Node node;
+
     public Vector3Int CubePosition{get => _cubePosition;}
     public TileFeature feature{get=>_feature;}
     [ShowInInspector]
