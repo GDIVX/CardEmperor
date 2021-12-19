@@ -15,8 +15,6 @@ public abstract class CreatureAbility
     protected int GetAttackDamage(Creature attacker , Creature defender){
         //Roll attack dice
         int attackRoll = Dice.Roll(attacker.attack) + attacker.damageBonus;
-        int attackAvarage = Mathf.RoundToInt(attackRoll / attacker.attack);
-
 
         int damage = attackRoll - defender.armor;
 

@@ -37,7 +37,7 @@ namespace Assets.Scripts.Mechanics.AI
 
             if (tile.CreatureID != 0)
             {
-                return 0;
+                return GetScoreBasedOnTileBonuses(tile);
             }
 
             Creature creature = Creature.GetCreature(creatureID);
@@ -57,11 +57,11 @@ namespace Assets.Scripts.Mechanics.AI
                     {
                         // tile is next to creature. Move to attack
                         //Favour keeping distance as possible
-                        return WorldController.DistanceOf((Vector3Int)t.position , (Vector3Int)tile.position);
+                        return WorldController.DistanceOf((Vector3Int)t.position , (Vector3Int)tile.position) + GetScoreBasedOnTileBonuses(tile);
                     }
                 }
             }
-            return 0;
+            return GetScoreBasedOnTileBonuses(tile);
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Assets.Scripts.Mechanics.AI
                     if (other.Player.IsMain())
                     {
                         // tile is next to creature. Move to attack
-                        return 1;
+                        return 1 + GetScoreBasedOnTileBonuses(tile);
                     }
                 }
 
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Mechanics.AI
             }
             float avarage = sum / tiles.Length;
             float res = avarage;
-            return res;
+            return res + GetScoreBasedOnTileBonuses(tile);
         }
     }
 }

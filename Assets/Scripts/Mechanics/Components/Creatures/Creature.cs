@@ -75,6 +75,7 @@ public class Creature : IClickable
         _PlayerID = card.playerID;
         creaturesRegestry.Add(cardID, this);
         WorldController.Instance.world[position.x, position.y].CreatureID = cardID;
+        ApplyTileBonuses();
 
         if (data.abilityScriptName != null && data.abilityScriptName != "")
         {
@@ -262,6 +263,7 @@ public class Creature : IClickable
         if(!isAlive) return;
         //Clean old tile
         WorldTile tile = WorldController.Instance.world[position.x, position.y];
+        RemoveTileBonuses();
         tile.CreatureID = 0;
 
         //Set Creature ID to new tile
@@ -274,8 +276,25 @@ public class Creature : IClickable
         _position = newPosition;
         displayer.UpdatePosition(newPosition);
 
-
+        ApplyTileBonuses();
     }
+
+    private void RemoveTileBonuses()
+    {
+        WorldTile tile = WorldController.Instance.GetTile(position);
+
+        attack -= tile.armorBonus;
+        armor -= tile.armorBonus;
+    }
+
+    private void ApplyTileBonuses()
+    {
+        WorldTile tile = WorldController.Instance.GetTile(position);
+        
+        attack += tile.attackBonus;
+        armor += tile.armorBonus;
+    }
+
     public void ToastAttackFormated(int damage, int targetHitpoint)
     {
         CreatureDisplayer displayer = CreatureDisplayer.GetCreatureDisplayer(ID);

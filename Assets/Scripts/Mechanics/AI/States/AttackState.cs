@@ -28,15 +28,15 @@ namespace Assets.Scripts.Mechanics.AI
 
             if (tile.CreatureID == 0)
             {
-                return 0;
+                return 0 + GetScoreBasedOnTileBonuses(tile);
             }
 
             Creature other = Creature.GetCreature(tile.CreatureID);
             if(other.PlayerID == Player.Main.ID){
                 //Hostile creature 
-                return 1 + Random.Range(0,.25f);
+                return 1 + GetScoreBasedOnTileBonuses(tile);
             }
-            return 0;
+            return 0 + GetScoreBasedOnTileBonuses(tile);
         }
     }
 }
