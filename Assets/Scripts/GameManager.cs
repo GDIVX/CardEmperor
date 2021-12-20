@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static IClickable CurrentSelected;
     static GameManager _instance;
 
+    public bool DebugMode;
     public Creature capital;
     public int currentLevel, currentRound, roundsPerLevel;
 
@@ -45,6 +46,8 @@ public class GameManager : MonoBehaviour
         else{
             _instance = this;
         }
+
+        DebugMode = Debug.isDebugBuild;
     }
 
     internal CreatureDisplayer GetCapitalDisplayer()
@@ -117,5 +120,6 @@ public class GameManager : MonoBehaviour
     public void debug_fireCardEvent(){
         GameEventMannager.FireAddCardEvent();
     }
+
 
 }

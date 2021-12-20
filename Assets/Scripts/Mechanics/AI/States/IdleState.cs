@@ -7,14 +7,28 @@ namespace Assets.Scripts.Mechanics.AI
 {
     public class IdleState : State
     {
-        public override void Activate(CreatureAgent agent)
+        WorldTile tile;
+        Creature creature;
+        public override State Activate(CreatureAgent agent)
         {
-            
-        }
+            creature = agent.creature;
+            tile = WorldController.Instance.GetTile(creature.position);
 
-        public override float GetPositionScore(WorldTile tile, int depth, int CreatureID)
-        {
-            return 0;
+            agent.SetTarget(FindTarget(tile , creature.attackRange));
+
+            if(agent.target == null){
+                if(creature.movement > 0)
+                    return new WanderState().Activate(agent);
+
+                return new IdleState();
+
+            }
+
+            //can attack now?
+            if(CanAttack(agent.target , creature)){
+                return new AttackState().Activate(agent);
+            }
+            return new ChargeState().Activate(agent);
         }
     }
 }

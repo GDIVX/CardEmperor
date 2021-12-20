@@ -1,3 +1,5 @@
+using System;
+using Assets.Scripts.Mechanics.Components.Board.Pathfinding;
 using Assets.Scripts.Mechanics.Systems.Players;
 using UnityEngine;
 
@@ -5,63 +7,55 @@ namespace Assets.Scripts.Mechanics.AI
 {
     internal class ChargeState : State
     {
-        public override void Activate(CreatureAgent agent)
+        public override State Activate(CreatureAgent agent)
         {
-            WorldTile currTile = WorldController.Instance.GetTile(agent.creature.position);
-            WorldTile tile = agent.GetFavorableTile(currTile.GetTilesInMovementRange(agent.creature.movement , agent.creature.flying));
+            WorldTile tile = WorldController.Instance.GetTile(agent.creature.position);
 
-            if(tile.CreatureID == 0){
-                agent.creature.UpdatePosition((Vector3Int)tile.position);
-                WorldTile[] tilesInRange = tile.GetTilesInRange(agent.creature.attackRange);
+            //Do we have a target?
+            if(agent.IsTargetDeadOrNull()){
+                //find a target
+                agent.SetTarget(FindTarget(tile , agent.creature.attackRange));
+                if(agent.IsTargetDeadOrNull()){
+                    //Can't find any target
+                    return new WanderState().Activate(agent);
+                }
+                //found a target. Try to run the state again
+                return Activate(agent);
+            }
 
-                // foreach (var t in tilesInRange)
-                // {
-                //     if(t.CreatureID != 0){
-                //         Creature other = Creature.GetCreature(t.CreatureID);
-                //         if(other.Player.IsMain()){
-                //             agent.states.Push(new AttackState());
-                //             break;
-                //         }
-                //     }
-                // }
-            }        
+            //We have a target
+            //Move as far as you can
+            Charge(agent.target , agent.creature);
 
-            //agent.OnStateActivatedDone();
+            //Can we attack now?
+            if(CanAttack(agent.target , agent.creature)){
+                return new AttackState().Activate(agent);
+            }
+            return this;
+
         }
 
-
-
-        public override float GetPositionScore(WorldTile tile, int depth ,int creatureID)
+        private void Charge(Creature target, Creature creature)
         {
-            if (depth <= 0) return 0;
+            int movementBudget = creature.movement;
+            WorldTile targetTile = WorldController.Instance.GetTile(target.position);
+            WorldTile tile = WorldController.Instance.GetTile(creature.position);
 
-            if (tile.CreatureID != 0)
+            Pathfinder pathfinder = new Pathfinder();
+            var path = pathfinder.FindPath(tile , targetTile , creature.flying);
+
+            foreach (var node in path)
             {
-                return GetScoreBasedOnTileBonuses(tile);
-            }
-
-            Creature creature = Creature.GetCreature(creatureID);
-
-            //unreachable tile
-            if (!tile.walkable && !creature.flying) return 0;
-
-            //Normal tile, look at its neighbor avarage
-
-            WorldTile[] tiles = tile.GetTilesInRange(creature.attackRange);
-            foreach (WorldTile t in tiles)
-            {
-                if (t.CreatureID != 0)
-                {
-                    Creature other = Creature.GetCreature(t.CreatureID);
-                    if (other.Player.IsMain())
-                    {
-                        // tile is next to creature. Move to attack
-                        //Favour keeping distance as possible
-                        return WorldController.DistanceOf((Vector3Int)t.position , (Vector3Int)tile.position) + GetScoreBasedOnTileBonuses(tile);
-                    }
+                movementBudget -= node.tile.speedCost;
+                if(movementBudget >= 0){
+                    targetTile = node.tile;
+                } 
+                else{
+                    break;
                 }
             }
-            return GetScoreBasedOnTileBonuses(tile);
+
+            creature.MoveTo(targetTile);
         }
     }
 }

@@ -19,7 +19,7 @@ MonoBehaviour:
   keywords:
   - value: 3
     keyword: 9
-  abilityScriptName: Spearman
+  abilityScriptName: CreatureMaker
   foodPrice: 0
   industryPrice: 0
   MagicPrice: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     flying: 1
     pioneer: 0
   rarity: 0
-  parm1: 0
+  parm1: 3
   parm2: 0
   parm3: 0
   stringParm: 

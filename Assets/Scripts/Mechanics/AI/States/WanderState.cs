@@ -5,52 +5,27 @@ namespace Assets.Scripts.Mechanics.AI
 {
     internal class WanderState : State
     {
-        public override void Activate(CreatureAgent agent)
+        public override State Activate(CreatureAgent agent)
         {
-            WorldTile currTile = WorldController.Instance.GetTile(agent.creature.position);
-            WorldTile tile = agent.GetFavorableTile(currTile.GetTilesInMovementRange(agent.creature.movement , agent.creature.flying));
+            WorldTile tile = WorldController.Instance.GetTile(agent.creature.position);
+            
+            WorldTile[] tilesInMovementRange = tile.GetTilesInMovementRange(agent.creature.movement , agent.creature.flying);
 
-            if(tile.CreatureID == 0){
-                agent.creature.UpdatePosition((Vector3Int)tile.position);
-            }
-            //agent.OnStateActivatedDone();
-        }
-
-        public override float GetPositionScore(WorldTile tile, int depth , int creatureID)
-        {
-            if (depth <= 0) return 0;
-
-            if (tile.CreatureID != 0)
+            //Find the best tile
+            //start with a random tile in range as a fallback option
+            WorldTile targetTile = tilesInMovementRange[Random.Range(0,tilesInMovementRange.Length)];
+            foreach (var t in tilesInMovementRange)
             {
-                return 0;
-            }
-
-            Creature creature = Creature.GetCreature(creatureID);
-
-            //unreachable tile
-            if (!tile.walkable && !creature.flying) return 0;
-
-            //Normal tile, look at its neighbor avarage
-
-            WorldTile[] tiles = tile.GetNeighbors();
-            float sum = 0;
-            foreach (WorldTile t in tiles)
-            {
-                if (t.CreatureID != 0)
-                {
-                    Creature other = Creature.GetCreature(t.CreatureID);
-                    if (other.Player.IsMain())
-                    {
-                        // tile is next to creature. Move to attack
-                        return 1 + GetScoreBasedOnTileBonuses(tile);
+                if(t.CreatureID == 0){
+                    if((t.armorBonus + t.attackBonus) > (targetTile.armorBonus + targetTile.attackBonus)){
+                        targetTile = t;
                     }
                 }
-
-                sum += GetPositionScore(t, depth - 1 , creatureID);
             }
-            float avarage = sum / tiles.Length;
-            float res = avarage;
-            return res + GetScoreBasedOnTileBonuses(tile);
+
+            agent.creature.MoveTo(targetTile);
+            return new IdleState();
         }
+
     }
 }

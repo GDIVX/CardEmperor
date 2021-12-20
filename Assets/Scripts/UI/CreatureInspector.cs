@@ -79,6 +79,22 @@ public class CreatureInspector : MonoBehaviour
             current.GUI.transform.GetChild(5).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.armor ,card.armor);
             current.GUI.transform.GetChild(6).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{creature.movement} / {GetFormatedString(creature.speed,card.speed)}";
             current.GUI.transform.GetChild(7).GetChild(0).GetComponent<TextMeshProUGUI>().text = GetFormatedString(creature.attack,card.attack);
+            
+            if(GameManager.Instance.DebugMode){
+                Creature selectedCreature = Creature.GetCreature(current.ID);
+                if(selectedCreature != null){
+                    current.GUI.transform.Find("Debug State").GetChild(0).GetComponent<TextMeshProUGUI>().text = 
+                        CreatureAgent.GetAgent(current.ID) != null ? CreatureAgent.GetAgent(current.ID).state.ToString() : "";
+                    
+                    current.GUI.transform.Find("Debug ID").GetChild(0).GetComponent<TextMeshProUGUI>().text = current.ID.ToString();
+                    current.GUI.transform.Find("Debug Position").GetChild(0).GetComponent<TextMeshProUGUI>().text = selectedCreature.position.ToString();
+                }
+            }
+            else{
+                current.GUI.transform.Find("Debug State").gameObject.SetActive(false);
+                current.GUI.transform.Find("Debug ID").gameObject.SetActive(false);
+                current.GUI.transform.Find("Debug Position").gameObject.SetActive(false);
+            }
 
             ShowEffects();
 

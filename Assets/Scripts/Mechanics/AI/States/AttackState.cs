@@ -5,38 +5,39 @@ namespace Assets.Scripts.Mechanics.AI
 {
     internal class AttackState : State
     {
-        public override void Activate(CreatureAgent agent)
+        public override State Activate(CreatureAgent agent)
         {
-            for (var i = 0; i < agent.creature.attacksPerTurn; i++)
-            {
-                WorldTile currTile = WorldController.Instance.GetTile(agent.creature.position);
-                WorldTile tile = agent.GetFavorableTile(currTile.GetTilesInRange(agent.creature.attackRange));
-                if(tile.CreatureID == 0) return;
-                Creature other = Creature.GetCreature(tile.CreatureID);
-                Creature creature = agent.creature;
-                int distance = WorldController.DistanceOf(creature.position , other.position);
-                if(other.PlayerID == Player.Main.ID && distance <= creature.attackRange){
-                    creature.InteractWithCreature(other);
+            WorldTile tile = WorldController.Instance.GetTile(agent.creature.position);
+            if(!agent.IsTargetDeadOrNull()){
+                //Can attack?
+                if(CanAttack(agent.target , agent.creature)){
+                    //Attack
+                    agent.creature.InteractWithCreature(agent.target);
+                    //Try to attack again
+                    //If it will fail for any reason, the state will be redirected 
+                    return Activate(agent);
                 }
-            }
+                //We can't attack but we have a target
+                //Are we in range?
+                int distance = WorldController.DistanceOf(agent.creature.position , agent.target.position);
+                if(distance <= agent.creature.attackRange){
+                    //try again next turn
+                    return this;
+                }
+                // we out of range. Charge
+                return new ChargeState().Activate(agent);
 
-            //agent.OnStateActivatedDone();
+            }
+            else{
+                //find a target
+                agent.SetTarget(FindTarget(tile , agent.creature.attackRange));
+                if(agent.target != null){
+                    //found a target. Run the state again
+                    return Activate(agent);
+                }
+                return new WanderState().Activate(agent);
+            }
         }
 
-        public override float GetPositionScore(WorldTile tile, int depth, int creatureID)
-        {
-
-            if (tile.CreatureID == 0)
-            {
-                return 0 + GetScoreBasedOnTileBonuses(tile);
-            }
-
-            Creature other = Creature.GetCreature(tile.CreatureID);
-            if(other.PlayerID == Player.Main.ID){
-                //Hostile creature 
-                return 1 + GetScoreBasedOnTileBonuses(tile);
-            }
-            return 0 + GetScoreBasedOnTileBonuses(tile);
-        }
     }
 }

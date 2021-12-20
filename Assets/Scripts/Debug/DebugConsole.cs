@@ -13,6 +13,9 @@ public class DebugConsole : MonoBehaviour
 
     DebugCommand SummonMonster;
 
+    [ReadOnly]
+    public Creature selectedCreature;
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.F5)){
@@ -41,6 +44,8 @@ public class DebugConsole : MonoBehaviour
             SummonMonster
         };
     }
+
+
 
     Vector2 scroll;
     void OnGUI()
@@ -99,6 +104,12 @@ public class DebugConsole : MonoBehaviour
         else{
             agent = null;
         }
+    }
+    [Button("Get Selected")]
+    [TabGroup("Creatures")]
+    void GetSelectedCreature(){
+        Creature selected = GameManager.CurrentSelected as Creature;
+        if(selected != null) creature = selected;
     }
     
 }

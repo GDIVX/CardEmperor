@@ -54,6 +54,7 @@ public class TurnSequenceMannager
 
     Turn SetCurrentTurn(){
         if(currentTurn.player.IsMain()){
+            Debug.Log("!");
             return new Turn(Player.Rival);     
         }
         return new Turn(Player.Main);
