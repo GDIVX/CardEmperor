@@ -49,7 +49,6 @@ public abstract class CreatureAgent
 
     public void OnTurnStart()
     {
-        Debug.Log($"attacks: {creature.attacksAttempts} movement: {creature.movement}");
         State nextState = state?.Activate(this);
         
         if(nextState != null){

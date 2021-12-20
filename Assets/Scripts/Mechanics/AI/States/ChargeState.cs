@@ -44,6 +44,8 @@ namespace Assets.Scripts.Mechanics.AI
             Pathfinder pathfinder = new Pathfinder();
             var path = pathfinder.FindPath(tile , targetTile , creature.flying);
 
+            if(path.Count == 0) return;
+
             foreach (var node in path)
             {
                 movementBudget -= node.tile.speedCost;

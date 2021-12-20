@@ -85,8 +85,8 @@ public class Creature : IClickable
             ability = System.Activator.CreateInstance(System.Type.GetType(data.abilityScriptName), cardID) as CreatureAbility;
         }
 
-        GameManager.Instance.turnSequenceMannager.OnTurnStart += OnTurnStart;
-        GameManager.Instance.turnSequenceMannager.OnTurnComplete += OnTurnEnd;
+        Player.OnTurnStartDelegate += OnTurnStart;
+        Player.OnTurnEndDelegate += OnTurnEnd;
     }
 
     public static Creature BuildCreatureCardless(string creatureCardName, int playerID, Vector3Int position)
@@ -343,34 +343,30 @@ public class Creature : IClickable
         effects.Remove(effect.GetType());
     }
 
-    void OnTurnStart(Turn turn)
+    void OnTurnStart()
     {
-        if (turn == null || turn.player == null || !isAlive)
+        if (!isAlive)
         {
             return;
         }
-        if (turn.player == this.Player)
-        {
-            _movement = speed;
-            attacksAttempts = 0;
-        }
+        _movement = speed;
+        attacksAttempts = 0;
     }
 
-    void OnTurnEnd(Turn turn)
+    void OnTurnEnd()
     {
-        if (turn == null || turn.player == null || !isAlive)
+        if (!isAlive)
         {
             return;
         }
-        if (turn.player == this.Player)
-        {
-            var effectsCopy = new Dictionary<Type, Effect>(effects);
+        
+        var effectsCopy = new Dictionary<Type, Effect>(effects);
 
-            foreach (var typeEffectPair in effectsCopy)
-            {
-                typeEffectPair.Value.OnTurnEnd();
-            }
+        foreach (var typeEffectPair in effectsCopy)
+        {
+            typeEffectPair.Value.OnTurnEnd();
         }
+ 
 
     }
 

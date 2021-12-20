@@ -20,6 +20,7 @@ namespace Assets.Scripts.Mechanics.Systems.Players
 
         public override void OnTurnEnd()
         {
+            OnTurnEndDelegate?.Invoke();
         }
 
         public override void OnTurnStart()
@@ -38,6 +39,8 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             {
                 agent.OnTurnStart();
             }
+
+            OnTurnStartDelegate?.Invoke();
             
             GameManager.Instance.turnSequenceMannager.NextTurn();
         }

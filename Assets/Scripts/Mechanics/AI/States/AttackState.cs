@@ -12,10 +12,14 @@ namespace Assets.Scripts.Mechanics.AI
                 //Can attack?
                 if(CanAttack(agent.target , agent.creature)){
                     //Attack
-                    agent.creature.InteractWithCreature(agent.target);
+                    for (var i = 0; i < agent.creature.attacksPerTurn; i++)
+                    {
+                        if(!agent.IsTargetDeadOrNull())
+                            agent.creature.InteractWithCreature(agent.target);
+                    }
                     //Try to attack again
                     //If it will fail for any reason, the state will be redirected 
-                    return Activate(agent);
+                    return this;
                 }
                 //We can't attack but we have a target
                 //Are we in range?

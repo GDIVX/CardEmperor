@@ -15,6 +15,9 @@ namespace Assets.Scripts.Mechanics.Systems.Players
         //manas
         public Mana foodPoints, industryPoints, magicPoints;
 
+        public Action OnTurnStartDelegate;
+        public Action OnTurnEndDelegate;
+
         protected int _ID;
         protected static MainPLayer _main;
         protected static Rival _rival;

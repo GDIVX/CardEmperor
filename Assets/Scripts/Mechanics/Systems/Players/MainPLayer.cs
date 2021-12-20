@@ -25,6 +25,8 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             magicPoints.SetValue(0);
 
             CardsMannager.Instance.ClearHand();
+
+            OnTurnEndDelegate?.Invoke();
         }
 
         public override void OnTurnStart()
@@ -34,6 +36,8 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             magicPoints.SetValue(magicPoints.income);
 
             CardsMannager.Instance.DrawCards(cardsToDraw);
+
+            OnTurnStartDelegate?.Invoke();
         }
     }
 }
