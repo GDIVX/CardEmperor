@@ -47,7 +47,7 @@ public abstract class CreatureAgent
         return agentsRegestry.ContainsKey(ID);
     }
 
-    public void OnTurnStart()
+    public virtual void OnTurnStart()
     {
         State nextState = state?.Activate(this);
         

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Mechanics.AI.Agents;
 using Assets.Scripts.UI;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Mechanics.Systems.Players
             _rival = this;
         }
 
+        public BossAgent Boss { get; internal set; }
 
         public override void OnTurnEnd()
         {
