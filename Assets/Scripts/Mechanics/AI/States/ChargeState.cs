@@ -49,7 +49,9 @@ namespace Assets.Scripts.Mechanics.AI
             foreach (var node in path)
             {
                 movementBudget -= node.tile.speedCost;
-                if(movementBudget >= 0){
+                int distance = WorldController.DistanceOf(node.tile.position , targetTile.position);
+                //Stop when can't move or in attack range
+                if(movementBudget >= 0 || distance > creature.attackRange){
                     targetTile = node.tile;
                 } 
                 else{
