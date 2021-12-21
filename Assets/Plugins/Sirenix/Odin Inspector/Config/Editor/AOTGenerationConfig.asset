@@ -16,7 +16,7 @@ MonoBehaviour:
   deleteDllAfterBuilds: 1
   AutomateForAllAOTPlatforms: 1
   automateForPlatforms: 0900000014000000
-  lastScan: 637752738795199901
+  lastScan: 637756466623891543
   supportSerializedTypes:
   - TypeName: CardData, Assembly-CSharp
     IsCustom: 0

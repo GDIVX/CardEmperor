@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac70aa301217b1488184b7b3caaca98, type: 3}
   m_Name: Chained
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  toolTipHeader: 
-  tooltipDescription: 
+  icon: {fileID: 21300000, guid: a5caa5140e562034c98e4e8393f62365, type: 3}
+  color: {r: 1, g: 0, b: 0, a: 1}
+  toolTipHeader: Chained
+  tooltipDescription: The creature is unable to move for the next _X_ turns.

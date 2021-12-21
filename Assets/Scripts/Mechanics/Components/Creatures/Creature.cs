@@ -307,7 +307,7 @@ public class Creature : IClickable
     {
         WorldTile tile = WorldController.Instance.GetTile(position);
 
-        attack -= tile.armorBonus;
+        attack -= tile.attackBonus;
         armor -= tile.armorBonus;
     }
 
