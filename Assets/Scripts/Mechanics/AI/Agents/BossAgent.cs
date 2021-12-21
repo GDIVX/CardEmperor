@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using Assets.Scripts.Mechanics.Systems.Players;
 using UnityEngine;
 
-namespace Assets.Scripts.Mechanics.AI.Agents
+namespace Assets.Scripts.Mechanics.AI
 {
     public abstract class BossAgent : CreatureAgent
     {
         public Action OnBossDeafetedDelegate;
+
+        protected string lastCardPlayed;
         public BossAgent()
         {
             if(Player.Rival.Boss == null){

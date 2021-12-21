@@ -37,8 +37,8 @@ public static class MonsterSpawner
             Debug.LogError($"Agent script name is null or empty");
             return;
         }
-
-        CreatureAgent agent = System.Activator.CreateInstance(System.Type.GetType("Assets.Scripts.Mechanics.AI."+agentScriptName)) as CreatureAgent;
+        Debug.Log(System.Type.GetType(agentScriptName));
+        CreatureAgent agent = System.Activator.CreateInstance(System.Type.GetType(agentScriptName)) as CreatureAgent;
         MonsterSpawner.Spawn(data , position ,agent);
 
         //TODO Add chained effect

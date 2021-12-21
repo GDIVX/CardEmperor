@@ -31,6 +31,7 @@ namespace Assets.Scripts.Mechanics.Components.Effects
             value--;
             if(value <= 0){
                 creature.speed = originalSpeed;
+                creature.RemoveEffect(this);
             }
         }
     }

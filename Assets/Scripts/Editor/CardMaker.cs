@@ -118,7 +118,7 @@ public class CardMaker : OdinEditorWindow
 
         char[] charsToTrim = { 'c', ' ', '\'', 's', '.' };
         data.abilityScriptName = Path.GetFileName(abilityScript).Trim(charsToTrim);
-        data.creatureData.AIAgentScriptName = Path.GetFileName(aiAgentScript).Trim(charsToTrim);
+        //data.creatureData.AIAgentScriptName = Path.GetFileName(aiAgentScript).Trim(charsToTrim);
 
         data.foodPrice = foodPrice;
         data.industryPrice = industryPrice;

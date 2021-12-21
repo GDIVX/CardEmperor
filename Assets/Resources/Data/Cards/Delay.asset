@@ -10,42 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a484a42f1d4655844b0b737b889cee28, type: 3}
-  m_Name: Capital
+  m_Name: Delay
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 8190f65602bd14145a410ee28df510d2, type: 3}
-  cardName: Capital
-  cardType: 1
-  description: 'The last light in the darkness. Protect it at all cost!
-
-    <b>Range
-    2</b>'
-  keywords:
-  - value: 2
-    keyword: 0
-  abilityScriptName: CreatureMaker
+  image: {fileID: 21300000, guid: cb572df57f1ca594e9f07d808c3dd7b8, type: 3}
+  cardName: Delay
+  cardType: 7
+  description: <color=yellow>Chain</color> the boss for _X_ more turns, <color=red>But</color>
+    spawn additional portal.<color=yellow> Exile.</color>
+  keywords: []
+  abilityScriptName: Delay
   foodPrice: 0
   industryPrice: 0
-  MagicPrice: 0
+  MagicPrice: 1
   Time: 0
-  priority: 1
+  priority: 0.5
   creatureData:
-    icon: {fileID: 21300000, guid: 4fd3bbc0244be2a4cabb4b32bc2f5985, type: 3}
+    icon: {fileID: 21300000, guid: 639845d78711a884494c207617212e64, type: 3}
     hitpoint: 30
-    speed: 0
-    armor: 10
+    speed: 2
+    armor: 3
     attack: 3
-    attackRange: 2
-    attacksPerTurn: 0
+    attackRange: 1
+    attacksPerTurn: 1
     abilityScriptName: BasicAbility
-    AIAgentScriptName: 
+    AIAgentScriptName: ShamblerBossAgent
     amphibious: 0
     flying: 0
-    pioneer: 1
-  rarity: 2
-  parm1: 0
+    pioneer: 0
+  rarity: 0
+  parm1: 1
   parm2: 0
   parm3: 0
   stringParm: 
   UpgradeOptions: []
   UnlockCards: []
-  Exile: 0
+  Exile: 1

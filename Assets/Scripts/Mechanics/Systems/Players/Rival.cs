@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Mechanics.AI.Agents;
+using Assets.Scripts.Mechanics.AI;
 using Assets.Scripts.UI;
 using UnityEngine;
 
