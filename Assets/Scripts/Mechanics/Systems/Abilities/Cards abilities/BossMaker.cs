@@ -8,7 +8,7 @@ public class BossMaker : CreatureMaker
     protected override bool _Activate(Vector3Int targetPosition)
     {
         if( base._Activate(targetPosition)){
-            creature.AddEffect(new Chained(GameManager.Instance.roundsPerLevel));
+            creature.AddEffect(new Chained(Mathf.RoundToInt(GameManager.Instance.roundsPerLevel / 2)));
             return true;
         }
         Debug.Log("Failed to spawn the boss");

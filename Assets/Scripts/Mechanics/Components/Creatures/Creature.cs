@@ -94,6 +94,15 @@ public class Creature : IClickable
         Card tempCard = Card.BuildCard(creatureCardName, playerID);
         return new Creature(tempCard.data.creatureData, tempCard.ID, position);
     }
+    internal static Creature[] GetAllCreaturesOfPlayer(int playerID)
+    {
+        List<Creature> creatures = new List<Creature>();
+        foreach (var pair in creaturesRegestry)
+        {
+            if(pair.Value.PlayerID == playerID) creatures.Add(pair.Value);
+        }
+        return creatures.ToArray();
+    }
 
     public static Creature BuildAndSpawnCardless(string creatureCardName, int playerID, Vector3Int position)
     {

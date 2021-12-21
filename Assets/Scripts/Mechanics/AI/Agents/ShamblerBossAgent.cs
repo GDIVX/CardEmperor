@@ -10,17 +10,19 @@ public class ShamblerBossAgent : BossAgent
     {
         Card card = null;
 
-        bool rand = .25f < Random.value;
+        bool rand = .125f < Random.value;
 
         if(rand){
             if((creature.armor < 5 || creature.hitpoints < 15)){
                 if(lastCardPlayed != "Calamity"){
-                    //build card Calamity
+                    card = Card.BuildCard("Calamity" , Player.Main.ID);
+                    CardsMannager.Instance.hand.AddCard(card);
                     lastCardPlayed = "Calamity";
                     return;
                 }
                 if(lastCardPlayed != "Burrow"){
-                    //build card
+                    card = Card.BuildCard("Burrow" , Player.Main.ID);
+                    CardsMannager.Instance.hand.AddCard(card);
                     lastCardPlayed = "Burrow";
                     return;
                 }

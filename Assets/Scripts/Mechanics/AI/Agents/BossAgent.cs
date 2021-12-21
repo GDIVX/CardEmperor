@@ -23,10 +23,9 @@ namespace Assets.Scripts.Mechanics.AI
         {
             if(creature.speed > 0){
                 base.OnTurnStart();
-            }
-            else{
                 AddCursedCardToDrawPile();
             }
+
         }
 
         void OnBossDeafeted(Creature creature){

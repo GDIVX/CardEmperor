@@ -12,8 +12,8 @@ public class BirdsCounting : CardAbility
 
     protected override bool _Activate(Vector3Int targetPosition)
     {
-        GameManager.Instance.capital.AddEffect(new Omen(1));
-        Creature.GetCreatureByPosition(targetPosition).AddEffect(new Aim(2));
+        GameManager.Instance.capital.AddEffect(new Omen(Card.GetCard(ID).data.parm1));
+        Creature.GetCreatureByPosition(targetPosition).AddEffect(new Aim(Card.GetCard(ID).data.parm2));
 
         HandleRemoval(ID);
 
